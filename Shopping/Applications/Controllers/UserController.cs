@@ -1,6 +1,7 @@
 ﻿using Shopping.Applications.DTOs;
 using Shopping.Applications.Interfaces;
 using Shopping.Domains.Services;
+using Shopping.Infrastructures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Web.Http;
 namespace Shopping.Applications.Controllers
 {
     [RoutePrefix("api/Users")]
-    public class UserController : ApiController
+    public class UserController : CommonController
     {
         private IUserService userService;
 
@@ -24,21 +25,21 @@ namespace Shopping.Applications.Controllers
         [Route("")]
         public IHttpActionResult Get()
         {
-            return Json(userService.Get());
+            return Return(userService.Get());
         }
 
         [HttpGet]
         [Route("{id}")]
         public IHttpActionResult Get([FromUri] Guid id)
         {
-            return Json(userService.Get(id));
+            return Return(userService.Get(id));
         }
 
         [HttpPost]
         [Route("")]
         public IHttpActionResult Post([FromBody] UserDTO userDTO)
         {
-            return Json(userDTO.ToModel());
+            return Return(userDTO.ToModel());
         }
     }
 }
