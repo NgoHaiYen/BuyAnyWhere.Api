@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Net.Http;
 using System.Web.Http;
-using Shopping.Applications.DTOs;
 using Shopping.Applications.Interfaces;
+using Shopping.Contexts.Auths.Applications.DTOs;
 using Shopping.Contexts.Auths.Infrastructures;
 
 namespace Shopping.Contexts.Auths.Applications.Controllers
@@ -35,9 +35,9 @@ namespace Shopping.Contexts.Auths.Applications.Controllers
 
         [HttpPost]
         [Route("")]
-        public IHttpActionResult Post([FromBody] UserDTO userDTO)
+        public IHttpActionResult Post([FromBody] UserDto userDto)
         {
-            return Return(userDTO.ToModel());
+            return Return(userDto.ToModel());
         }
     }
 }

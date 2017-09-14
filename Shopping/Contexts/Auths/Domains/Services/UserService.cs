@@ -1,37 +1,36 @@
-﻿using Shopping.Applications.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using Shopping.Applications.DTOs;
-using Shopping.Contexts.Auths.Domains.Models;
+using Shopping.Applications.Interfaces;
+using Shopping.Contexts.Auths.Applications.DTOs;
+using Shopping.Contexts.Auths.Infrastructures.Models;
 
-namespace Shopping.Domains.Services
+namespace Shopping.Contexts.Auths.Domains.Services
 {
     public class UserService : IUserService
     {
-        public UserDTO Create(UserDTO userDTO)
+        public UserDto Create(UserDto userDto)
         {
             using (ShoppingEntities shoppingEntities = new ShoppingEntities())
             {
-                User user = userDTO.ToModel();
-                shoppingEntities.Users.Add(userDTO.ToModel());
+                User user = userDto.ToModel();
+                shoppingEntities.Users.Add(userDto.ToModel());
 
                 return Get(user.Id);
             }
         }
 
-        public List<UserDTO> Get()
+        public List<UserDto> Get()
         {
             using (ShoppingEntities shoppingEntities = new ShoppingEntities())
             {
                 var users = shoppingEntities.Users.ToList();
 
-                return users.ConvertAll(t => new UserDTO(t));
+                return users.ConvertAll(t => new UserDto(t));
             }
         }
 
-        public UserDTO Get(Guid id)
+        public UserDto Get(Guid id)
         {
             using (ShoppingEntities shoppingEntities = new ShoppingEntities())
             {
@@ -42,7 +41,7 @@ namespace Shopping.Domains.Services
                     throw new Exception("User not found!");
                 }
 
-                return new UserDTO(user);
+                return new UserDto(user);
             }
         }
     }

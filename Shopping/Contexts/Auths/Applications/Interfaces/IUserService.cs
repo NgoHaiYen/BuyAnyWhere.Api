@@ -1,16 +1,16 @@
-﻿using Shopping.Applications.DTOs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Shopping.Contexts.Auths.Applications.DTOs;
 
 namespace Shopping.Applications.Interfaces
 {
     public interface IUserService
     {
-        List<UserDTO> Get();
-        UserDTO Create(UserDTO userDTO);
-        UserDTO Get(Guid id);
+        List<UserDto> Get();
+        UserDto Create(UserDto userDTO);
+        UserDto Get(Guid id);
     }
 }

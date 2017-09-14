@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Shopping.Contexts.Auths.Applications.DTOs
+namespace Shopping.Contexts.Auths.Infrastructures
 {
-    public class RoleDto
+    public class FilterDto
     {
     }
 }

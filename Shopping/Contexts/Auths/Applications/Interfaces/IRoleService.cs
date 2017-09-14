@@ -9,6 +9,6 @@ namespace Shopping.Contexts.Auths.Applications.Interfaces
 {
     public interface IRoleService
     {
-        List<RoleDTO> Get();
+        List<RoleDto> Get();
     }
 }

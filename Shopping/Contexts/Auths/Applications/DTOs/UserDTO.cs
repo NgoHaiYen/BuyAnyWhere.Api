@@ -1,19 +1,16 @@
-﻿using Shopping.Contexts.Auths.Domains.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
+using Shopping.Contexts.Auths.Infrastructures.Models;
 
-namespace Shopping.Applications.DTOs
+namespace Shopping.Contexts.Auths.Applications.DTOs
 {
-    public class UserDTO
+    public class UserDto
     {
-        public UserDTO() { }
+        public UserDto() { }
 
         public Guid Id { get; set; }
         public string Name { get; set; }
 
-        public UserDTO(User user)
+        public UserDto(User user)
         {
             Id = user.Id;
             Name = user.Name;

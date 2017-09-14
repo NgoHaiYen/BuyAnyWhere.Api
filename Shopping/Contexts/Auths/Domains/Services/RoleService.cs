@@ -9,7 +9,7 @@ namespace Shopping.Contexts.Auths.Domains.Services
 {
     public class RoleService : IRoleService
     {
-        public List<RoleDTO> Get()
+        public List<RoleDto> Get()
         {
             return null;
         }
