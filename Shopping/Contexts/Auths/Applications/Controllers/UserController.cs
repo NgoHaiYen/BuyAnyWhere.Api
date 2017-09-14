@@ -1,21 +1,16 @@
-﻿using Shopping.Applications.DTOs;
-using Shopping.Applications.Interfaces;
-using Shopping.Domains.Services;
-using Shopping.Infrastructures;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Results;
+using Shopping.Applications.DTOs;
+using Shopping.Applications.Interfaces;
+using Shopping.Contexts.Auths.Infrastructures;
 
-namespace Shopping.Applications.Controllers
+namespace Shopping.Contexts.Auths.Applications.Controllers
 {
     [RoutePrefix("api/Users")]
     public class UserController : CommonController
     {
-        private IUserService userService;
+        private readonly IUserService userService;
 
         public UserController(IUserService userService)
         {

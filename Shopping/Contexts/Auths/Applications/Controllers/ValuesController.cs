@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
 
-namespace Shopping.Controllers
+namespace Shopping.Contexts.Auths.Applications.Controllers
 {
     public class ValuesController : ApiController
     {

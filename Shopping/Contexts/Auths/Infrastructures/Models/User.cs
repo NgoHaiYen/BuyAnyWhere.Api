@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Shopping.Contexts.Auths.Domains.Models
+namespace Shopping.Contexts.Auths.Infrastructures.Models
 {
     using System;
     using System.Collections.Generic;
