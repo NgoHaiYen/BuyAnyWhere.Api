@@ -9,7 +9,6 @@ namespace Shopping.Infrastructures
 {
     public class CommonController : ApiController
     {
-
         public IHttpActionResult Return(object obj)
         {
             return Json(obj);

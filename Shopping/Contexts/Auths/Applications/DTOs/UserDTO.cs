@@ -1,4 +1,4 @@
-﻿using Shopping.Domains.Models;
+﻿using Shopping.Contexts.Auths.Domains.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
