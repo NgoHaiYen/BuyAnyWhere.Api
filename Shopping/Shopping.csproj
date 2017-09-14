@@ -172,8 +172,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contexts\Auths\Applications\Controllers\RoleController.cs" />
     <Compile Include="Contexts\Auths\Applications\Controllers\UserController.cs" />
+    <Compile Include="Contexts\Auths\Applications\DTOs\RoleDTO.cs" />
     <Compile Include="Contexts\Auths\Applications\DTOs\UserDTO.cs" />
+    <Compile Include="Contexts\Auths\Applications\Interfaces\IRoleService.cs" />
     <Compile Include="Contexts\Auths\Applications\Interfaces\IUserService.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -229,6 +232,7 @@
     <Compile Include="Contexts\Auths\Domains\Models\User.cs">
       <DependentUpon>ShoppingEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Contexts\Auths\Domains\Services\RoleService.cs" />
     <Compile Include="Contexts\Auths\Domains\Services\UserService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -308,8 +312,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Contexts\Customers\" />
+    <Folder Include="Contexts\Managements\Catalogs\" />
     <Folder Include="Contexts\Managements\Categories\" />
+    <Folder Include="Contexts\Procurements\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

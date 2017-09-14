@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Results;
 
 namespace Shopping.Applications.Controllers
 {
@@ -25,6 +26,8 @@ namespace Shopping.Applications.Controllers
         [Route("")]
         public IHttpActionResult Get()
         {
+            HttpResponseMessage httpResponseMessage = Request.CreateResponse();
+            httpResponseMessage.Headers.Location = new Uri("");
             return Return(userService.Get());
         }
 
