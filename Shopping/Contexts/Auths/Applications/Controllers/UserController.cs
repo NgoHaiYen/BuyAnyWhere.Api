@@ -21,8 +21,6 @@ namespace Shopping.Contexts.Auths.Applications.Controllers
         [Route("")]
         public IHttpActionResult Get()
         {
-            HttpResponseMessage httpResponseMessage = Request.CreateResponse();
-            httpResponseMessage.Headers.Location = new Uri("");
             return Return(userService.Get());
         }
 
