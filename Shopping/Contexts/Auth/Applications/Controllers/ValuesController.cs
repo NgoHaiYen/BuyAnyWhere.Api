@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 
-namespace Shopping.Contexts.Auths.Applications.Controllers
+namespace Shopping.Contexts.Auth.Applications.Controllers
 {
     public class ValuesController : ApiController
     {

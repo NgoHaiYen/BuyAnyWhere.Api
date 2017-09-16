@@ -1,12 +1,13 @@
 ﻿using System.Web.Http;
 
-namespace Shopping.Contexts.Auths.Infrastructures
+namespace Shopping.Ultilities
 {
     public class CommonController : ApiController
     {
         public IHttpActionResult Return(object obj)
         {
-            return Json(obj);
+            // Logging here 
+            return Ok(obj);
         }
     }
 }

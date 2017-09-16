@@ -1,5 +1,5 @@
 ﻿using System;
-using Shopping.Contexts.Auths.Infrastructures.Models;
+using Shopping.Models;
 
 namespace Shopping.Contexts.Auths.Applications.DTOs
 {
