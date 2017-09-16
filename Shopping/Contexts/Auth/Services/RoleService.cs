@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using Shopping.Contexts.Auths.Applications.DTOs;
-using Shopping.Contexts.Auths.Applications.Interfaces;
+﻿using Shopping.Contexts.Auth.Applications.DTOs;
+using Shopping.Contexts.Auth.Applications.Interfaces;
+using System.Collections.Generic;
 
-namespace Shopping.Contexts.Auths.Services
+
+namespace Shopping.Contexts.Auth.Services
 {
     public class RoleService : IRoleService
     {

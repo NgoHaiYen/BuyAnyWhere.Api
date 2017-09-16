@@ -4,7 +4,6 @@ using Microsoft.Practices.Unity.Configuration;
 using Shopping.Applications.Interfaces;
 using Shopping.Contexts.Auth.Applications.Interfaces;
 using Shopping.Contexts.Auth.Services;
-using Shopping.Contexts.Auths.Services;
 using Shopping.Models;
 
 namespace Shopping.App_Start

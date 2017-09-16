@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using Shopping.Contexts.Auth.Applications.DTOs;
 using Shopping.Contexts.Auth.Applications.Interfaces;
-using Shopping.Contexts.Auths.Applications.DTOs;
 using System;
 using Shopping.App_Start;
 

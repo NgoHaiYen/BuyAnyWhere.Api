@@ -1,11 +1,11 @@
-﻿using Shopping.Contexts.Auths.Applications.DTOs;
+﻿using Shopping.Contexts.Auth.Applications.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shopping.Contexts.Auths.Applications.Interfaces
+namespace Shopping.Contexts.Auth.Applications.Interfaces
 {
     public interface IRoleService
     {
