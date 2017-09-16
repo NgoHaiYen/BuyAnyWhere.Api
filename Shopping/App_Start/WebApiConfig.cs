@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using Shopping.App_Start;
 
 namespace Shopping
 {
@@ -11,6 +12,8 @@ namespace Shopping
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+
+            config.Filters.Add(new WebApiAuthentication());
 
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
 

@@ -172,6 +172,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\WebApiAuthentication.cs" />
     <Compile Include="Contexts\Auths\Applications\Controllers\RoleController.cs" />
     <Compile Include="Contexts\Auths\Applications\Controllers\UserController.cs" />
     <Compile Include="Contexts\Auths\Applications\DTOs\RoleDTO.cs" />
@@ -214,43 +215,43 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Contexts\Auths\Applications\Controllers\HomeController.cs" />
     <Compile Include="Contexts\Auths\Applications\Controllers\ValuesController.cs" />
-    <Compile Include="Contexts\Auths\Infrastructures\FilterDto.cs" />
-    <Compile Include="Contexts\Auths\Infrastructures\Models\ShoppingEntities.Context.cs">
+    <Compile Include="Ultilities\FilterDto.cs" />
+    <Compile Include="Models\ShoppingEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ShoppingEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Contexts\Auths\Infrastructures\Models\ShoppingEntities.cs">
+    <Compile Include="Models\ShoppingEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ShoppingEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Contexts\Auths\Infrastructures\Models\ShoppingEntities.Designer.cs">
+    <Compile Include="Models\ShoppingEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ShoppingEntities.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Contexts\Auths\Infrastructures\Models\User.cs">
+    <Compile Include="Models\User.cs">
       <DependentUpon>ShoppingEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Contexts\Auths\Domains\Services\RoleService.cs" />
-    <Compile Include="Contexts\Auths\Domains\Services\UserService.cs" />
+    <Compile Include="Contexts\Auths\Services\RoleService.cs" />
+    <Compile Include="Contexts\Auths\Services\UserService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Contexts\Auths\Infrastructures\CommonController.cs" />
+    <Compile Include="Ultilities\CommonController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Contexts\Auths\Infrastructures\Models\ShoppingEntities.Context.tt">
+    <Content Include="Models\ShoppingEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ShoppingEntities.Context.cs</LastGenOutput>
       <DependentUpon>ShoppingEntities.edmx</DependentUpon>
     </Content>
-    <Content Include="Contexts\Auths\Infrastructures\Models\ShoppingEntities.tt">
+    <Content Include="Models\ShoppingEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ShoppingEntities.edmx</DependentUpon>
       <LastGenOutput>ShoppingEntities.cs</LastGenOutput>
@@ -282,11 +283,11 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Contexts\Auths\Infrastructures\Models\ShoppingEntities.edmx">
+    <EntityDeploy Include="Models\ShoppingEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ShoppingEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Contexts\Auths\Infrastructures\Models\ShoppingEntities.edmx.diagram">
+    <Content Include="Models\ShoppingEntities.edmx.diagram">
       <DependentUpon>ShoppingEntities.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\ShoppingColtech - Web Deploy.pubxml" />

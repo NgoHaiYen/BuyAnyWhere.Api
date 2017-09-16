@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Shopping.Applications.Interfaces;
 using Shopping.Contexts.Auths.Applications.DTOs;
-using Shopping.Contexts.Auths.Infrastructures.Models;
+using Shopping.Models;
 
-namespace Shopping.Contexts.Auths.Domains.Services
+namespace Shopping.Contexts.Auths.Services
 {
     public class UserService : IUserService
     {

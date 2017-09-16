@@ -2,7 +2,7 @@ using System;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using Shopping.Applications.Interfaces;
-using Shopping.Contexts.Auths.Domains.Services;
+using Shopping.Contexts.Auths.Services;
 
 namespace Shopping.App_Start
 {
