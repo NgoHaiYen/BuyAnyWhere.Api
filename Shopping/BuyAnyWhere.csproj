@@ -179,7 +179,7 @@
     <Compile Include="Contexts\Auth\Applications\Controllers\UserController.cs" />
     <Compile Include="Contexts\Auth\Applications\DTOs\RoleDTO.cs" />
     <Compile Include="Contexts\Auth\Applications\DTOs\UserDTO.cs" />
-    <Compile Include="Contexts\Auth\Applications\DTOs\UserTokenDto.cs" />
+    <Compile Include="Contexts\Auth\Applications\DTOs\UserTokenDTO.cs" />
     <Compile Include="Contexts\Auth\Applications\Interfaces\IAuthService.cs" />
     <Compile Include="Contexts\Auth\Applications\Interfaces\IRoleService.cs" />
     <Compile Include="Contexts\Auth\Applications\Interfaces\IUserService.cs" />

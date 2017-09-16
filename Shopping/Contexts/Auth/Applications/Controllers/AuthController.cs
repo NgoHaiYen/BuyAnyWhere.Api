@@ -25,7 +25,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        [Route("Login/{token}")]
+        [Route("Login")]
         public IHttpActionResult Login([FromBody] string token)
         {
 
@@ -39,7 +39,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
                 shoppingEntities.Users.Add(userDto.ToModel());
 
                 // Tao tao token cho user
-                UserTokenDto userTokenDto = new UserTokenDto();
+                UserTokenDTO userTokenDto = new UserTokenDTO();
                 userTokenDto.Name = token;
                 shoppingEntities.UserTokens.Add(userTokenDto.ToModel());
 
@@ -52,7 +52,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
                 UserToken userToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
                 if (userToken == null)
                 {
-                    UserTokenDto userTokenDto = new UserTokenDto();
+                    UserTokenDTO userTokenDto = new UserTokenDTO();
                     userTokenDto.Name = token;
                     userTokenDto.UserId = user.Id;
 
