@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http.Filters;
 using Microsoft.Practices.Unity;
 using Shopping.Applications.Interfaces;
+using Shopping.App_Start;
 
-namespace Shopping.App_Start
+namespace Shopping
 {
     public class WebApiAuthentication : IAuthenticationFilter
     {
