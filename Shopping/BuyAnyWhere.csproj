@@ -172,11 +172,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\ExceptionResponeAttribute.cs" />
     <Compile Include="App_Start\WebApiAuthentication.cs" />
+    <Compile Include="Contexts\Auth\Applications\Controllers\AuthController.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\RoleController.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\UserController.cs" />
     <Compile Include="Contexts\Auth\Applications\DTOs\RoleDTO.cs" />
     <Compile Include="Contexts\Auth\Applications\DTOs\UserDTO.cs" />
+    <Compile Include="Contexts\Auth\Applications\DTOs\UserTokenDto.cs" />
+    <Compile Include="Contexts\Auth\Applications\Interfaces\IAuthService.cs" />
     <Compile Include="Contexts\Auth\Applications\Interfaces\IRoleService.cs" />
     <Compile Include="Contexts\Auth\Applications\Interfaces\IUserService.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -215,6 +219,13 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\HomeController.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\ValuesController.cs" />
+    <Compile Include="Contexts\Auth\Services\AuthService.cs" />
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>ShoppingEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserToken.cs">
+      <DependentUpon>ShoppingEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Ultilities\FilterDto.cs" />
     <Compile Include="Models\ShoppingEntities.Context.cs">
       <AutoGen>True</AutoGen>
@@ -314,8 +325,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Contexts\Managements\" />
-    <Folder Include="Contexts\Procurements\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

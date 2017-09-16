@@ -12,19 +12,12 @@ namespace Shopping.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class UserToken
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
-        {
-            this.UserTokens = new HashSet<UserToken>();
-        }
-    
         public System.Guid Id { get; set; }
         public string Name { get; set; }
-        public string FbId { get; set; }
+        public Nullable<System.Guid> UserId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserToken> UserTokens { get; set; }
+        public virtual User User { get; set; }
     }
 }

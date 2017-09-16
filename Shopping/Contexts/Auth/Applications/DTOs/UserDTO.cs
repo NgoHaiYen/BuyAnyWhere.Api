@@ -1,27 +1,32 @@
 ﻿using System;
 using Shopping.Models;
 
-namespace Shopping.Contexts.Auths.Applications.DTOs
+namespace Shopping.Contexts.Auth.Applications.DTOs
 {
     public class UserDto
     {
+        public Guid Id { get; set; }
+        public string FbId { get; set; }
+        public string Name { get; set; }
+
+
         public UserDto() { }
 
-        public Guid Id { get; set; }
-        public string Name { get; set; }
 
         public UserDto(User user)
         {
-            Id = user.Id;
+            Id = user.Id;          
             Name = user.Name;
+            FbId = user.FbId;
         }
 
         public User ToModel()
         {
-            Id = Guid.NewGuid();
             User user = new User();
-            user.Id = Id;
+
+            user.Id = Guid.NewGuid();
             user.Name = Name;
+            user.FbId = FbId;
 
             return user;
         }
@@ -30,6 +35,7 @@ namespace Shopping.Contexts.Auths.Applications.DTOs
         {
             Id = user.Id;
             Name = user.Name;
+            FbId = user.FbId;
         }
 
     }

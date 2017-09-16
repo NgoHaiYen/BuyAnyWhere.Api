@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Shopping.Applications.Interfaces;
-using Shopping.Contexts.Auths.Applications.DTOs;
+using Shopping.Contexts.Auth.Applications.DTOs;
 using Shopping.Models;
 
-namespace Shopping.Contexts.Auths.Services
+namespace Shopping.Contexts.Auth.Services
 {
     public class UserService : IUserService
     {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Http;
 using Shopping.Applications.Interfaces;
+using Shopping.Contexts.Auth.Applications.DTOs;
 using Shopping.Contexts.Auths.Applications.DTOs;
 using Shopping.Ultilities;
 

@@ -2,7 +2,10 @@ using System;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using Shopping.Applications.Interfaces;
+using Shopping.Contexts.Auth.Applications.Interfaces;
+using Shopping.Contexts.Auth.Services;
 using Shopping.Contexts.Auths.Services;
+using Shopping.Models;
 
 namespace Shopping.App_Start
 {
@@ -38,7 +41,8 @@ namespace Shopping.App_Start
             // container.LoadConfiguration();
 
             // TODO: Register your types here
-            container.RegisterType<IUserService, UserService>();
+            container.RegisterType<ShoppingEntities>();
+            container.RegisterTypes(AllClasses.FromLoadedAssemblies(), WithMappings.FromMatchingInterface, WithName.Default);
         }
     }
 }
