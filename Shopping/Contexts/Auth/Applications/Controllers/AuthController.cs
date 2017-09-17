@@ -9,7 +9,7 @@ using Shopping.Applications.Interfaces;
 namespace Shopping.Contexts.Auth.Applications.Controllers
 {
     [RoutePrefix("api/Auth")]
-    public class AuthController : CommonController
+    public class AuthController : ApiController
     {
 
         private readonly IAuthService authService;
@@ -66,7 +66,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
             shoppingEntities.SaveChanges();
 
-            return Return(userService.Get(user.Id));
+            return Ok(userService.Get(user.Id));
             
         }
     }

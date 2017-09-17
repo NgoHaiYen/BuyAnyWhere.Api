@@ -12,7 +12,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 {
 
     [RoutePrefix("api/Users")]
-    public class UserController : CommonController
+    public class UserController : ApiController
     {
 
         private readonly IUserService userService;
@@ -26,21 +26,21 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         [Route("")]
         public IHttpActionResult Get()
         {
-            return Return(userService.Get());
+            return Ok(userService.Get());
         }
 
         [HttpGet]
         [Route("{id}")]
         public IHttpActionResult Get([FromUri] Guid id)
         {
-            return Return(userService.Get(id));
+            return Ok(userService.Get(id));
         }
 
         [HttpPost]
         [Route("")]
         public IHttpActionResult Post([FromBody] UserDto userDto)
         {
-            return Return(userDto.ToModel());
+            return Ok(userDto.ToModel());
         }
     }
 }
