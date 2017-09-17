@@ -61,7 +61,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
             shoppingEntities.SaveChanges();
 
-            return Return(userDto);
+            return Return(new UserDto(user));
             
         }
     }
