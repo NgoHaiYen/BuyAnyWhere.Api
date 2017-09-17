@@ -61,7 +61,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
             shoppingEntities.SaveChanges();
 
-            return Return("Login completed !");
+            return Return(userDto);
             
         }
     }
