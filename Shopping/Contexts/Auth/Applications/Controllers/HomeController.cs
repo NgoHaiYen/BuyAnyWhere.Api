@@ -8,13 +8,8 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
     {
         public ActionResult Index()
         {
-            var identity = (ClaimsIdentity)User.Identity;
-            IEnumerable<Claim> claims = identity.Claims;
 
-
-            ViewBag.Title = "Home Page";
-
-            return View();
+            return Redirect("~/swagger");
         }
     }
 }
