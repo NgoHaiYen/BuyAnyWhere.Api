@@ -224,13 +224,6 @@
     <Compile Include="Contexts\Auth\Applications\Controllers\HomeController.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\ValuesController.cs" />
     <Compile Include="Contexts\Auth\Services\AuthService.cs" />
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>ShoppingEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UserToken.cs">
-      <DependentUpon>ShoppingEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Ultilities\FilterDto.cs" />
     <Compile Include="Models\ShoppingEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -246,9 +239,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ShoppingEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>ShoppingEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>ShoppingEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserToken.cs">
+      <DependentUpon>ShoppingEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ultilities\FilterDto.cs" />
     <Compile Include="Contexts\Auth\Services\RoleService.cs" />
     <Compile Include="Contexts\Auth\Services\UserService.cs" />
     <Compile Include="Global.asax.cs">
@@ -261,19 +261,19 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
     <Content Include="Models\ShoppingEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ShoppingEntities.Context.cs</LastGenOutput>
       <DependentUpon>ShoppingEntities.edmx</DependentUpon>
+      <LastGenOutput>ShoppingEntities.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\ShoppingEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ShoppingEntities.edmx</DependentUpon>
       <LastGenOutput>ShoppingEntities.cs</LastGenOutput>
     </Content>
-    <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
