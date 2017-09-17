@@ -181,8 +181,9 @@
     <Compile Include="Contexts\Auth\Applications\Controllers\AuthController.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\RoleController.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\UserController.cs" />
-    <Compile Include="Contexts\Auth\Applications\DTOs\RoleDTO.cs" />
-    <Compile Include="Contexts\Auth\Applications\DTOs\UserDTO.cs" />
+    <Compile Include="Contexts\Auth\Applications\DTOs\ApiDto.cs" />
+    <Compile Include="Contexts\Auth\Applications\DTOs\RoleDto.cs" />
+    <Compile Include="Contexts\Auth\Applications\DTOs\UserDto.cs" />
     <Compile Include="Contexts\Auth\Applications\DTOs\UserTokenDTO.cs" />
     <Compile Include="Contexts\Auth\Applications\Interfaces\IAuthService.cs" />
     <Compile Include="Contexts\Auth\Applications\Interfaces\IRoleService.cs" />
@@ -224,6 +225,9 @@
     <Compile Include="Contexts\Auth\Applications\Controllers\HomeController.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\ValuesController.cs" />
     <Compile Include="Contexts\Auth\Services\AuthService.cs" />
+    <Compile Include="Models\Api.cs">
+      <DependentUpon>ShoppingEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ShoppingEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -248,6 +252,7 @@
     <Compile Include="Models\UserToken.cs">
       <DependentUpon>ShoppingEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Ultilities\Constant.cs" />
     <Compile Include="Ultilities\FilterDto.cs" />
     <Compile Include="Contexts\Auth\Services\RoleService.cs" />
     <Compile Include="Contexts\Auth\Services\UserService.cs" />

@@ -7,6 +7,9 @@ using Shopping.App_Start;
 using Shopping.Models;
 using System.Security.Authentication;
 using System.Collections.Generic;
+using Shopping.Contexts.Auth.Services;
+using Shopping.Contexts.Auth.Applications.Interfaces;
+using Shopping.Ultilities;
 
 namespace Shopping
 {
@@ -14,15 +17,12 @@ namespace Shopping
     {
         public static readonly string AccessToken = "access_token";
         private readonly ShoppingEntities shoppingEntities;
-
-        private static IReadOnlyList<string> anonymousRoutes = new List<string>
-        {
-            "POST /api/Auth/Login",
-        };
+        private readonly IAuthService authService;
 
         public WebApiAuthentication()
         {
             shoppingEntities = UnityConfig.GetConfiguredContainer().Resolve<ShoppingEntities>();
+            authService = UnityConfig.GetConfiguredContainer().Resolve<IAuthService>();
         }
 
 
@@ -33,7 +33,10 @@ namespace Shopping
         {
             var request = context.Request;
 
-            if (anonymousRoutes.Contains(request.Method.ToString() + " " + request.RequestUri.AbsolutePath))
+            var publicApis = shoppingEntities.Apis.Where(t => t.Type == Constant.ApiType.PUBLIC).ToList();
+
+            if (publicApis.FirstOrDefault(t => t.Method == request.Method.ToString() 
+                && t.Uri == authService.NormalizePath(request.RequestUri.AbsolutePath)) != null)
             {
                 return Task.FromResult(0);
             }

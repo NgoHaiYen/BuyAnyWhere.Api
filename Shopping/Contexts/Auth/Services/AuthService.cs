@@ -5,6 +5,9 @@ using Shopping.Contexts.Auth.Applications.Interfaces;
 using System;
 using Shopping.App_Start;
 using Shopping.Models;
+using System.Linq;
+using System.Collections.Generic;
+using Shopping.Ultilities;
 
 namespace Shopping.Contexts.Auth.Services
 {
@@ -12,6 +15,14 @@ namespace Shopping.Contexts.Auth.Services
     {
         public static readonly string Url = "https://graph.facebook.com/me";
         public static readonly string Fields = "id,name";
+
+        private readonly ShoppingEntities shoppingEntities;
+
+        public AuthService(ShoppingEntities shoppingEntities)
+        {
+            this.shoppingEntities = shoppingEntities;
+        }
+
 
         public UserDto GetUserInfoFromToken(string token)
         {
@@ -31,24 +42,29 @@ namespace Shopping.Contexts.Auth.Services
                 dynamic userDynamic = JsonConvert.DeserializeObject(userJson);
 
 
-                User user = new User();
-                
-                user.FbId = userDynamic["id"];
-                user.Name = userDynamic["name"];
+                UserDto userDto = new UserDto();
 
-                return new UserDto(user);
+                userDto.FbId = userDynamic["id"];
+                userDto.Name = userDynamic["name"];
+
+                return userDto;
             }
 
         }
 
-        public string NormalizeUri()
+        public string NormalizePath(string path)
         {
-            throw new NotImplementedException();
-        }
+            string[] linkParts = path.Split('/').Where(x => !string.IsNullOrEmpty(x)).ToArray();
 
-        public string UnNormalizeUri()
-        {
-            throw new NotImplementedException();
+            for (int i = 0; i < linkParts.Length; i++)
+            {
+                Guid testGuid;
+                if (Guid.TryParse(linkParts[i], out testGuid))
+                {
+                    linkParts[i] = "*";
+                }
+            }
+            return String.Join("/", linkParts);
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Shopping.Contexts.Auth.Applications.DTOs;
+using Shopping.Models;
+using System.Collections.Generic;
 
 namespace Shopping.Contexts.Auth.Applications.Interfaces
 {
@@ -6,8 +8,7 @@ namespace Shopping.Contexts.Auth.Applications.Interfaces
     {
         UserDto GetUserInfoFromToken(string token);
 
-        string NormalizeUri();
+        string NormalizePath(string path);
 
-        string UnNormalizeUri();
     }
 }
