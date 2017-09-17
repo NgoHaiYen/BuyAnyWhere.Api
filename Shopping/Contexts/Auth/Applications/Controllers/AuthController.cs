@@ -13,12 +13,15 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
     {
 
         private readonly IAuthService authService;
+        private readonly IUserService userService;
         private readonly ShoppingEntities shoppingEntities;
 
-        public AuthController(IAuthService authService, ShoppingEntities shoppingEntities)
+        public AuthController(IAuthService authService, ShoppingEntities shoppingEntities,
+            IUserService userService)
         {
             this.authService = authService;
             this.shoppingEntities = shoppingEntities;
+            this.userService = userService;
         }
 
 
@@ -35,11 +38,14 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             if (user == null)
             {
                 // Chua co user, them thong tin user vao database
-                shoppingEntities.Users.Add(userDto.ToModel());
+                user = userDto.ToModel();
+                shoppingEntities.Users.Add(user);
 
                 // Tao tao token cho user
                 UserTokenDTO userTokenDto = new UserTokenDTO();
                 userTokenDto.Name = token;
+                userTokenDto.UserId = user.Id;
+
                 shoppingEntities.UserTokens.Add(userTokenDto.ToModel());
 
             } else
@@ -61,7 +67,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
             shoppingEntities.SaveChanges();
 
-            return Return(new UserDto(user));
+            return Return(userService.Get(user.Id));
             
         }
     }
