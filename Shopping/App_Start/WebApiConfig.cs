@@ -14,6 +14,7 @@ namespace Shopping
             // Web API configuration and services
 
             config.Filters.Add(new ExceptionResponeAttribute());
+            config.Filters.Add(new WebApiAuthentication());
 
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
 

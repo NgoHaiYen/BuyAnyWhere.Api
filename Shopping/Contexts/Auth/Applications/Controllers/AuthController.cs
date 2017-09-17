@@ -25,7 +25,6 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         }
 
 
-        [AllowAnonymous]
         [HttpPost]
         [Route("Login")]
         public IHttpActionResult Login([FromBody] string token)
