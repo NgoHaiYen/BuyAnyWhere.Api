@@ -6,7 +6,6 @@ using Shopping.Ultilities;
 
 namespace Shopping.Contexts.Auth.Applications.Controllers
 {
-    [RoutePrefix("api/Users")]
     public class UserController : CommonController
     {
         private readonly IUserService userService;
@@ -17,21 +16,21 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         }
 
         [HttpGet]
-        [Route("")]
+        [Route("api/Users")]
         public IHttpActionResult Get()
         {
             return Return(userService.Get());
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("api/Users/{id}")]
         public IHttpActionResult Get([FromUri] Guid id)
         {
             return Return(userService.Get(id));
         }
 
         [HttpPost]
-        [Route("")]
+        [Route("api/Users")]
         public IHttpActionResult Post([FromBody] UserDto userDto)
         {
             return Return(userDto.ToModel());
