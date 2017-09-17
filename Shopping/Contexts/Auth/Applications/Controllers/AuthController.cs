@@ -8,7 +8,7 @@ using Shopping.Applications.Interfaces;
 
 namespace Shopping.Contexts.Auth.Applications.Controllers
 {
-    [RoutePrefix("api/Auths")]
+    [RoutePrefix("api/Auth")]
     public class AuthController : CommonController
     {
 
