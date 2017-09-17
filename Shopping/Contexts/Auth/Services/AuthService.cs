@@ -4,6 +4,7 @@ using Shopping.Contexts.Auth.Applications.DTOs;
 using Shopping.Contexts.Auth.Applications.Interfaces;
 using System;
 using Shopping.App_Start;
+using Shopping.Models;
 
 namespace Shopping.Contexts.Auth.Services
 {
@@ -29,13 +30,25 @@ namespace Shopping.Contexts.Auth.Services
 
                 dynamic userDynamic = JsonConvert.DeserializeObject(userJson);
 
-                UserDto userDto = new UserDto();
-                userDto.FbId = userDynamic["id"];
-                userDto.Name = userDynamic["name"];
 
-                return userDto;
+                User user = new User();
+                
+                user.FbId = userDynamic["id"];
+                user.Name = userDynamic["name"];
+
+                return new UserDto(user);
             }
 
+        }
+
+        public string NormalizeUri()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string UnNormalizeUri()
+        {
+            throw new NotImplementedException();
         }
     }
 }
