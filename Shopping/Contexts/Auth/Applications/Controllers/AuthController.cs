@@ -26,7 +26,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
 
         [HttpPost]
-        [Route("Login")]
+        [Route("Facebook/Login")]
         public IHttpActionResult Login([FromBody] string token)
         {
 
