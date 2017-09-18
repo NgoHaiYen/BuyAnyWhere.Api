@@ -187,6 +187,7 @@
     <Compile Include="Contexts\Auth\Applications\DTOs\RoleDto.cs" />
     <Compile Include="Contexts\Auth\Applications\DTOs\UserDto.cs" />
     <Compile Include="Contexts\Auth\Applications\DTOs\UserTokenDTO.cs" />
+    <Compile Include="Contexts\Auth\Applications\Interfaces\IAppService.cs" />
     <Compile Include="Contexts\Auth\Applications\Interfaces\IAuthService.cs" />
     <Compile Include="Contexts\Auth\Applications\Interfaces\IRoleService.cs" />
     <Compile Include="Contexts\Auth\Applications\Interfaces\IUserService.cs" />

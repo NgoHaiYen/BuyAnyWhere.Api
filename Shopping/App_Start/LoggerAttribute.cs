@@ -13,11 +13,13 @@ namespace Shopping.App_Start
     {
         private readonly ShoppingEntities shoppingEntities;
         private readonly IAuthService authService;
+        private readonly IAppService appService;
 
         public LoggerAttribute()
         {
             shoppingEntities = UnityConfig.GetConfiguredContainer().Resolve<ShoppingEntities>();
-            this.authService = UnityConfig.GetConfiguredContainer().Resolve<IAuthService>();
+            authService = UnityConfig.GetConfiguredContainer().Resolve<IAuthService>();
+            appService = UnityConfig.GetConfiguredContainer().Resolve<IAppService>();
         }
 
 
@@ -28,12 +30,7 @@ namespace Shopping.App_Start
 
             var api = shoppingEntities.Apis.FirstOrDefault(t => t.Method == method && t.Uri == uri);
 
-            string token = null;
-
-            if (actionExecutedContext.Request.Headers.TryGetValues(RequestConstant.ACCESS_TOKEN, out var values))
-            {
-                token = values.First();
-            }
+            var token = appService.GetTokenFromHeaderHttpRequest(actionExecutedContext);
 
             var user = authService.GetUserInfoFromToken(token).ToModel();
 
