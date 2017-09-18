@@ -36,6 +36,7 @@ namespace Shopping.Contexts.Auth.Services
 
                 } catch(Exception e)
                 {
+      
                     throw new BadRequestException("Invalid token");
                 }
 

@@ -16,6 +16,8 @@ namespace Shopping
             config.Filters.Add(new ExceptionResponeAttribute());
             config.Filters.Add(new WebApiAuthentication());
 
+            config.Filters.Add(new LoggerAttribute());
+
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
 
             // Web API routes

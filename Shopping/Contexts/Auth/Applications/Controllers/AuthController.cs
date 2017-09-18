@@ -5,10 +5,11 @@ using Shopping.Ultilities;
 using Shopping.Models;
 using System.Linq;
 using Shopping.Applications.Interfaces;
+using System;
 
 namespace Shopping.Contexts.Auth.Applications.Controllers
 {
-    [RoutePrefix("api/Auth")]
+    [RoutePrefix("api/OAuth2")]
     public class AuthController : ApiController
     {
 
@@ -41,26 +42,26 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
                 shoppingEntities.Users.Add(user);
 
                 // Tao tao token cho user
-                UserTokenDTO userTokenDto = new UserTokenDTO();
-                userTokenDto.Name = token;
-                userTokenDto.UserId = user.Id;
+                UserToken userToken = new UserToken();
+                userToken.Id = Guid.NewGuid();
+                userToken.Name = token;
+                userToken.UserId = user.Id;
 
-                shoppingEntities.UserTokens.Add(userTokenDto.ToModel());
+                shoppingEntities.UserTokens.Add(userToken);
 
             } else
             {
-                // Da ton tai user roi, update thong tin user
-                user.Name = userDto.Name;
-
                 // Kiem tra neu token khac thi them vao
                 UserToken userToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
+
                 if (userToken == null)
                 {
-                    UserTokenDTO userTokenDto = new UserTokenDTO();
-                    userTokenDto.Name = token;
-                    userTokenDto.UserId = user.Id;
+                    userToken = new UserToken();
+                    userToken.Id = Guid.NewGuid();
+                    userToken.Name = token;
+                    userToken.UserId = user.Id;
 
-                    shoppingEntities.UserTokens.Add(userTokenDto.ToModel());
+                    shoppingEntities.UserTokens.Add(userToken);
                 }
             }
 

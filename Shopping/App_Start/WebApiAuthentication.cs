@@ -15,7 +15,7 @@ namespace Shopping
 {
     public class WebApiAuthentication : IAuthenticationFilter
     {
-        public static readonly string AccessToken = "access_token";
+
         private readonly ShoppingEntities shoppingEntities;
         private readonly IAuthService authService;
 
@@ -33,7 +33,7 @@ namespace Shopping
         {
             var request = context.Request;
 
-            var publicApis = shoppingEntities.Apis.Where(t => t.Type == Constant.ApiType.PUBLIC).ToList();
+            var publicApis = shoppingEntities.Apis.Where(t => t.Type == ApiTypeConstant.PUBLIC).ToList();
 
             if (publicApis.FirstOrDefault(t => t.Method == request.Method.ToString() 
                 && t.Uri == authService.NormalizePath(request.RequestUri.AbsolutePath)) != null)
@@ -43,7 +43,7 @@ namespace Shopping
 
             string token = null;
 
-            if (context.Request.Headers.TryGetValues(AccessToken, out var values))
+            if (context.Request.Headers.TryGetValues(RequestConstant.ACCESS_TOKEN, out var values))
             {
                 token = values.First();
             }

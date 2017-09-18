@@ -176,8 +176,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\ExceptionResponeAttribute.cs" />
+    <Compile Include="App_Start\LoggerAttribute.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiAuthentication.cs" />
+    <Compile Include="Contexts\Auth\Applications\AppService.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\AuthController.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\RoleController.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\UserController.cs" />
@@ -225,6 +227,9 @@
     <Compile Include="Contexts\Auth\Applications\Controllers\HomeController.cs" />
     <Compile Include="Contexts\Auth\Services\AuthService.cs" />
     <Compile Include="Models\Api.cs">
+      <DependentUpon>ShoppingEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Logger.cs">
       <DependentUpon>ShoppingEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ShoppingEntities.Context.cs">

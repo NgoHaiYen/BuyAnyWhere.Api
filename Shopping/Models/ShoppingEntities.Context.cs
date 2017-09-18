@@ -29,5 +29,6 @@ namespace Shopping.Models
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserToken> UserTokens { get; set; }
+        public virtual DbSet<Logger> Loggers { get; set; }
     }
 }
