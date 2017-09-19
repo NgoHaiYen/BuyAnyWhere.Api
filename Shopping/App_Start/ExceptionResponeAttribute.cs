@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using Shopping.Contexts.Auth.Applications.DTOs;
+using Shopping.Contexts.Auth.Applications.Interfaces;
 using Shopping.Models;
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,14 @@ namespace Shopping.App_Start
 {
     public class ExceptionResponeAttribute : ExceptionFilterAttribute
     {
+        private readonly ShoppingEntities shoppingEntities;
+        private readonly IUltilityService appService;
 
+        public ExceptionResponeAttribute(ShoppingEntities shoppingEntities, IUltilityService appService)
+        {
+            this.shoppingEntities = shoppingEntities;
+            this.appService = appService;
+        }
 
         public override void OnException(HttpActionExecutedContext Context)
         {
@@ -51,6 +60,13 @@ namespace Shopping.App_Start
 
             Response.Content = new StringContent(Message);
             Context.Response = Response;
+
+
+            var token = appService.GetTokenFromHeaderHttpRequest(Context);
+            User user = appService.GetUserFromTokenAlwayReturnUserName(token);
+
+
+
         }
     }
 

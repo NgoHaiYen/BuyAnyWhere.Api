@@ -1,40 +1,26 @@
-﻿using Shopping.App_Start;
-using Shopping.Contexts.Auth.Applications.Interfaces;
+﻿using Shopping.Contexts.Auth.Applications.Interfaces;
 using Shopping.Models;
 using Shopping.Ultilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Web;
-using System.Web.Http.Filters;
 
 namespace Shopping.Contexts.Auth.Applications
 {
-    public class AppService : IAppService
+    public class UltilityService : IUltilityService
     {
 
         private readonly ShoppingEntities shoppingEntities;
 
-        public AppService(ShoppingEntities shoppingEntities)
+        public UltilityService(ShoppingEntities shoppingEntities)
         {
             this.shoppingEntities = shoppingEntities;
         }
 
         public string GetTokenFromHeaderHttpRequest(object context) 
         {
-            if (context is HttpActionExecutedContext)
-            {
-            } else if (context is HttpAuthenticationContext)
-            {
-            } else
-            {
-                throw new InvalidCastException("Invalid Type!") ;
-            }
-
             string token = null;
             dynamic ctx = context;
-
 
             if (ctx.Request.Headers.TryGetValues(RequestConstant.ACCESS_TOKEN, out IEnumerable<string> values))
             {
@@ -42,6 +28,36 @@ namespace Shopping.Contexts.Auth.Applications
             }
 
             return null;
+        }
+
+        public User GetUserFromTokenAlwayReturnUserName(string token)
+        {
+
+            User user = null;
+
+            // Khong co token, tra ve thong tin User mac dinh
+            if (token == null)
+            {
+                user = new User();
+                user.Name = "GUEST";
+
+            } else
+            {
+                var userToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
+
+                // token sai hoac qua han roi, truy cap public api nen van duoc
+                if (userToken == null)
+                {
+                    user = new User();
+                    user.Name = "INVALID_TOKEN_USER";
+                }
+
+                user = userToken.User;          
+            }
+
+
+            return user;
+
         }
 
 

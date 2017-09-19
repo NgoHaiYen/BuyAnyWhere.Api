@@ -11,17 +11,17 @@ namespace Shopping.App_Start
     public class LoggerAttribute : ActionFilterAttribute
     {
         private readonly ShoppingEntities shoppingEntities;
-        private readonly IAppService appService;
+        private readonly IUltilityService ultilityService;
 
         public LoggerAttribute()
         {
             shoppingEntities = UnityConfig.GetConfiguredContainer().Resolve<ShoppingEntities>();
-            appService = UnityConfig.GetConfiguredContainer().Resolve<IAppService>();
+            ultilityService = UnityConfig.GetConfiguredContainer().Resolve<IUltilityService>();
         }
 
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
-            var token = appService.GetTokenFromHeaderHttpRequest(actionExecutedContext);
+            var token = ultilityService.GetTokenFromHeaderHttpRequest(actionExecutedContext);
 
             Logger logger = new Logger();
             logger.Id = Guid.NewGuid();
@@ -30,17 +30,8 @@ namespace Shopping.App_Start
             logger.ApiUri = actionExecutedContext.Request.RequestUri.AbsolutePath;
             logger.Success = true;
             logger.Reason = "Successful request";
+            logger.UserName = ultilityService.GetUserFromTokenAlwayReturnUserName(token).Name;
 
-
-            if (token == null)
-            {
-                logger.UserName = "GUEST";
-            } 
-            else
-            {
-                var focusToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
-                logger.UserName = focusToken.User.Name;
-            }
 
             shoppingEntities.Loggers.Add(logger);
             shoppingEntities.SaveChanges();

@@ -18,12 +18,12 @@ namespace Shopping
     {
 
         private readonly ShoppingEntities shoppingEntities;
-        private readonly IAppService appService;
+        private readonly IUltilityService appService;
 
         public WebApiAuthentication()
         {
             shoppingEntities = UnityConfig.GetConfiguredContainer().Resolve<ShoppingEntities>();
-            appService = UnityConfig.GetConfiguredContainer().Resolve<IAppService>();
+            appService = UnityConfig.GetConfiguredContainer().Resolve<IUltilityService>();
         }
 
 
@@ -64,7 +64,7 @@ namespace Shopping
 
                 throw new AuthenticationException("Unauthenticated user");
             } 
-            // Neu token het han
+            // Neu token het han thi khong cho goi may ham private ... TODO
 
             return Task.FromResult(0);
         }
