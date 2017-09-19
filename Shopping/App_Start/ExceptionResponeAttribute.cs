@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Shopping.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,6 +13,8 @@ namespace Shopping.App_Start
 {
     public class ExceptionResponeAttribute : ExceptionFilterAttribute
     {
+
+
         public override void OnException(HttpActionExecutedContext Context)
         {
             var Response = new HttpResponseMessage(HttpStatusCode.BadRequest);

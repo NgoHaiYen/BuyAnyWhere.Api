@@ -1,5 +1,6 @@
 ﻿using Shopping.App_Start;
 using Shopping.Contexts.Auth.Applications.Interfaces;
+using Shopping.Models;
 using Shopping.Ultilities;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,13 @@ namespace Shopping.Contexts.Auth.Applications
 {
     public class AppService : IAppService
     {
+
+        private readonly ShoppingEntities shoppingEntities;
+
+        public AppService(ShoppingEntities shoppingEntities)
+        {
+            this.shoppingEntities = shoppingEntities;
+        }
 
         public string GetTokenFromHeaderHttpRequest(object context) 
         {
@@ -34,6 +42,12 @@ namespace Shopping.Contexts.Auth.Applications
             }
 
             return null;
+        }
+
+
+        public void Log(string apiMethod, string userToken, string apiUri, bool success, string reason)
+        {
+            return;
         }
 
 
