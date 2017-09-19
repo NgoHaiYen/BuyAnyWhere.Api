@@ -20,16 +20,24 @@ namespace Shopping.Contexts.Auth.Applications
 
         public string GetTokenFromHeaderHttpRequest(HttpAuthenticationContext context) 
         {
-            var token = context.Request.Headers.GetValues(RequestConstant.ACCESS_TOKEN).First();
+            if (context.Request.Headers.Contains(RequestConstant.ACCESS_TOKEN))
+            {
+                var token = context.Request.Headers.GetValues(RequestConstant.ACCESS_TOKEN).First();
+                return token;
+            }
 
-            return token;
+            return null;
         }
 
         public string GetTokenFromHeaderHttpRequest(HttpActionExecutedContext context)
         {
-            var token = context.Request.Headers.GetValues(RequestConstant.ACCESS_TOKEN).First();
+            if (context.Request.Headers.Contains(RequestConstant.ACCESS_TOKEN))
+            {
+                var token = context.Request.Headers.GetValues(RequestConstant.ACCESS_TOKEN).First();
+                return token;
+            }
 
-            return token;
+            return null;
         }
 
         public User GetUserFromTokenAlwayReturnUserName(string token)
