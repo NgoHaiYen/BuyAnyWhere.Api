@@ -67,6 +67,7 @@ namespace Shopping.App_Start
             User user = ultilityService.GetUserFromTokenAlwayReturnUserName(token);
 
 
+            ultilityService.Log(Context, token, false, Context.Exception.Message);
 
         }
     }

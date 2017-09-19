@@ -6,11 +6,8 @@ using Microsoft.Practices.Unity;
 using Shopping.App_Start;
 using Shopping.Models;
 using System.Security.Authentication;
-using System.Collections.Generic;
-using Shopping.Contexts.Auth.Services;
 using Shopping.Contexts.Auth.Applications.Interfaces;
 using Shopping.Ultilities;
-using System;
 
 namespace Shopping
 {
@@ -50,20 +47,9 @@ namespace Shopping
 
             if (userToken == null)
             {
-                Logger logger = new Logger();
-                logger.Id = Guid.NewGuid();
-                logger.UserName = "GUEST";
-                logger.ApiMethod = request.Method.ToString();
-                logger.DateTime = System.DateTime.Now;
-                logger.ApiUri = request.RequestUri.AbsolutePath;
-                logger.Success = false;
-                logger.Reason = "User must login to access this private api";
-
-                shoppingEntities.Loggers.Add(logger);
-                shoppingEntities.SaveChanges();
-
-                throw new AuthenticationException("Unauthenticated user");
+                throw new AuthenticationException("User must login to access this private api");
             } 
+
             // Neu token het han thi khong cho goi may ham private ... TODO
 
             return Task.FromResult(0);

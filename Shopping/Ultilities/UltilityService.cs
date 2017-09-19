@@ -55,15 +55,25 @@ namespace Shopping.Contexts.Auth.Applications
                 user = userToken.User;          
             }
 
-
             return user;
-
         }
 
 
-        public void Log(string apiMethod, string userToken, string apiUri, bool success, string reason)
+        public void Log(object context, string userToken, bool success, string reason)
         {
-            return;
+            dynamic ctx = context;
+
+            Logger logger = new Logger();
+            logger.Id = Guid.NewGuid();
+            logger.UserName = GetUserFromTokenAlwayReturnUserName(userToken).Name;
+            logger.DateTime = System.DateTime.Now;
+            logger.ApiMethod = ctx.Request.Method.ToString();
+            logger.ApiUri = ctx.Request.RequestUri.AbsolutePath;
+            logger.Success = success;
+            logger.Reason = reason;
+
+            shoppingEntities.Loggers.Add(logger);
+            shoppingEntities.SaveChanges();
         }
 
 
