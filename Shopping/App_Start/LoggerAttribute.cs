@@ -19,21 +19,18 @@ namespace Shopping.App_Start
             appService = UnityConfig.GetConfiguredContainer().Resolve<IAppService>();
         }
 
-
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
-            var method = actionExecutedContext.Request.Method.ToString();
-            var uri = appService.NormalizePath(actionExecutedContext.Request.RequestUri.AbsolutePath);
-
             var token = appService.GetTokenFromHeaderHttpRequest(actionExecutedContext);
 
             Logger logger = new Logger();
-
             logger.Id = Guid.NewGuid();
             logger.DateTime = System.DateTime.Now;
-            logger.ApiMethod = method;
-            logger.ApiUri = uri;
+            logger.ApiMethod = actionExecutedContext.Request.Method.ToString();
+            logger.ApiUri = actionExecutedContext.Request.RequestUri.AbsolutePath;
             logger.Success = true;
+            logger.Reason = "Successful request";
+
 
             if (token == null)
             {
@@ -42,23 +39,11 @@ namespace Shopping.App_Start
             else
             {
                 var focusToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
-
-                if (focusToken == null)
-                {
-                    logger.UserName = "WRONG_TOKEN_USER";
-
-                } else
-                {
-                    logger.UserName = focusToken.User.Name;
-                }
+                logger.UserName = focusToken.User.Name;
             }
 
             shoppingEntities.Loggers.Add(logger);
             shoppingEntities.SaveChanges();
-        }
-
-        public override void OnActionExecuting(HttpActionContext actionContext)
-        {
         }
     }
 }

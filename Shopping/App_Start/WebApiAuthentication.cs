@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Shopping.Contexts.Auth.Services;
 using Shopping.Contexts.Auth.Applications.Interfaces;
 using Shopping.Ultilities;
+using System;
 
 namespace Shopping
 {
@@ -32,28 +33,38 @@ namespace Shopping
         public Task AuthenticateAsync(HttpAuthenticationContext context, CancellationToken cancellationToken)
         {
             var request = context.Request;
-
             var publicApis = shoppingEntities.Apis.Where(t => t.Type == ApiTypeConstant.PUBLIC).ToList();
 
+            // Neu la public Api
             if (publicApis.FirstOrDefault(t => t.Method == request.Method.ToString() 
                 && t.Uri == appService.NormalizePath(request.RequestUri.AbsolutePath)) != null)
             {
                 return Task.FromResult(0);
             }
 
-            string token = null;
 
-            if (context.Request.Headers.TryGetValues(RequestConstant.ACCESS_TOKEN, out var values))
-            {
-                token = values.First();
-            }
+            // Neu la private Api
 
+            string token = appService.GetTokenFromHeaderHttpRequest(context);
             UserToken userToken = shoppingEntities.UserTokens.Where(t => t.Name == token).FirstOrDefault();
 
             if (userToken == null)
             {
+                Logger logger = new Logger();
+                logger.Id = Guid.NewGuid();
+                logger.UserName = "GUEST";
+                logger.ApiMethod = request.Method.ToString();
+                logger.DateTime = System.DateTime.Now;
+                logger.ApiUri = request.RequestUri.AbsolutePath;
+                logger.Success = false;
+                logger.Reason = "User must login to access this private api";
+
+                shoppingEntities.Loggers.Add(logger);
+                shoppingEntities.SaveChanges();
+
                 throw new AuthenticationException("Unauthenticated user");
-            }
+            } 
+            // Neu token het han
 
             return Task.FromResult(0);
         }

@@ -20,5 +20,6 @@ namespace Shopping.Models
         public Nullable<System.DateTime> DateTime { get; set; }
         public string ApiUri { get; set; }
         public Nullable<bool> Success { get; set; }
+        public string Reason { get; set; }
     }
 }

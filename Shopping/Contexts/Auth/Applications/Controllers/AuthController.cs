@@ -17,10 +17,9 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         private readonly IUserService userService;
         private readonly ShoppingEntities shoppingEntities;
 
-        public AuthController(IAuthService authService, ShoppingEntities shoppingEntities,
+        public AuthController(ShoppingEntities shoppingEntities,
             IUserService userService)
         {
-            this.authService = authService;
             this.shoppingEntities = shoppingEntities;
             this.userService = userService;
         }

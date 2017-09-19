@@ -175,6 +175,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\WebApiAuthorization.cs" />
     <Compile Include="App_Start\ExceptionResponeAttribute.cs" />
     <Compile Include="App_Start\LoggerAttribute.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />

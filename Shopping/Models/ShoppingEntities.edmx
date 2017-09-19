@@ -26,6 +26,7 @@
           <Property Name="DateTime" Type="datetime" />
           <Property Name="ApiUri" Type="nvarchar(max)" />
           <Property Name="Success" Type="bit" />
+          <Property Name="Reason" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -152,6 +153,7 @@
           <Property Name="DateTime" Type="DateTime" Precision="3" />
           <Property Name="ApiUri" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Success" Type="Boolean" />
+          <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -203,6 +205,7 @@
           <EntitySetMapping Name="Loggers">
             <EntityTypeMapping TypeName="ShoppingModel.Logger">
               <MappingFragment StoreEntitySet="Logger">
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
                 <ScalarProperty Name="Success" ColumnName="Success" />
                 <ScalarProperty Name="ApiUri" ColumnName="ApiUri" />
                 <ScalarProperty Name="DateTime" ColumnName="DateTime" />
