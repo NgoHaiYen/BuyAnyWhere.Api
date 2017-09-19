@@ -26,22 +26,36 @@ namespace Shopping.App_Start
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
             var method = actionExecutedContext.Request.Method.ToString();
-            var uri = actionExecutedContext.Request.RequestUri.AbsolutePath;
-
-            var api = shoppingEntities.Apis.FirstOrDefault(t => t.Method == method && t.Uri == uri);
+            var uri = appService.NormalizePath(actionExecutedContext.Request.RequestUri.AbsolutePath);
 
             var token = appService.GetTokenFromHeaderHttpRequest(actionExecutedContext);
 
-            var user = authService.GetUserInfoFromToken(token).ToModel();
-
             Logger logger = new Logger();
-
             logger.Id = Guid.NewGuid();
-            logger.User = user;
-            logger.Api = api;
+            logger.DateTime = System.DateTime.Now;
+            logger.ApiMethod = method;
+            logger.ApiUri = uri;
+            logger.Success = true;
+
+            if (token == null)
+            {
+                logger.UserName = "GUEST";
+            } 
+            else
+            {
+                try
+                {
+                    User user = authService.GetUserInfoFromToken(token).ToModel();
+                    logger.UserName = user.Name;
+
+                } catch(Exception e)
+                {
+                    logger.UserName = "WRONG_TOKEN_USER";
+                }
+         
+            }
 
             shoppingEntities.Loggers.Add(logger);
-
             shoppingEntities.SaveChanges();
         }
 

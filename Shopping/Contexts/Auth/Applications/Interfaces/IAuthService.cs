@@ -7,8 +7,5 @@ namespace Shopping.Contexts.Auth.Applications.Interfaces
     public interface IAuthService
     {
         UserDto GetUserInfoFromToken(string token);
-
-        string NormalizePath(string path);
-
     }
 }

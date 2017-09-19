@@ -35,5 +35,20 @@ namespace Shopping.Contexts.Auth.Applications
 
             return null;
         }
+
+        public string NormalizePath(string path)
+        {
+            string[] linkParts = path.Split('/').Where(x => !string.IsNullOrEmpty(x)).ToArray();
+
+            for (int i = 0; i < linkParts.Length; i++)
+            {
+                Guid testGuid;
+                if (Guid.TryParse(linkParts[i], out testGuid))
+                {
+                    linkParts[i] = "*";
+                }
+            }
+            return String.Join("/", linkParts);
+        }
     }
 }

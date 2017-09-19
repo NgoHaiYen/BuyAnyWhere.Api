@@ -21,8 +21,11 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="UserId" Type="uniqueidentifier" />
-          <Property Name="ApiId" Type="uniqueidentifier" />
+          <Property Name="UserName" Type="nvarchar(max)" />
+          <Property Name="ApiMethod" Type="nvarchar(max)" />
+          <Property Name="DateTime" Type="datetime" />
+          <Property Name="ApiUri" Type="nvarchar(max)" />
+          <Property Name="Success" Type="bit" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -50,30 +53,6 @@
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="UserId" Type="uniqueidentifier" />
         </EntityType>
-        <Association Name="FK_Logger_Api">
-          <End Role="Api" Type="Self.Api" Multiplicity="0..1" />
-          <End Role="Logger" Type="Self.Logger" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Api">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Logger">
-              <PropertyRef Name="ApiId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Logger_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
-          <End Role="Logger" Type="Self.Logger" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Logger">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UserToken_User">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="UserToken" Type="Self.UserToken" Multiplicity="*" />
@@ -92,14 +71,6 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserToken" EntityType="Self.UserToken" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Logger_Api" Association="Self.FK_Logger_Api">
-            <End Role="Api" EntitySet="Api" />
-            <End Role="Logger" EntitySet="Logger" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Logger_User" Association="Self.FK_Logger_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="Logger" EntitySet="Logger" />
-          </AssociationSet>
           <AssociationSet Name="FK_UserToken_User" Association="Self.FK_UserToken_User">
             <End Role="User" EntitySet="User" />
             <End Role="UserToken" EntitySet="UserToken" />
@@ -119,15 +90,7 @@
             <End Role="UserToken" EntitySet="UserTokens" />
           </AssociationSet>
           <EntitySet Name="Loggers" EntityType="ShoppingModel.Logger" />
-          <AssociationSet Name="FK_Logger_Api" Association="ShoppingModel.FK_Logger_Api">
-            <End Role="Api" EntitySet="Apis" />
-            <End Role="Logger" EntitySet="Loggers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Logger_User" Association="ShoppingModel.FK_Logger_User">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Logger" EntitySet="Loggers" />
-          </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Api">
           <Key>
             <PropertyRef Name="Id" />
@@ -138,7 +101,6 @@
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Loggers" Relationship="ShoppingModel.FK_Logger_Api" FromRole="Api" ToRole="Logger" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -158,7 +120,6 @@
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FbId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UserTokens" Relationship="ShoppingModel.FK_UserToken_User" FromRole="User" ToRole="UserToken" />
-          <NavigationProperty Name="Loggers" Relationship="ShoppingModel.FK_Logger_User" FromRole="User" ToRole="Logger" />
         </EntityType>
         <EntityType Name="UserToken">
           <Key>
@@ -186,36 +147,13 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="UserId" Type="Guid" />
-          <Property Name="ApiId" Type="Guid" />
-          <NavigationProperty Name="Api" Relationship="ShoppingModel.FK_Logger_Api" FromRole="Logger" ToRole="Api" />
-          <NavigationProperty Name="User" Relationship="ShoppingModel.FK_Logger_User" FromRole="Logger" ToRole="User" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ApiMethod" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateTime" Type="DateTime" Precision="3" />
+          <Property Name="ApiUri" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Success" Type="Boolean" />
         </EntityType>
-        <Association Name="FK_Logger_Api">
-          <End Type="ShoppingModel.Api" Role="Api" Multiplicity="0..1" />
-          <End Type="ShoppingModel.Logger" Role="Logger" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Api">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Logger">
-              <PropertyRef Name="ApiId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Logger_User">
-          <End Type="ShoppingModel.User" Role="User" Multiplicity="0..1" />
-          <End Type="ShoppingModel.Logger" Role="Logger" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Logger">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -265,8 +203,11 @@
           <EntitySetMapping Name="Loggers">
             <EntityTypeMapping TypeName="ShoppingModel.Logger">
               <MappingFragment StoreEntitySet="Logger">
-                <ScalarProperty Name="ApiId" ColumnName="ApiId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="ApiUri" ColumnName="ApiUri" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="ApiMethod" ColumnName="ApiMethod" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

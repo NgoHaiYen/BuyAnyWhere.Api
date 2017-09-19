@@ -9,5 +9,6 @@ namespace Shopping.Contexts.Auth.Applications.Interfaces
     public interface IAppService
     {
         string GetTokenFromHeaderHttpRequest(object context);
+        string NormalizePath(string path);
     }
 }

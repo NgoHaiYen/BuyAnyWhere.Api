@@ -11,9 +11,7 @@
         <EntityTypeShape EntityType="ShoppingModel.UserToken" Width="1.5" PointX="3" PointY="0.875" />
         <AssociationConnector Association="ShoppingModel.FK_UserToken_User" />
         <EntityTypeShape EntityType="ShoppingModel.Logger" Width="1.5" PointX="5.375" PointY="0.75" />
-        <AssociationConnector Association="ShoppingModel.FK_Logger_Api" />
-        <AssociationConnector Association="ShoppingModel.FK_Logger_User" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

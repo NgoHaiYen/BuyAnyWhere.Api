@@ -18,7 +18,6 @@ namespace Shopping.Models
         public User()
         {
             this.UserTokens = new HashSet<UserToken>();
-            this.Loggers = new HashSet<Logger>();
         }
     
         public System.Guid Id { get; set; }
@@ -27,7 +26,5 @@ namespace Shopping.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserToken> UserTokens { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Logger> Loggers { get; set; }
     }
 }

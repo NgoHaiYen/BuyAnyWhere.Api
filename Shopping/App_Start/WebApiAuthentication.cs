@@ -18,11 +18,13 @@ namespace Shopping
 
         private readonly ShoppingEntities shoppingEntities;
         private readonly IAuthService authService;
+        private readonly IAppService appService;
 
         public WebApiAuthentication()
         {
             shoppingEntities = UnityConfig.GetConfiguredContainer().Resolve<ShoppingEntities>();
             authService = UnityConfig.GetConfiguredContainer().Resolve<IAuthService>();
+            appService = UnityConfig.GetConfiguredContainer().Resolve<IAppService>();
         }
 
 
@@ -36,7 +38,7 @@ namespace Shopping
             var publicApis = shoppingEntities.Apis.Where(t => t.Type == ApiTypeConstant.PUBLIC).ToList();
 
             if (publicApis.FirstOrDefault(t => t.Method == request.Method.ToString() 
-                && t.Uri == authService.NormalizePath(request.RequestUri.AbsolutePath)) != null)
+                && t.Uri == appService.NormalizePath(request.RequestUri.AbsolutePath)) != null)
             {
                 return Task.FromResult(0);
             }

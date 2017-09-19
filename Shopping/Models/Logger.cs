@@ -15,10 +15,10 @@ namespace Shopping.Models
     public partial class Logger
     {
         public System.Guid Id { get; set; }
-        public Nullable<System.Guid> UserId { get; set; }
-        public Nullable<System.Guid> ApiId { get; set; }
-    
-        public virtual Api Api { get; set; }
-        public virtual User User { get; set; }
+        public string UserName { get; set; }
+        public string ApiMethod { get; set; }
+        public Nullable<System.DateTime> DateTime { get; set; }
+        public string ApiUri { get; set; }
+        public Nullable<bool> Success { get; set; }
     }
 }
