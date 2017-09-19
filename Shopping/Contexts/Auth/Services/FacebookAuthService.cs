@@ -5,20 +5,17 @@ using Shopping.Contexts.Auth.Applications.Interfaces;
 using System;
 using Shopping.App_Start;
 using Shopping.Models;
-using System.Linq;
-using System.Collections.Generic;
-using Shopping.Ultilities;
 
 namespace Shopping.Contexts.Auth.Services
 {
-    public class AuthService : IAuthService
+    public class FacebookAuthService : IAuthService
     {
         public static readonly string Url = "https://graph.facebook.com/me";
         public static readonly string Fields = "id,name";
 
         private readonly ShoppingEntities shoppingEntities;
 
-        public AuthService(ShoppingEntities shoppingEntities)
+        public FacebookAuthService(ShoppingEntities shoppingEntities)
         {
             this.shoppingEntities = shoppingEntities;
         }

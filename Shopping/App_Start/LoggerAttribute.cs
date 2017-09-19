@@ -2,23 +2,20 @@
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using Microsoft.Practices.Unity;
-using System.Linq;
 using Shopping.Contexts.Auth.Applications.Interfaces;
-using Shopping.Ultilities;
 using System;
+using System.Linq;
 
 namespace Shopping.App_Start
 {
     public class LoggerAttribute : ActionFilterAttribute
     {
         private readonly ShoppingEntities shoppingEntities;
-        private readonly IAuthService authService;
         private readonly IAppService appService;
 
         public LoggerAttribute()
         {
             shoppingEntities = UnityConfig.GetConfiguredContainer().Resolve<ShoppingEntities>();
-            authService = UnityConfig.GetConfiguredContainer().Resolve<IAuthService>();
             appService = UnityConfig.GetConfiguredContainer().Resolve<IAppService>();
         }
 
@@ -31,6 +28,7 @@ namespace Shopping.App_Start
             var token = appService.GetTokenFromHeaderHttpRequest(actionExecutedContext);
 
             Logger logger = new Logger();
+
             logger.Id = Guid.NewGuid();
             logger.DateTime = System.DateTime.Now;
             logger.ApiMethod = method;
@@ -43,16 +41,16 @@ namespace Shopping.App_Start
             } 
             else
             {
-                try
-                {
-                    User user = authService.GetUserInfoFromToken(token).ToModel();
-                    logger.UserName = user.Name;
+                var focusToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
 
-                } catch(Exception e)
+                if (focusToken == null)
                 {
                     logger.UserName = "WRONG_TOKEN_USER";
+
+                } else
+                {
+                    logger.UserName = focusToken.User.Name;
                 }
-         
             }
 
             shoppingEntities.Loggers.Add(logger);

@@ -17,13 +17,11 @@ namespace Shopping
     {
 
         private readonly ShoppingEntities shoppingEntities;
-        private readonly IAuthService authService;
         private readonly IAppService appService;
 
         public WebApiAuthentication()
         {
             shoppingEntities = UnityConfig.GetConfiguredContainer().Resolve<ShoppingEntities>();
-            authService = UnityConfig.GetConfiguredContainer().Resolve<IAuthService>();
             appService = UnityConfig.GetConfiguredContainer().Resolve<IAppService>();
         }
 

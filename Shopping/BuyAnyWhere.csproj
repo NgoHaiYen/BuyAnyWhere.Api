@@ -226,7 +226,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\HomeController.cs" />
-    <Compile Include="Contexts\Auth\Services\AuthService.cs" />
+    <Compile Include="Contexts\Auth\Services\FacebookAuthService.cs" />
+    <Compile Include="Contexts\Auth\Services\GoogleAuthService.cs" />
     <Compile Include="Models\Api.cs">
       <DependentUpon>ShoppingEntities.tt</DependentUpon>
     </Compile>
