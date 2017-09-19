@@ -64,9 +64,6 @@ namespace Shopping.App_Start
 
 
             var token = ultilityService.GetTokenFromHeaderHttpRequest(Context);
-            User user = ultilityService.GetUserFromTokenAlwayReturnUserName(token);
-
-
             ultilityService.Log(Context, token, false, Context.Exception.Message);
 
         }
