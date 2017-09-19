@@ -6,6 +6,8 @@ using Shopping.Models;
 using System.Linq;
 using Shopping.Applications.Interfaces;
 using System;
+using Shopping.App_Start;
+using Shopping.Contexts.Auth.Services;
 
 namespace Shopping.Contexts.Auth.Applications.Controllers
 {
@@ -13,7 +15,6 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
     public class AuthController : ApiController
     {
 
-        private readonly IAuthService authService;
         private readonly IUserService userService;
         private readonly ShoppingEntities shoppingEntities;
 
@@ -29,6 +30,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         [Route("Facebook/Login")]
         public IHttpActionResult Login([FromBody] string token)
         {
+            IAuthService authService = new FacebookAuthService(shoppingEntities);
 
             UserDto userDto = authService.GetUserInfoFromToken(token);
 

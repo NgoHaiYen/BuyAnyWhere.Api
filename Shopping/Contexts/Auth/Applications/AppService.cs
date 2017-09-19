@@ -36,6 +36,7 @@ namespace Shopping.Contexts.Auth.Applications
             return null;
         }
 
+
         public string NormalizePath(string path)
         {
             string[] linkParts = path.Split('/').Where(x => !string.IsNullOrEmpty(x)).ToArray();
