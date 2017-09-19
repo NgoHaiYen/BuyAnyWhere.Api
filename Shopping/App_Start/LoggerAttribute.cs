@@ -20,7 +20,7 @@ namespace Shopping.App_Start
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
             var token = ultilityService.GetTokenFromHeaderHttpRequest(actionExecutedContext);
-
+            ultilityService.Log(actionExecutedContext, token, true, "Successful Request");
         }
     }
 }

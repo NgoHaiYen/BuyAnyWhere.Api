@@ -4,6 +4,7 @@ using Shopping.Ultilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http.Filters;
 
 namespace Shopping.Contexts.Auth.Applications
 {
@@ -17,17 +18,18 @@ namespace Shopping.Contexts.Auth.Applications
             this.shoppingEntities = shoppingEntities;
         }
 
-        public string GetTokenFromHeaderHttpRequest(object context) 
+        public string GetTokenFromHeaderHttpRequest(HttpAuthenticationContext context) 
         {
-            string token = null;
-            dynamic ctx = context;
+            var token = context.Request.Headers.GetValues(RequestConstant.ACCESS_TOKEN).First();
 
-            if (ctx.Request.Headers.TryGetValues(RequestConstant.ACCESS_TOKEN, out IEnumerable<string> values))
-            {
-                token = values.First();
-            }
+            return token;
+        }
 
-            return null;
+        public string GetTokenFromHeaderHttpRequest(HttpActionExecutedContext context)
+        {
+            var token = context.Request.Headers.GetValues(RequestConstant.ACCESS_TOKEN).First();
+
+            return token;
         }
 
         public User GetUserFromTokenAlwayReturnUserName(string token)
@@ -39,7 +41,7 @@ namespace Shopping.Contexts.Auth.Applications
             if (token == null)
             {
                 user = new User();
-                user.Name = "GUEST";
+                user.Name = "Guest";
 
             } else
             {
@@ -49,7 +51,7 @@ namespace Shopping.Contexts.Auth.Applications
                 if (userToken == null)
                 {
                     user = new User();
-                    user.Name = "INVALID_TOKEN_USER";
+                    user.Name = "Invalid token user";
                 }
 
                 user = userToken.User;          
@@ -59,13 +61,13 @@ namespace Shopping.Contexts.Auth.Applications
         }
 
 
-        public void Log(object context, string userToken, bool success, string reason)
+        public void Log(object context, string headerToken, bool success, string reason)
         {
             dynamic ctx = context;
 
             Logger logger = new Logger();
             logger.Id = Guid.NewGuid();
-            logger.UserName = GetUserFromTokenAlwayReturnUserName(userToken).Name;
+            logger.UserName = GetUserFromTokenAlwayReturnUserName(headerToken).Name;
             logger.DateTime = System.DateTime.Now;
             logger.ApiMethod = ctx.Request.Method.ToString();
             logger.ApiUri = ctx.Request.RequestUri.AbsolutePath;
