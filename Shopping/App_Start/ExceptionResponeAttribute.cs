@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net;
+using Microsoft.Practices.Unity;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http.Filters;
@@ -16,12 +17,12 @@ namespace Shopping.App_Start
     public class ExceptionResponeAttribute : ExceptionFilterAttribute
     {
         private readonly ShoppingEntities shoppingEntities;
-        private readonly IUltilityService appService;
+        private readonly IUltilityService ultilityService;
 
-        public ExceptionResponeAttribute(ShoppingEntities shoppingEntities, IUltilityService appService)
+        public ExceptionResponeAttribute()
         {
-            this.shoppingEntities = shoppingEntities;
-            this.appService = appService;
+            this.shoppingEntities = UnityConfig.GetConfiguredContainer().Resolve<ShoppingEntities>();
+            this.ultilityService = UnityConfig.GetConfiguredContainer().Resolve<IUltilityService>();
         }
 
         public override void OnException(HttpActionExecutedContext Context)
@@ -62,8 +63,8 @@ namespace Shopping.App_Start
             Context.Response = Response;
 
 
-            var token = appService.GetTokenFromHeaderHttpRequest(Context);
-            User user = appService.GetUserFromTokenAlwayReturnUserName(token);
+            var token = ultilityService.GetTokenFromHeaderHttpRequest(Context);
+            User user = ultilityService.GetUserFromTokenAlwayReturnUserName(token);
 
 
 
