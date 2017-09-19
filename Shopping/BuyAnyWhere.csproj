@@ -180,6 +180,7 @@
     <Compile Include="App_Start\LoggerAttribute.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiAuthentication.cs" />
+    <Compile Include="Contexts\Auth\Applications\Controllers\LoggerController.cs" />
     <Compile Include="Ultilities\UltilityService.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\AuthController.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\RoleController.cs" />
