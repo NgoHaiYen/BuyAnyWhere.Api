@@ -1,12 +1,10 @@
 ﻿using System.Web.Http;
 using Shopping.Contexts.Auth.Applications.DTOs;
 using Shopping.Contexts.Auth.Applications.Interfaces;
-using Shopping.Ultilities;
 using Shopping.Models;
 using System.Linq;
 using Shopping.Applications.Interfaces;
 using System;
-using Shopping.App_Start;
 using Shopping.Contexts.Auth.Services;
 
 namespace Shopping.Contexts.Auth.Applications.Controllers
