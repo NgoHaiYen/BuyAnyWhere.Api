@@ -9,7 +9,7 @@ using Shopping.Contexts.Auth.Services;
 
 namespace Shopping.Contexts.Auth.Applications.Controllers
 {
-    [RoutePrefix("api/Auth")]
+    [RoutePrefix("api/Auth/OAuth2")]
     public class AuthController : ApiController
     {
 
@@ -25,7 +25,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
 
         [HttpPost]
-        [Route("Facebook/Login")]
+        [Route("Facebook/Callback")]
         public IHttpActionResult Login([FromBody] string token)
         {
             IAuthService authService = new FacebookAuthService(shoppingEntities);
