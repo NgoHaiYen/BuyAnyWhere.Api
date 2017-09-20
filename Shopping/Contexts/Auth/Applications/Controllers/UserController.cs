@@ -1,11 +1,13 @@
 ﻿using Shopping.Applications.Interfaces;
 using Shopping.Contexts.Auth.Applications.DTOs;
+using Shopping.Contexts.Auth.Applications.Interfaces;
 using Shopping.Ultilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace Shopping.Contexts.Auth.Applications.Controllers
@@ -16,10 +18,12 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
     {
 
         private readonly IUserService userService;
+        private readonly IUltilityService ultilityService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IUltilityService ultilityService)
         {
             this.userService = userService;
+            this.ultilityService = ultilityService;
         }
 
         [HttpGet]
@@ -41,6 +45,15 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         public IHttpActionResult Post([FromBody] UserDto userDto)
         {
             return Ok(userDto.ToModel());
+        }
+
+        [HttpGet]
+        [Route("me")]
+        public IHttpActionResult GetCurrentUser()
+        {
+            string token = ultilityService.GetTokenFromHeaderHttpRequest(HttpContext.Current);
+            var user = ultilityService.GetUserFromTokenAlwayReturnUserName(token);
+            return Ok(user);
         }
     }
 }

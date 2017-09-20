@@ -42,7 +42,7 @@ namespace Shopping.Contexts.Auth.Services
 
                 UserDto userDto = new UserDto();
 
-                userDto.FbId = userDynamic["id"];
+                userDto.FacebookId = userDynamic["id"];
                 userDto.Name = userDynamic["name"];
 
                 return userDto;

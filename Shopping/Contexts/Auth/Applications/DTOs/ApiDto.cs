@@ -15,6 +15,12 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
         public string Description { get; set; }
         public string Type { get; set; }
 
+
+        public ApiDto()
+        {
+
+        }
+
         public ApiDto(Api api)
         {
             this.Id = api.Id;

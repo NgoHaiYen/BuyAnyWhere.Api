@@ -28,6 +28,21 @@
           <Property Name="Success" Type="bit" />
           <Property Name="Reason" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="RoleApi">
+          <Key>
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="ApiId" />
+          </Key>
+          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ApiId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -44,7 +59,8 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
-          <Property Name="FbId" Type="nvarchar(max)" />
+          <Property Name="FacebookId" Type="nvarchar(max)" />
+          <Property Name="RoleId" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="UserToken">
           <Key>
@@ -54,6 +70,42 @@
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="UserId" Type="uniqueidentifier" />
         </EntityType>
+        <Association Name="FK_RoleApi_Api">
+          <End Role="Api" Type="Self.Api" Multiplicity="1" />
+          <End Role="RoleApi" Type="Self.RoleApi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Api">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleApi">
+              <PropertyRef Name="ApiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleApi_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="RoleApi" Type="Self.RoleApi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleApi">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserToken_User">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="UserToken" Type="Self.UserToken" Multiplicity="*" />
@@ -69,9 +121,23 @@
         <EntityContainer Name="ShoppingModelStoreContainer">
           <EntitySet Name="Api" EntityType="Self.Api" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Logger" EntityType="Self.Logger" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoleApi" EntityType="Self.RoleApi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserToken" EntityType="Self.UserToken" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_RoleApi_Api" Association="Self.FK_RoleApi_Api">
+            <End Role="Api" EntitySet="Api" />
+            <End Role="RoleApi" EntitySet="RoleApi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleApi_Role" Association="Self.FK_RoleApi_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="RoleApi" EntitySet="RoleApi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserToken_User" Association="Self.FK_UserToken_User">
             <End Role="User" EntitySet="User" />
             <End Role="UserToken" EntitySet="UserToken" />
@@ -83,15 +149,24 @@
       <Schema Namespace="ShoppingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="ShoppingEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Apis" EntityType="ShoppingModel.Api" />
+          <EntitySet Name="Loggers" EntityType="ShoppingModel.Logger" />
+          <EntitySet Name="Roles" EntityType="ShoppingModel.Role" />
           <EntitySet Name="sysdiagrams" EntityType="ShoppingModel.sysdiagram" />
           <EntitySet Name="Users" EntityType="ShoppingModel.User" />
           <EntitySet Name="UserTokens" EntityType="ShoppingModel.UserToken" />
+          <AssociationSet Name="FK_User_Role" Association="ShoppingModel.FK_User_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserToken_User" Association="ShoppingModel.FK_UserToken_User">
             <End Role="User" EntitySet="Users" />
             <End Role="UserToken" EntitySet="UserTokens" />
           </AssociationSet>
-          <EntitySet Name="Loggers" EntityType="ShoppingModel.Logger" />
-          </EntityContainer>
+          <AssociationSet Name="RoleApi" Association="ShoppingModel.RoleApi">
+            <End Role="Api" EntitySet="Apis" />
+            <End Role="Role" EntitySet="Roles" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Api">
           <Key>
             <PropertyRef Name="Id" />
@@ -102,6 +177,28 @@
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Roles" Relationship="ShoppingModel.RoleApi" FromRole="Api" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="Logger">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ApiMethod" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateTime" Type="DateTime" Precision="3" />
+          <Property Name="ApiUri" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Success" Type="Boolean" />
+          <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="ShoppingModel.FK_User_Role" FromRole="Role" ToRole="User" />
+          <NavigationProperty Name="Apis" Relationship="ShoppingModel.RoleApi" FromRole="Role" ToRole="Api" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -119,7 +216,9 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="FbId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FacebookId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="Guid" />
+          <NavigationProperty Name="Role" Relationship="ShoppingModel.FK_User_Role" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="UserTokens" Relationship="ShoppingModel.FK_UserToken_User" FromRole="User" ToRole="UserToken" />
         </EntityType>
         <EntityType Name="UserToken">
@@ -131,6 +230,18 @@
           <Property Name="UserId" Type="Guid" />
           <NavigationProperty Name="User" Relationship="ShoppingModel.FK_UserToken_User" FromRole="UserToken" ToRole="User" />
         </EntityType>
+        <Association Name="FK_User_Role">
+          <End Type="ShoppingModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="ShoppingModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserToken_User">
           <End Type="ShoppingModel.User" Role="User" Multiplicity="0..1" />
           <End Type="ShoppingModel.UserToken" Role="UserToken" Multiplicity="*" />
@@ -143,18 +254,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Logger">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ApiMethod" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DateTime" Type="DateTime" Precision="3" />
-          <Property Name="ApiUri" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Success" Type="Boolean" />
-          <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
+        <Association Name="RoleApi">
+          <End Type="ShoppingModel.Api" Role="Api" Multiplicity="*" />
+          <End Type="ShoppingModel.Role" Role="Role" Multiplicity="*" />
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -173,6 +276,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Loggers">
+            <EntityTypeMapping TypeName="ShoppingModel.Logger">
+              <MappingFragment StoreEntitySet="Logger">
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="ApiUri" ColumnName="ApiUri" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="ApiMethod" ColumnName="ApiMethod" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="ShoppingModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="ShoppingModel.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
@@ -187,7 +311,8 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="ShoppingModel.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="FbId" ColumnName="FbId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="FacebookId" ColumnName="FacebookId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -202,19 +327,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Loggers">
-            <EntityTypeMapping TypeName="ShoppingModel.Logger">
-              <MappingFragment StoreEntitySet="Logger">
-                <ScalarProperty Name="Reason" ColumnName="Reason" />
-                <ScalarProperty Name="Success" ColumnName="Success" />
-                <ScalarProperty Name="ApiUri" ColumnName="ApiUri" />
-                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
-                <ScalarProperty Name="ApiMethod" ColumnName="ApiMethod" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <AssociationSetMapping Name="RoleApi" TypeName="ShoppingModel.RoleApi" StoreEntitySet="RoleApi">
+            <EndProperty Name="Role">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="Api">
+              <ScalarProperty Name="Id" ColumnName="ApiId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

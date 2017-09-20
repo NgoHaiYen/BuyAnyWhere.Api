@@ -22,8 +22,10 @@ namespace Shopping.Models
     
         public System.Guid Id { get; set; }
         public string Name { get; set; }
-        public string FbId { get; set; }
+        public string FacebookId { get; set; }
+        public Nullable<System.Guid> RoleId { get; set; }
     
+        public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserToken> UserTokens { get; set; }
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using Shopping.Applications.Interfaces;
 using Shopping.Contexts.Auth.Applications.DTOs;
 using Shopping.Models;
+using System.Data.Entity;
 
 namespace Shopping.Contexts.Auth.Services
 {
@@ -24,9 +25,9 @@ namespace Shopping.Contexts.Auth.Services
         {
             using (ShoppingEntities shoppingEntities = new ShoppingEntities())
             {
-                var users = shoppingEntities.Users.ToList();
+                var users = shoppingEntities.Users.Include(t => t.Role).ToList();
 
-                return users.ConvertAll(t => new UserDto(t));
+                return users.ConvertAll(t => new UserDto(t, null, t.Role));
             }
         }
 
@@ -41,7 +42,7 @@ namespace Shopping.Contexts.Auth.Services
                     throw new Exception("User not found!");
                 }
 
-                return new UserDto(user);
+                return new UserDto(user, null, user.Role);
             }
         }
     }

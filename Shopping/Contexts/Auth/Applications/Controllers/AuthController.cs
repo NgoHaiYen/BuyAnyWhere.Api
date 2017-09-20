@@ -32,7 +32,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
             UserDto userDto = authService.GetUserInfoFromToken(token);
 
-            User user = shoppingEntities.Users.FirstOrDefault(t => t.FbId == userDto.FbId);
+            User user = shoppingEntities.Users.FirstOrDefault(t => t.FacebookId == userDto.FacebookId);
 
             if (user == null)
             {
@@ -66,7 +66,10 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
             shoppingEntities.SaveChanges();
 
-            return Ok(userService.Get(user.Id));
+            var result = userService.Get(user.Id);
+            result.AccessToken = token;
+
+            return Ok(result);
             
         }
     }

@@ -6,18 +6,31 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
     public class UserDto
     {
         public Guid Id { get; set; }
-        public string FbId { get; set; }
+        public string FacebookId { get; set; }
         public string Name { get; set; }
+
+        public string AccessToken { get; set; }
+        public RoleDto roleDto { get; set; }
 
 
         public UserDto() { }
 
 
-        public UserDto(User user)
+        public UserDto(User user, string accessToken = null, 
+            params object[] args)
         {
             Id = user.Id;          
             Name = user.Name;
-            FbId = user.FbId;
+            FacebookId = user.FacebookId;
+            AccessToken = accessToken;
+            
+            foreach (var arg in args)
+            {
+                if (arg is Role role)
+                {                 
+                    roleDto = new RoleDto(role);
+                }
+            }
         }
 
         public User ToModel()
@@ -26,16 +39,9 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
 
             user.Id = Guid.NewGuid();
             user.Name = Name;
-            user.FbId = FbId;
+            user.FacebookId = FacebookId;
 
             return user;
-        }
-
-        public void Update(User user)
-        {
-            Id = user.Id;
-            Name = user.Name;
-            FbId = user.FbId;
         }
 
     }
