@@ -1,7 +1,6 @@
 ﻿using Shopping.Contexts.Auth.Applications.Interfaces;
 using Shopping.Models;
 using System.Linq;
-using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Data.Entity;
 using System;
@@ -33,14 +32,10 @@ namespace Shopping.App_Start
 
             var publicApis = shoppingEntities.Apis.Where(t => t.Type == ApiTypeConstant.PUBLIC);
 
-
-            // Neu la public uri thi return;
             if (publicApis.FirstOrDefault(t => t.Method == method && t.Uri == uri) != null)
             {
                 return;
             }
-
-            // Con neu khong thi 
 
             var userToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
             var user = userToken.User;
@@ -49,7 +44,6 @@ namespace Shopping.App_Start
             {
                 throw new UnauthorizedAccessException("Invalid Role");
             }
-
 
             var role = shoppingEntities.Roles.Include(t => t.Apis).First(t => t.Id == user.RoleId);
 
