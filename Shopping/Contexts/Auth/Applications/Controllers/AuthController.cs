@@ -9,7 +9,7 @@ using Shopping.Contexts.Auth.Services;
 
 namespace Shopping.Contexts.Auth.Applications.Controllers
 {
-    [RoutePrefix("api/OAuth2")]
+    [RoutePrefix("api/Auth")]
     public class AuthController : ApiController
     {
 

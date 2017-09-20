@@ -11,7 +11,7 @@ using System.Web.Http;
 namespace Shopping.Contexts.Auth.Applications.Controllers
 {
 
-    [RoutePrefix("api/Users")]
+    [RoutePrefix("api/Auth/Users")]
     public class UserController : ApiController
     {
 
