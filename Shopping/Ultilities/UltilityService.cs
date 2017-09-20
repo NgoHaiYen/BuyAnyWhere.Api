@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http.Filters;
+using System.Web.Http.Controllers;
 
 namespace Shopping.Contexts.Auth.Applications
 {
@@ -44,6 +45,17 @@ namespace Shopping.Contexts.Auth.Applications
         public string GetTokenFromHeaderHttpRequest(HttpContext context)
         {
             if (context.Request.Headers[RequestConstant.ACCESS_TOKEN] != null)
+            {
+                var token = context.Request.Headers.GetValues(RequestConstant.ACCESS_TOKEN).First();
+                return token;
+            }
+
+            return null;
+        }
+
+        public string GetTokenFromHeaderHttpRequest(HttpActionContext context)
+        {
+            if (context.Request.Headers.Contains(RequestConstant.ACCESS_TOKEN))
             {
                 var token = context.Request.Headers.GetValues(RequestConstant.ACCESS_TOKEN).First();
                 return token;

@@ -1,10 +1,6 @@
-﻿using Shopping.Models;
-using System.Web.Http.Controllers;
-using System.Web.Http.Filters;
+﻿using System.Web.Http.Filters;
 using Microsoft.Practices.Unity;
 using Shopping.Contexts.Auth.Applications.Interfaces;
-using System;
-using System.Linq;
 using System.Net;
 
 namespace Shopping.App_Start

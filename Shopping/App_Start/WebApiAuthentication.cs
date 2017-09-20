@@ -47,7 +47,7 @@ namespace Shopping
 
             if (userToken == null)
             {
-                throw new AuthenticationException("User must login to access this private api");
+                throw new AuthenticationException("Authentication Exception");
             } 
 
             // Neu token het han thi khong cho goi may ham private ... TODO
