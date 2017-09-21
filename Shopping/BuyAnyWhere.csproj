@@ -180,6 +180,7 @@
     <Compile Include="App_Start\LoggerAttribute.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiAuthentication.cs" />
+    <Compile Include="Contexts\Auth\Applications\Controllers\HelpPageController.cs" />
     <Compile Include="Models\Role.cs">
       <DependentUpon>ShoppingEntities.tt</DependentUpon>
     </Compile>
@@ -344,6 +345,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\HelpPage\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
