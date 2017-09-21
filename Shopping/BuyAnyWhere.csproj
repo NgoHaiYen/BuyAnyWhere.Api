@@ -192,7 +192,7 @@
     <Compile Include="Contexts\Auth\Applications\DTOs\ApiDto.cs" />
     <Compile Include="Contexts\Auth\Applications\DTOs\RoleDto.cs" />
     <Compile Include="Contexts\Auth\Applications\DTOs\UserDto.cs" />
-    <Compile Include="Contexts\Auth\Applications\DTOs\UserTokenDTO.cs" />
+    <Compile Include="Contexts\Auth\Applications\DTOs\UserTokenDto.cs" />
     <Compile Include="Contexts\Auth\Applications\Interfaces\IUltilityService.cs" />
     <Compile Include="Contexts\Auth\Applications\Interfaces\IAuthService.cs" />
     <Compile Include="Contexts\Auth\Applications\Interfaces\IRoleService.cs" />

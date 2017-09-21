@@ -6,19 +6,19 @@ using System.Web;
 
 namespace Shopping.Contexts.Auth.Applications.DTOs
 {
-    public class UserTokenDTO
+    public class UserTokenDto
     {
         public System.Guid Id { get; set; }
         public string Name { get; set; }
         public Guid? UserId { get; set; }
 
 
-        public UserTokenDTO()
+        public UserTokenDto()
         {
 
         }
 
-        public UserTokenDTO(UserToken userToken)
+        public UserTokenDto(UserToken userToken)
         {
             Id = userToken.Id;
             Name = userToken.Name;
