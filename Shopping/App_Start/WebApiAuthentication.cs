@@ -30,7 +30,7 @@ namespace Shopping
         public Task AuthenticateAsync(HttpAuthenticationContext context, CancellationToken cancellationToken)
         {
             var request = context.Request;
-            var publicApis = shoppingEntities.Apis.Where(t => t.Type == ApiTypeConstant.PUBLIC).ToList();
+            var publicApis = shoppingEntities.Apis.Where(t => t.Type == ConstantApiType.PUBLIC).ToList();
 
             // Neu la public Api
             if (publicApis.FirstOrDefault(t => t.Method == request.Method.ToString() 
