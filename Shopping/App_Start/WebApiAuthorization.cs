@@ -30,7 +30,7 @@ namespace Shopping.App_Start
             string method = actionContext.Request.Method.ToString();
             string uri = ultilityService.NormalizePath(actionContext.Request.RequestUri.AbsolutePath);
 
-            var publicApis = shoppingEntities.Apis.Where(t => t.Type == ConstantApiType.PUBLIC);
+            var publicApis = shoppingEntities.Apis.Where(t => t.Type == (int)Constant.TypeApi.PUBLIC);
 
             if (publicApis.FirstOrDefault(t => t.Method == method && t.Uri == uri) != null)
             {

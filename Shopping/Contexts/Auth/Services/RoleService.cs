@@ -18,9 +18,9 @@ namespace Shopping.Contexts.Auth.Services
 
         public List<RoleDto> Get()
         {
-            var roles = shoppingEntities.Roles.Include(t => t.Users).ToList();
+            var roles = shoppingEntities.Roles.Include(t => t.Users).Include(t => t.Apis).ToList();
 
-            var roleDtos = roles.ConvertAll(t => new RoleDto(t, t.Users));
+            var roleDtos = roles.ConvertAll(t => new RoleDto(t, t.Users, t.Apis));
 
             return roleDtos;
         }

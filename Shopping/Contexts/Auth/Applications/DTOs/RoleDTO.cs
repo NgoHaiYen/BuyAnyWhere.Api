@@ -12,6 +12,7 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
         public string Name { get; set; }
 
         public List<UserDto> UserDtos { get; set; }
+        public List<ApiDto> ApiDtos { get; set; }
 
 
         public RoleDto()
@@ -35,6 +36,17 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
                         UserDtos.Add(new UserDto(user));
                     }
                 }
+
+                if (arg is ICollection<Api> apis)
+                {
+                    ApiDtos = new List<ApiDto>();
+
+                    foreach (var api in apis)
+                    {
+                        ApiDtos.Add(new ApiDto(api));
+                    }
+                }
+
             }
         }
 

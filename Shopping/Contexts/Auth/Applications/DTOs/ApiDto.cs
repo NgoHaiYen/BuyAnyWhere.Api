@@ -1,4 +1,5 @@
 ﻿using Shopping.Models;
+using Shopping.Ultilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
         public string Uri { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Type { get; set; }
+        public Constant.TypeApi Type { get; set; }
 
 
         public ApiDto()
@@ -26,9 +27,7 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
             this.Id = api.Id;
             this.Method = api.Method;
             this.Uri = api.Uri;
-            this.Name = api.Name;
-            this.Description = api.Description;
-            this.Type = api.Type;
+            this.Type = (Constant.TypeApi)api.Type;
         }
 
         public Api ToModel()
@@ -38,9 +37,7 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
                 Id = Id,
                 Method = Method,
                 Uri = Uri,
-                Name = Name,
-                Description = Description,
-                Type = Type,
+                Type = (int)Type,
             };
         }
     }

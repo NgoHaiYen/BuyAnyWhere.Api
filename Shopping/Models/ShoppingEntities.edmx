@@ -12,9 +12,7 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Method" Type="nvarchar(max)" />
           <Property Name="Uri" Type="nvarchar(max)" />
-          <Property Name="Name" Type="nvarchar(max)" />
-          <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="Type" Type="nvarchar(max)" />
+          <Property Name="Type" Type="int" />
         </EntityType>
         <EntityType Name="Logger">
           <Key>
@@ -148,7 +146,6 @@
     <edmx:ConceptualModels>
       <Schema Namespace="ShoppingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="ShoppingEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Apis" EntityType="ShoppingModel.Api" />
           <EntitySet Name="Loggers" EntityType="ShoppingModel.Logger" />
           <EntitySet Name="Roles" EntityType="ShoppingModel.Role" />
           <EntitySet Name="sysdiagrams" EntityType="ShoppingModel.sysdiagram" />
@@ -162,23 +159,12 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserToken" EntitySet="UserTokens" />
           </AssociationSet>
+          <EntitySet Name="Apis" EntityType="ShoppingModel.Api" />
           <AssociationSet Name="RoleApi" Association="ShoppingModel.RoleApi">
             <End Role="Api" EntitySet="Apis" />
             <End Role="Role" EntitySet="Roles" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Api">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Method" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Uri" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Roles" Relationship="ShoppingModel.RoleApi" FromRole="Api" ToRole="Role" />
-        </EntityType>
         <EntityType Name="Logger">
           <Key>
             <PropertyRef Name="Id" />
@@ -254,6 +240,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Api">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Method" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Uri" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="Int32" />
+          <NavigationProperty Name="Roles" Relationship="ShoppingModel.RoleApi" FromRole="Api" ToRole="Role" />
+        </EntityType>
         <Association Name="RoleApi">
           <End Type="ShoppingModel.Api" Role="Api" Multiplicity="*" />
           <End Type="ShoppingModel.Role" Role="Role" Multiplicity="*" />
@@ -264,18 +260,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ShoppingModelStoreContainer" CdmEntityContainer="ShoppingEntities">
-          <EntitySetMapping Name="Apis">
-            <EntityTypeMapping TypeName="ShoppingModel.Api">
-              <MappingFragment StoreEntitySet="Api">
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Uri" ColumnName="Uri" />
-                <ScalarProperty Name="Method" ColumnName="Method" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Loggers">
             <EntityTypeMapping TypeName="ShoppingModel.Logger">
               <MappingFragment StoreEntitySet="Logger">
@@ -327,6 +311,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Apis">
+            <EntityTypeMapping TypeName="ShoppingModel.Api">
+              <MappingFragment StoreEntitySet="Api">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Uri" ColumnName="Uri" />
+                <ScalarProperty Name="Method" ColumnName="Method" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <AssociationSetMapping Name="RoleApi" TypeName="ShoppingModel.RoleApi" StoreEntitySet="RoleApi">
             <EndProperty Name="Role">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
@@ -335,7 +329,7 @@
               <ScalarProperty Name="Id" ColumnName="ApiId" />
             </EndProperty>
           </AssociationSetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

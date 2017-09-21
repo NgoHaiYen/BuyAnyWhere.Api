@@ -22,9 +22,9 @@ namespace Shopping.Contexts.Auth.Applications
 
         public string GetTokenFromHeaderHttpRequest(HttpAuthenticationContext context) 
         {
-            if (context.Request.Headers.Contains(ConstantRequest.ACCESS_TOKEN))
+            if (context.Request.Headers.Contains(Constant.ACCESS_TOKEN))
             {
-                var token = context.Request.Headers.GetValues(ConstantRequest.ACCESS_TOKEN).First();
+                var token = context.Request.Headers.GetValues(Constant.ACCESS_TOKEN).First();
                 return token;
             }
 
@@ -33,9 +33,9 @@ namespace Shopping.Contexts.Auth.Applications
 
         public string GetTokenFromHeaderHttpRequest(HttpActionExecutedContext context)
         {
-            if (context.Request.Headers.Contains(ConstantRequest.ACCESS_TOKEN))
+            if (context.Request.Headers.Contains(Constant.ACCESS_TOKEN))
             {
-                var token = context.Request.Headers.GetValues(ConstantRequest.ACCESS_TOKEN).First();
+                var token = context.Request.Headers.GetValues(Constant.ACCESS_TOKEN).First();
                 return token;
             }
 
@@ -44,9 +44,9 @@ namespace Shopping.Contexts.Auth.Applications
 
         public string GetTokenFromHeaderHttpRequest(HttpContext context)
         {
-            if (context.Request.Headers[ConstantRequest.ACCESS_TOKEN] != null)
+            if (context.Request.Headers[Constant.ACCESS_TOKEN] != null)
             {
-                var token = context.Request.Headers.GetValues(ConstantRequest.ACCESS_TOKEN).First();
+                var token = context.Request.Headers.GetValues(Constant.ACCESS_TOKEN).First();
                 return token;
             }
 
@@ -55,9 +55,9 @@ namespace Shopping.Contexts.Auth.Applications
 
         public string GetTokenFromHeaderHttpRequest(HttpActionContext context)
         {
-            if (context.Request.Headers.Contains(ConstantRequest.ACCESS_TOKEN))
+            if (context.Request.Headers.Contains(Constant.ACCESS_TOKEN))
             {
-                var token = context.Request.Headers.GetValues(ConstantRequest.ACCESS_TOKEN).First();
+                var token = context.Request.Headers.GetValues(Constant.ACCESS_TOKEN).First();
                 return token;
             }
 

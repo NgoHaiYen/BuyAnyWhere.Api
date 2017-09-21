@@ -5,15 +5,15 @@ using System.Web;
 
 namespace Shopping.Ultilities
 {
-    public static class ConstantApiType
+    public static class Constant
     {
-        public static readonly string PUBLIC = "PUBLIC";
-        public static readonly string PRIVATE = "PRIVATE";       
-    }
+        public enum TypeApi
+        {
+            PUBLIC = 1,
+            PRIVATE = 0
+        }
 
-
-    public static class ConstantRequest
-    {
         public static readonly string ACCESS_TOKEN = "access_token";
-    } 
+
+    }
 }
