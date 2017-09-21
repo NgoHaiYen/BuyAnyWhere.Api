@@ -5,6 +5,7 @@ using Shopping.Applications.Interfaces;
 using Shopping.Contexts.Auth.Applications.DTOs;
 using Shopping.Models;
 using System.Data.Entity;
+using Shopping.Ultilities;
 
 namespace Shopping.Contexts.Auth.Services
 {
@@ -21,11 +22,16 @@ namespace Shopping.Contexts.Auth.Services
             }
         }
 
-        public List<UserDto> Get()
+        public List<UserDto> Get(PaginateDto paginateDto)
         {
+            if (paginateDto == null)
+            {
+                paginateDto = new PaginateDto();
+            }
+
             using (ShoppingEntities shoppingEntities = new ShoppingEntities())
             {
-                var users = shoppingEntities.Users.Include(t => t.Role).ToList();
+                var users = paginateDto.SkipAndTake(shoppingEntities.Users).ToList();
 
                 return users.ConvertAll(t => new UserDto(t, null, t.Role));
             }

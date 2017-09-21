@@ -1,6 +1,7 @@
 ﻿using Shopping.Applications.Interfaces;
 using Shopping.Contexts.Auth.Applications.DTOs;
 using Shopping.Contexts.Auth.Applications.Interfaces;
+using Shopping.Ultilities;
 using System;
 using System.Web.Http;
 
@@ -22,9 +23,9 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
         [HttpGet]
         [Route("")]
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(PaginateDto paginateDto)
         {
-            return Ok(userService.Get());
+            return Ok(userService.Get(paginateDto));
         }
 
         [HttpGet]

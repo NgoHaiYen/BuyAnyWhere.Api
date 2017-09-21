@@ -183,6 +183,7 @@
     <Compile Include="Models\Role.cs">
       <DependentUpon>ShoppingEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Ultilities\PaginateDto.cs" />
     <Compile Include="Ultilities\UltilityService.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\AuthController.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\RoleController.cs" />
@@ -270,7 +271,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Ultilities\PaginateDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
