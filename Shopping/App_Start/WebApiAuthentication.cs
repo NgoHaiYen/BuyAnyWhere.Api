@@ -47,7 +47,7 @@ namespace Shopping
 
             if (userToken == null)
             {
-                throw new AuthenticationException("Authentication Exception");
+                throw new AuthenticationException("Đường dẫn này yêu cầu người dùng đăng nhập");
             } 
 
             // Neu token het han thi khong cho goi may ham private ... TODO

@@ -42,7 +42,7 @@ namespace Shopping.App_Start
 
             if (user.RoleId == null)
             {
-                throw new UnauthorizedAccessException("Invalid Role");
+                throw new UnauthorizedAccessException("Người dùng chưa được phân quyền");
             }
 
             var role = shoppingEntities.Roles.Include(t => t.Apis).First(t => t.Id == user.RoleId);
@@ -56,7 +56,7 @@ namespace Shopping.App_Start
 
             if (apis.FirstOrDefault(t => t.Method == method && t.Uri == uri) == null)
             {
-                throw new UnauthorizedAccessException("Unauthorized Access");
+                throw new UnauthorizedAccessException("Không thể truy cập đường dẫn này");
             }
 
         }

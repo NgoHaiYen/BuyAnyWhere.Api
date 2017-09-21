@@ -21,7 +21,7 @@ namespace Shopping.App_Start
                 if (actionExecutedContext.Response.StatusCode == HttpStatusCode.OK)
                 {
                     var token = ultilityService.GetTokenFromHeaderHttpRequest(actionExecutedContext);
-                    ultilityService.Log(actionExecutedContext, token, true, "Successful Request");
+                    ultilityService.Log(actionExecutedContext, token, true, "Thực hiện yêu cầu thành công");
                 }
             } 
         }
