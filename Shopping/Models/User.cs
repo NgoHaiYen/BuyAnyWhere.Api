@@ -23,6 +23,7 @@ namespace Shopping.Models
         public System.Guid Id { get; set; }
         public string Name { get; set; }
         public string FacebookId { get; set; }
+        public string GoogleId { get; set; }
         public Nullable<System.Guid> RoleId { get; set; }
     
         public virtual Role Role { get; set; }

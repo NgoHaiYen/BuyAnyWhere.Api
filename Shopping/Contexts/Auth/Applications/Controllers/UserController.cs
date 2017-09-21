@@ -29,10 +29,10 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
-        public IHttpActionResult Get([FromUri] Guid id)
+        [Route("{userId}")]
+        public IHttpActionResult Get([FromUri] Guid userId)
         {
-            return Ok(userService.Get(id));
+            return Ok(userService.Get(userId));
         }
 
         [HttpPost]
@@ -42,5 +42,11 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             return Ok(userDto.ToModel());
         }
 
+        [HttpPut]
+        [Route("{userId}/Role/{roleId}")]
+        public IHttpActionResult PutRole([FromUri] Guid userId, [FromUri] Guid roleId)
+        {
+            return Ok(userService.PutRole(userId, roleId));
+        }
     }
 }

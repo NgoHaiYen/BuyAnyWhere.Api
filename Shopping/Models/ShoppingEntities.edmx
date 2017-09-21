@@ -58,6 +58,7 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="FacebookId" Type="nvarchar(max)" />
+          <Property Name="GoogleId" Type="nvarchar(max)" />
           <Property Name="RoleId" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="UserToken">
@@ -149,8 +150,13 @@
           <EntitySet Name="Loggers" EntityType="ShoppingModel.Logger" />
           <EntitySet Name="Roles" EntityType="ShoppingModel.Role" />
           <EntitySet Name="sysdiagrams" EntityType="ShoppingModel.sysdiagram" />
-          <EntitySet Name="Users" EntityType="ShoppingModel.User" />
           <EntitySet Name="UserTokens" EntityType="ShoppingModel.UserToken" />
+          <EntitySet Name="Apis" EntityType="ShoppingModel.Api" />
+          <AssociationSet Name="RoleApi" Association="ShoppingModel.RoleApi">
+            <End Role="Api" EntitySet="Apis" />
+            <End Role="Role" EntitySet="Roles" />
+          </AssociationSet>
+          <EntitySet Name="Users" EntityType="ShoppingModel.User" />
           <AssociationSet Name="FK_User_Role" Association="ShoppingModel.FK_User_Role">
             <End Role="Role" EntitySet="Roles" />
             <End Role="User" EntitySet="Users" />
@@ -158,11 +164,6 @@
           <AssociationSet Name="FK_UserToken_User" Association="ShoppingModel.FK_UserToken_User">
             <End Role="User" EntitySet="Users" />
             <End Role="UserToken" EntitySet="UserTokens" />
-          </AssociationSet>
-          <EntitySet Name="Apis" EntityType="ShoppingModel.Api" />
-          <AssociationSet Name="RoleApi" Association="ShoppingModel.RoleApi">
-            <End Role="Api" EntitySet="Apis" />
-            <End Role="Role" EntitySet="Roles" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Logger">
@@ -183,8 +184,8 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Users" Relationship="ShoppingModel.FK_User_Role" FromRole="Role" ToRole="User" />
           <NavigationProperty Name="Apis" Relationship="ShoppingModel.RoleApi" FromRole="Role" ToRole="Api" />
+          <NavigationProperty Name="Users" Relationship="ShoppingModel.FK_User_Role" FromRole="Role" ToRole="User" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -196,17 +197,6 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="FacebookId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RoleId" Type="Guid" />
-          <NavigationProperty Name="Role" Relationship="ShoppingModel.FK_User_Role" FromRole="User" ToRole="Role" />
-          <NavigationProperty Name="UserTokens" Relationship="ShoppingModel.FK_UserToken_User" FromRole="User" ToRole="UserToken" />
-        </EntityType>
         <EntityType Name="UserToken">
           <Key>
             <PropertyRef Name="Id" />
@@ -215,6 +205,32 @@
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="UserId" Type="Guid" />
           <NavigationProperty Name="User" Relationship="ShoppingModel.FK_UserToken_User" FromRole="UserToken" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Api">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Method" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Uri" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="Int32" />
+          <NavigationProperty Name="Roles" Relationship="ShoppingModel.RoleApi" FromRole="Api" ToRole="Role" />
+        </EntityType>
+        <Association Name="RoleApi">
+          <End Type="ShoppingModel.Api" Role="Api" Multiplicity="*" />
+          <End Type="ShoppingModel.Role" Role="Role" Multiplicity="*" />
+        </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FacebookId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GoogleId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="Guid" />
+          <NavigationProperty Name="Role" Relationship="ShoppingModel.FK_User_Role" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="UserTokens" Relationship="ShoppingModel.FK_UserToken_User" FromRole="User" ToRole="UserToken" />
         </EntityType>
         <Association Name="FK_User_Role">
           <End Type="ShoppingModel.Role" Role="Role" Multiplicity="0..1" />
@@ -239,20 +255,6 @@
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Api">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Method" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Uri" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="Int32" />
-          <NavigationProperty Name="Roles" Relationship="ShoppingModel.RoleApi" FromRole="Api" ToRole="Role" />
-        </EntityType>
-        <Association Name="RoleApi">
-          <End Type="ShoppingModel.Api" Role="Api" Multiplicity="*" />
-          <End Type="ShoppingModel.Role" Role="Role" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -292,16 +294,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="ShoppingModel.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="FacebookId" ColumnName="FacebookId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UserTokens">
             <EntityTypeMapping TypeName="ShoppingModel.UserToken">
               <MappingFragment StoreEntitySet="UserToken">
@@ -329,6 +321,17 @@
               <ScalarProperty Name="Id" ColumnName="ApiId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ShoppingModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="GoogleId" ColumnName="GoogleId" />
+                <ScalarProperty Name="FacebookId" ColumnName="FacebookId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

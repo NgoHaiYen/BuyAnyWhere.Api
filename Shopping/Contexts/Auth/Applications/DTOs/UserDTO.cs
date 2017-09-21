@@ -7,6 +7,7 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
     {
         public Guid Id { get; set; }
         public string FacebookId { get; set; }
+        public string GoogleId { get; set; }
         public string Name { get; set; }
 
         public string AccessToken { get; set; }
@@ -23,6 +24,7 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
             Name = user.Name;
             FacebookId = user.FacebookId;
             AccessToken = accessToken;
+            GoogleId = user.GoogleId;
             
             foreach (var arg in args)
             {
@@ -40,6 +42,7 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
             user.Id = Guid.NewGuid();
             user.Name = Name;
             user.FacebookId = FacebookId;
+            user.GoogleId = GoogleId;
 
             return user;
         }

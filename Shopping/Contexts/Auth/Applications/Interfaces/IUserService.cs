@@ -12,6 +12,8 @@ namespace Shopping.Applications.Interfaces
     {
         List<UserDto> Get(PaginateDto paginateDto);
         UserDto Create(UserDto userDTO);
-        UserDto Get(Guid id);
+        UserDto Get(Guid userId);
+
+        UserDto PutRole(Guid userId, Guid roleId);
     }
 }
