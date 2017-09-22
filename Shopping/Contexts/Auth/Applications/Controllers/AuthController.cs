@@ -38,6 +38,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             {
                 // Chua co user, them thong tin user vao database
                 user = userDto.ToModel();
+                
                 shoppingEntities.Users.Add(user);
 
                 // Tao tao token cho user

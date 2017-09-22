@@ -345,6 +345,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Contexts\Management\" />
+    <Folder Include="Contexts\Procurement\" />
     <Folder Include="Views\HelpPage\" />
   </ItemGroup>
   <ItemGroup>
