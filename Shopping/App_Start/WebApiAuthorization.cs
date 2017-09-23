@@ -31,28 +31,36 @@ namespace Shopping
             var publicApis = shoppingEntities.Apis.Where(t => t.Type == (int) Constant.TypeApi.Public);
 
 
-            // Nếu là Public Api thì thành công
+            // Nếu là PUBLIC API thì thành công
 
             if (publicApis.FirstOrDefault(t => t.Method == method && t.Uri == uri) != null)
+            {
                 return;
+            }
 
-            // Nếu là Private Api thì ... 
+            // Nếu là PRIVATE API thì ... 
 
             var userToken = shoppingEntities.UserTokens.First(t => t.Name == token);
             var user = userToken.User;
-
-            if (user.RoleId == null)
-                throw new UnauthorizedAccessException("Người dùng chưa được phân quyền");
-
             var role = shoppingEntities.Roles.Include(t => t.Apis).First(t => t.Id == user.RoleId);
 
+
+            if (role == null)
+            {
+                throw new UnauthorizedAccessException("Người dùng chưa được phân quyền");
+            }
+
             if (role.Name == "Root")
+            {
                 return;
+            }
 
             var apis = role.Apis.ToList();
 
             if (apis.FirstOrDefault(t => t.Method == method && t.Uri == uri) == null)
+            {
                 throw new UnauthorizedAccessException("Không thể truy cập đường dẫn này");
+            }
         }
     }
 }

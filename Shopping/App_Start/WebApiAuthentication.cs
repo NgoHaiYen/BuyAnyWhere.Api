@@ -32,7 +32,7 @@ namespace Shopping
             var request = context.Request;
             var publicApis = shoppingEntities.Apis.Where(t => t.Type == (int)Constant.TypeApi.Public).ToList();
 
-            // Neu la public Api
+            // Nếu là PUBLIC API thì
             if (publicApis.FirstOrDefault(t => t.Method == request.Method.ToString() 
                 && t.Uri == appService.NormalizePath(request.RequestUri.AbsolutePath)) != null)
             {
@@ -40,7 +40,7 @@ namespace Shopping
             }
 
 
-            // Neu la private Api
+            // Nếu là PRIVATE API thì
 
             string token = appService.GetTokenFromHeaderHttpRequest(context);
             var userToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
@@ -50,7 +50,7 @@ namespace Shopping
                 throw new AuthenticationException("Đường dẫn này yêu cầu người dùng đăng nhập");
             } 
 
-            // Neu token het han thi khong cho goi may ham private ... TODO
+            // Nếu token hết hạn thì 
 
             return Task.FromResult(0);
         }
