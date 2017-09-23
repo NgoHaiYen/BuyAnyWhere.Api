@@ -20,7 +20,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
         [HttpGet]
         [Route("")]
-        public IHttpActionResult Get(PaginateDto paginateDto)
+        public IHttpActionResult Get([FromUri] PaginateDto paginateDto)
         {
             if (paginateDto == null)
                 paginateDto = new PaginateDto();
