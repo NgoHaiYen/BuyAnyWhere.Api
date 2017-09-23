@@ -27,7 +27,7 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
             this.Id = api.Id;
             this.Method = api.Method;
             this.Uri = api.Uri;
-            this.Type = (Constant.TypeApi)api.Type;
+            if (api.Type != null) this.Type = (Constant.TypeApi) api.Type;
         }
 
         public Api ToModel()
