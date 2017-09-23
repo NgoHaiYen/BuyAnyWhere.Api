@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Shopping.Ultilities
@@ -20,29 +21,29 @@ namespace Shopping.Ultilities
             {
                 source = source.Take((int)Take);
             }
+
             return source;
         }
 
-        public IQueryable<T> Order<T>(IQueryable<T> Source)
+        public IQueryable<T> Order<T>(IQueryable<T> source)
         {
             OrderType = OrderType ?? Ultilities.OrderType.Asc;
-            var Command = OrderType == Ultilities.OrderType.Desc ? "OrderByDescending" : "OrderBy";
-            var Type = typeof(T);
-            var Parameter = Expression.Parameter(Type, "p");
-            var Property = Type.GetProperty("Id");
+            var command = OrderType == Ultilities.OrderType.Desc ? "OrderByDescending" : "OrderBy";
+            var type = typeof(T);
+            var parameter = Expression.Parameter(type, "p");
+            var property = type.GetProperty("Id");
             if (!string.IsNullOrEmpty(OrderBy) && OrderType != Ultilities.OrderType.None)
             {
-                Property = Type.GetProperty(OrderBy);
+                property = type.GetProperty(OrderBy);
             }
-            var PropertyAccess = Expression.MakeMemberAccess(Parameter, Property);
-            var OrderByExpression = Expression.Lambda(PropertyAccess, Parameter);
-            var ResultExpression = Expression.Call(typeof(Queryable), Command,
-                new[] { Type, Property.PropertyType },
-                Source.Expression, Expression.Quote(OrderByExpression));
-            return Source.Provider.CreateQuery<T>(ResultExpression);
+            var propertyAccess = Expression.MakeMemberAccess(parameter, property ?? throw new InvalidOperationException());
+            var orderByExpression = Expression.Lambda(propertyAccess, parameter);
+            var resultExpression = Expression.Call(typeof(Queryable), command,
+                new[] { type, property.PropertyType },
+                source.Expression, Expression.Quote(orderByExpression));
+            return source.Provider.CreateQuery<T>(resultExpression);
         }
     }
-
 
     public enum OrderType
     {
