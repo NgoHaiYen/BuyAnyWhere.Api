@@ -52,10 +52,12 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
 
         public Role ToModel()
         {
-            Role role = new Role();
+            var role = new Role
+            {
+                Id = Guid.NewGuid(),
+                Name = Name
+            };
 
-            role.Id = Guid.NewGuid();
-            role.Name = Name;
             return role;
         }
 

@@ -37,12 +37,14 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
 
         public User ToModel()
         {
-            User user = new User();
+            var user = new User
+            {
+                Id = Guid.NewGuid(),
+                Name = Name,
+                FacebookId = FacebookId,
+                GoogleId = GoogleId
+            };
 
-            user.Id = Guid.NewGuid();
-            user.Name = Name;
-            user.FacebookId = FacebookId;
-            user.GoogleId = GoogleId;
 
             return user;
         }
