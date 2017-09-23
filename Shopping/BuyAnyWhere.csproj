@@ -187,7 +187,6 @@
     <Compile Include="Ultilities\PaginateDto.cs" />
     <Compile Include="Ultilities\UltilityService.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\AuthController.cs" />
-    <Compile Include="Contexts\Auth\Applications\Controllers\RoleController.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\UserController.cs" />
     <Compile Include="Contexts\Auth\Applications\DTOs\ApiDto.cs" />
     <Compile Include="Contexts\Auth\Applications\DTOs\RoleDto.cs" />

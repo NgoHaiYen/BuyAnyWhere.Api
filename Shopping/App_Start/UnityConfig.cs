@@ -1,7 +1,6 @@
 using System;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
-using Shopping.Applications.Interfaces;
 using Shopping.Contexts.Auth.Applications.Interfaces;
 using Shopping.Contexts.Auth.Services;
 using Shopping.Models;
