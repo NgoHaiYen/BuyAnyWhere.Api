@@ -30,9 +30,12 @@ namespace Shopping.Contexts.Auth.Services
                     string userJson = client.DownloadString(Url + "?access_token=" + token + "&fields=" + Fields);
 
                     dynamic userDynamic = JsonConvert.DeserializeObject(userJson);
-                    UserDto userDto = new UserDto();
-                    userDto.FacebookId = userDynamic["id"];
-                    userDto.Name = userDynamic["name"];
+
+                    UserDto userDto = new UserDto
+                    {
+                        FacebookId = userDynamic["id"],
+                        Name = userDynamic["name"]
+                    };
                     return userDto;
 
                 } catch(Exception)
