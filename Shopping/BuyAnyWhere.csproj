@@ -195,8 +195,6 @@
     <Compile Include="Contexts\Auth\Applications\DTOs\UserTokenDto.cs" />
     <Compile Include="Contexts\Auth\Applications\Interfaces\IUltilityService.cs" />
     <Compile Include="Contexts\Auth\Applications\Interfaces\IAuthService.cs" />
-    <Compile Include="Contexts\Auth\Applications\Interfaces\IRoleService.cs" />
-    <Compile Include="Contexts\Auth\Applications\Interfaces\IUserService.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -266,8 +264,6 @@
     </Compile>
     <Compile Include="Ultilities\Constant.cs" />
     <Compile Include="Ultilities\FilterDto.cs" />
-    <Compile Include="Contexts\Auth\Services\RoleService.cs" />
-    <Compile Include="Contexts\Auth\Services\UserService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

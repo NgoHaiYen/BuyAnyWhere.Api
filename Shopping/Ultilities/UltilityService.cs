@@ -1,18 +1,15 @@
-﻿using Shopping.Contexts.Auth.Applications.Interfaces;
-using Shopping.Models;
-using Shopping.Ultilities;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Web;
-using System.Web.Http.Filters;
 using System.Web.Http.Controllers;
+using System.Web.Http.Filters;
+using Shopping.Contexts.Auth.Applications.Interfaces;
+using Shopping.Models;
 
-namespace Shopping.Contexts.Auth.Applications
+namespace Shopping.Ultilities
 {
     public class UltilityService : IUltilityService
     {
-
         private readonly ShoppingEntities shoppingEntities;
 
         public UltilityService(ShoppingEntities shoppingEntities)
@@ -20,7 +17,7 @@ namespace Shopping.Contexts.Auth.Applications
             this.shoppingEntities = shoppingEntities;
         }
 
-        public string GetTokenFromHeaderHttpRequest(HttpAuthenticationContext context) 
+        public string GetTokenFromHeaderHttpRequest(HttpAuthenticationContext context)
         {
             if (context.Request.Headers.Contains(Constant.ACCESS_TOKEN))
             {
@@ -46,7 +43,7 @@ namespace Shopping.Contexts.Auth.Applications
         {
             if (context.Request.Headers[Constant.ACCESS_TOKEN] != null)
             {
-                var token = context.Request.Headers.GetValues(Constant.ACCESS_TOKEN).First();
+                var token = (context.Request.Headers.GetValues(Constant.ACCESS_TOKEN) ?? throw new InvalidOperationException()).First();
                 return token;
             }
 
@@ -66,27 +63,22 @@ namespace Shopping.Contexts.Auth.Applications
 
         public User GetUserFromTokenAlwayReturnUserName(string token)
         {
-
             User user = null;
 
-            // Khong co token, tra ve thong tin User mac dinh
             if (token == null)
             {
-                user = new User();
-                user.Name = "Guest";
-
-            } else
+                user = new User {Name = "Khách vãng lai"};
+            }
+            else
             {
                 var userToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
 
-                // token sai hoac qua han roi, truy cap public api nen van duoc
                 if (userToken == null)
                 {
-                    user = new User();
-                    user.Name = "Invalid token user";
+                    user = new User {Name = "Người dùng sai Token"};
                 }
 
-                user = userToken.User;          
+                if (userToken != null) user = userToken.User;
             }
 
             return user;
@@ -95,16 +87,18 @@ namespace Shopping.Contexts.Auth.Applications
 
         public void Log(object context, string headerToken, bool success, string reason)
         {
-            dynamic ctx = context;
+            dynamic dynamicContect = context;
 
-            Logger logger = new Logger();
-            logger.Id = Guid.NewGuid();
-            logger.UserName = GetUserFromTokenAlwayReturnUserName(headerToken).Name;
-            logger.DateTime = System.DateTime.Now;
-            logger.ApiMethod = ctx.Request.Method.ToString();
-            logger.ApiUri = ctx.Request.RequestUri.AbsolutePath;
-            logger.Success = success;
-            logger.Reason = reason;
+            var logger = new Logger
+            {
+                Id = Guid.NewGuid(),
+                UserName = GetUserFromTokenAlwayReturnUserName(headerToken).Name,
+                DateTime = DateTime.Now,
+                ApiMethod = dynamicContect.Request.Method.ToString(),
+                ApiUri = dynamicContect.Request.RequestUri.AbsolutePath,
+                Success = success,
+                Reason = reason
+            };
 
             shoppingEntities.Loggers.Add(logger);
             shoppingEntities.SaveChanges();
@@ -113,17 +107,14 @@ namespace Shopping.Contexts.Auth.Applications
 
         public string NormalizePath(string path)
         {
-            string[] linkParts = path.Split('/').Where(x => !string.IsNullOrEmpty(x)).ToArray();
+            var linkParts = path.Split('/').Where(x => !string.IsNullOrEmpty(x)).ToArray();
 
-            for (int i = 0; i < linkParts.Length; i++)
+            for (var i = 0; i < linkParts.Length; i++)
             {
-                Guid testGuid;
-                if (Guid.TryParse(linkParts[i], out testGuid))
-                {
+                if (Guid.TryParse(linkParts[i], out _))
                     linkParts[i] = "*";
-                }
             }
-            return String.Join("/", linkParts);
+            return string.Join("/", linkParts);
         }
     }
 }

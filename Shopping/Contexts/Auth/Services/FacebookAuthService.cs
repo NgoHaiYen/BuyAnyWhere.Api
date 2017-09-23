@@ -20,35 +20,26 @@ namespace Shopping.Contexts.Auth.Services
             this.shoppingEntities = shoppingEntities;
         }
 
-
-        public UserDto GetUserInfoFromToken(string token)
+        public UserDto GetUserFromTokenProvider(string token)
         {
             using (var client = new WebClient())
             {
-                string userJson = null;
 
                 try
                 {
-                    userJson = client.DownloadString(Url + "?access_token=" + token + "&fields=" + Fields);
+                    string userJson = client.DownloadString(Url + "?access_token=" + token + "&fields=" + Fields);
 
-                } catch(Exception e)
+                    dynamic userDynamic = JsonConvert.DeserializeObject(userJson);
+                    UserDto userDto = new UserDto();
+                    userDto.FacebookId = userDynamic["id"];
+                    userDto.Name = userDynamic["name"];
+                    return userDto;
+
+                } catch(Exception)
                 {
-      
                     throw new BadRequestException("Invalid token");
                 }
-
-                dynamic userDynamic = JsonConvert.DeserializeObject(userJson);
-
-
-                UserDto userDto = new UserDto();
-
-                userDto.FacebookId = userDynamic["id"];
-                userDto.Name = userDynamic["name"];
-
-                return userDto;
             }
-
         }
-
     }
 }

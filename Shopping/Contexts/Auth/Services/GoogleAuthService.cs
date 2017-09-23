@@ -9,7 +9,7 @@ namespace Shopping.Contexts.Auth.Services
 {
     public class GoogleAuthService : IAuthService
     {
-        public UserDto GetUserInfoFromToken(string token)
+        public UserDto GetUserFromTokenProvider(string token)
         {
             throw new NotImplementedException();
         }

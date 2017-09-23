@@ -6,7 +6,6 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 {
     public class HomeController : Controller
     {
-
         public ActionResult Index()
         {
 

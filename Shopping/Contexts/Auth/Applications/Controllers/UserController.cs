@@ -1,52 +1,74 @@
-﻿using Shopping.Applications.Interfaces;
-using Shopping.Contexts.Auth.Applications.DTOs;
-using Shopping.Contexts.Auth.Applications.Interfaces;
-using Shopping.Ultilities;
-using System;
+﻿using System;
+using System.Linq;
 using System.Web.Http;
+using Shopping.App_Start;
+using Shopping.Contexts.Auth.Applications.DTOs;
+using Shopping.Models;
+using Shopping.Ultilities;
 
 namespace Shopping.Contexts.Auth.Applications.Controllers
 {
-
     [RoutePrefix("api/Auth/Users")]
     public class UserController : ApiController
     {
+        private readonly ShoppingEntities shoppingEntities;
 
-        private readonly IUserService userService;
-        private readonly IUltilityService ultilityService;
-
-        public UserController(IUserService userService, IUltilityService ultilityService)
+        public UserController(ShoppingEntities shoppingEntities)
         {
-            this.userService = userService;
-            this.ultilityService = ultilityService;
+            this.shoppingEntities = shoppingEntities;
         }
 
         [HttpGet]
         [Route("")]
         public IHttpActionResult Get(PaginateDto paginateDto)
         {
-            return Ok(userService.Get(paginateDto));
+            if (paginateDto == null)
+                paginateDto = new PaginateDto();
+
+            var users = paginateDto.SkipAndTake(shoppingEntities.Users).ToList();
+            var userDtos = users.ConvertAll(t => new UserDto(t, null, t.Role));
+
+            return Ok(userDtos);
         }
 
         [HttpGet]
         [Route("{userId}")]
         public IHttpActionResult Get([FromUri] Guid userId)
         {
-            return Ok(userService.Get(userId));
+            var user = shoppingEntities.Users.FirstOrDefault(t => t.Id == userId);
+
+            if (user == null)
+                throw new Exception("User not found!");
+
+            var userDto = new UserDto(user, null, user.Role);
+            return Ok(userDto);
         }
 
         [HttpPost]
         [Route("")]
         public IHttpActionResult Post([FromBody] UserDto userDto)
         {
-            return Ok(userDto.ToModel());
+            var user = userDto.ToModel();
+            shoppingEntities.Users.Add(userDto.ToModel());
+            shoppingEntities.SaveChanges();
+
+            return Get(user.Id);
         }
 
         [HttpPut]
         [Route("{userId}/Role/{roleId}")]
         public IHttpActionResult PutRole([FromUri] Guid userId, [FromUri] Guid roleId)
         {
-            return Ok(userService.PutRole(userId, roleId));
+            var user = shoppingEntities.Users.FirstOrDefault(t => t.Id == userId);
+            var role = shoppingEntities.Roles.FirstOrDefault(t => t.Id == roleId);
+
+            if (user == null)
+                throw new BadRequestException("ID người dùng không hợp lệ");
+
+            user.Role = role ?? throw new BadRequestException("ID vai trò không hợp lệ");
+
+            shoppingEntities.SaveChanges();
+            return Get(userId);
         }
     }
 }

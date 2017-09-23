@@ -1,77 +1,68 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Configuration;
+using System.Linq;
+using System.Web.Http;
 using Shopping.Contexts.Auth.Applications.DTOs;
 using Shopping.Contexts.Auth.Applications.Interfaces;
-using Shopping.Models;
-using System.Linq;
-using Shopping.Applications.Interfaces;
-using System;
 using Shopping.Contexts.Auth.Services;
+using Shopping.Models;
 
 namespace Shopping.Contexts.Auth.Applications.Controllers
 {
     [RoutePrefix("api/Auth/OAuth2")]
     public class AuthController : ApiController
     {
-
-        private readonly IUserService userService;
         private readonly ShoppingEntities shoppingEntities;
 
-        public AuthController(ShoppingEntities shoppingEntities,
-            IUserService userService)
+        public AuthController(ShoppingEntities shoppingEntities)
         {
             this.shoppingEntities = shoppingEntities;
-            this.userService = userService;
         }
-
 
         [HttpPost]
         [Route("Facebook/Callback")]
         public IHttpActionResult Login([FromBody] string token)
         {
             IAuthService authService = new FacebookAuthService(shoppingEntities);
-
-            UserDto userDto = authService.GetUserInfoFromToken(token);
-
-            User user = shoppingEntities.Users.FirstOrDefault(t => t.FacebookId == userDto.FacebookId);
+            var userDto = authService.GetUserFromTokenProvider(token);
+            var user = shoppingEntities.Users.FirstOrDefault(t => t.FacebookId == userDto.FacebookId);
 
             if (user == null)
             {
-                // Chua co user, them thong tin user vao database
                 user = userDto.ToModel();
-                
                 shoppingEntities.Users.Add(user);
 
-                // Tao tao token cho user
-                UserToken userToken = new UserToken();
-                userToken.Id = Guid.NewGuid();
-                userToken.Name = token;
-                userToken.UserId = user.Id;
+                var userToken = new UserToken
+                {
+                    Id = Guid.NewGuid(),
+                    Name = token,
+                    UserId = user.Id
+                };
 
                 shoppingEntities.UserTokens.Add(userToken);
-
-            } else
+            }
+            else
             {
-                // Kiem tra neu token khac thi them vao
-                UserToken userToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
+                var userToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
 
                 if (userToken == null)
                 {
-                    userToken = new UserToken();
-                    userToken.Id = Guid.NewGuid();
-                    userToken.Name = token;
-                    userToken.UserId = user.Id;
-
+                    userToken = new UserToken
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = token,
+                        UserId = user.Id
+                    };
                     shoppingEntities.UserTokens.Add(userToken);
                 }
             }
 
             shoppingEntities.SaveChanges();
 
-            var result = userService.Get(user.Id);
-            result.AccessToken = token;
-
-            return Ok(result);
-            
+            var usr = shoppingEntities.Users.FirstOrDefault(t => t.Id == user.Id);
+            var usrDto = new UserDto(usr);
+            userDto.AccessToken = token;
+            return Ok(usrDto);
         }
     }
 }
