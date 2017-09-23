@@ -5,6 +5,7 @@ using Shopping.App_Start;
 using Shopping.Contexts.Auth.Applications.DTOs;
 using Shopping.Models;
 using Shopping.Ultilities;
+using System.Data.Entity;
 
 namespace Shopping.Contexts.Auth.Applications.Controllers
 {
@@ -20,12 +21,14 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
         [HttpGet]
         [Route("")]
-        public IHttpActionResult Get([FromUri] PaginateDto paginateDto)
+        public IHttpActionResult Get([FromUri] UserFilterDto userFilterDto)
         {
-            if (paginateDto == null)
-                paginateDto = new PaginateDto();
+            if (userFilterDto == null)
+            {
+                userFilterDto = new UserFilterDto();
+            }
 
-            var users = paginateDto.SkipAndTake(shoppingEntities.Users).ToList();
+            var users = userFilterDto.SkipAndTake(userFilterDto.ApplyTo(shoppingEntities.Users.Include(t => t.Role))).ToList();
             var userDtos = users.ConvertAll(t => new UserDto(t, null, t.Role));
 
             return Ok(userDtos);
@@ -35,10 +38,10 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         [Route("{userId}")]
         public IHttpActionResult Get([FromUri] Guid userId)
         {
-            var user = shoppingEntities.Users.FirstOrDefault(t => t.Id == userId);
+            var user = shoppingEntities.Users.Include(t => t.Role).FirstOrDefault(t => t.Id == userId);
 
             if (user == null)
-                throw new Exception("User not found!");
+                throw new BadRequestException("Không tìm thấy User này");
 
             var userDto = new UserDto(user, null, user.Role);
             return Ok(userDto);
@@ -53,6 +56,19 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             shoppingEntities.SaveChanges();
 
             return Get(user.Id);
+        }
+
+        [HttpGet]
+        [Route("Counter")]
+        public IHttpActionResult Count([FromUri] UserFilterDto userFilterDto)
+        {
+            if (userFilterDto == null)
+            {
+                userFilterDto = new UserFilterDto();
+            }
+
+            var count = userFilterDto.ApplyTo(shoppingEntities.Users).Count();
+            return Ok(count);
         }
 
         [HttpPut]
