@@ -30,8 +30,13 @@ namespace Shopping
 
             var publicApis = shoppingEntities.Apis.Where(t => t.Type == (int) Constant.TypeApi.Public);
 
+
+            // Nếu là Public Api thì thành công
+
             if (publicApis.FirstOrDefault(t => t.Method == method && t.Uri == uri) != null)
                 return;
+
+            // Nếu là Private Api thì ... 
 
             var userToken = shoppingEntities.UserTokens.First(t => t.Name == token);
             var user = userToken.User;
