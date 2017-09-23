@@ -24,7 +24,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         public IHttpActionResult Login([FromBody] string token)
         {
             IAuthService authService = new FacebookAuthService(shoppingEntities);
-            var userDto = authService.GetUserFromTokenProvider(token);
+            var userDto = authService.GetUserFromProviderToken(token);
             var user = shoppingEntities.Users.FirstOrDefault(t => t.FacebookId == userDto.FacebookId);
 
             if (user == null)

@@ -4,6 +4,6 @@ namespace Shopping.Contexts.Auth.Applications.Interfaces
 {
     public interface IAuthService
     {
-        UserDto GetUserFromTokenProvider(string token);
+        UserDto GetUserFromProviderToken(string token);
     }
 }

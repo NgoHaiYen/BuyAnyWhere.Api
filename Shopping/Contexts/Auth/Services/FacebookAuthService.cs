@@ -20,7 +20,7 @@ namespace Shopping.Contexts.Auth.Services
             this.shoppingEntities = shoppingEntities;
         }
 
-        public UserDto GetUserFromTokenProvider(string token)
+        public UserDto GetUserFromProviderToken(string token)
         {
             using (var client = new WebClient())
             {
