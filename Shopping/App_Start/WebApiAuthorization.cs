@@ -24,7 +24,7 @@ namespace Shopping
 
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
-            var token = ultilityService.GetTokenFromHeaderHttpRequest(actionContext);
+            var token = ultilityService.GetHeaderToken(actionContext);
             var method = actionContext.Request.Method.ToString();
             var uri = ultilityService.NormalizePath(actionContext.Request.RequestUri.AbsolutePath);
 

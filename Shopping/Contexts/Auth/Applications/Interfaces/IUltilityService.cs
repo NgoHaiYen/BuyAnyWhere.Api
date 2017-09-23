@@ -7,13 +7,13 @@ namespace Shopping.Contexts.Auth.Applications.Interfaces
 {
     public interface IUltilityService
     {
-        string GetTokenFromHeaderHttpRequest(HttpAuthenticationContext context);
-        string GetTokenFromHeaderHttpRequest(HttpActionExecutedContext context);
-        string GetTokenFromHeaderHttpRequest(HttpContext context);
-        string GetTokenFromHeaderHttpRequest(HttpActionContext context);
+        string GetHeaderToken(HttpAuthenticationContext context);
+        string GetHeaderToken(HttpActionExecutedContext context);
+        string GetHeaderToken(HttpContext context);
+        string GetHeaderToken(HttpActionContext context);
 
         string NormalizePath(string path);
-        User GetUserFromTokenAlwayReturnUserName(string token);
+        User GetUserForLogging(string token);
         void Log(object context, string headerToken, bool success, string reason);
     }
 }

@@ -1,18 +1,15 @@
-﻿using Newtonsoft.Json;
-using Shopping.Contexts.Auth.Applications.DTOs;
+﻿using System;
+using System.Data;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http.Filters;
+using Microsoft.Practices.Unity;
+using Newtonsoft.Json;
+using Shopping.App_Start;
 using Shopping.Contexts.Auth.Applications.Interfaces;
 using Shopping.Models;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Net;
-using Microsoft.Practices.Unity;
-using System.Net.Http;
-using System.Web;
-using System.Web.Http.Filters;
 
-namespace Shopping.App_Start
+namespace Shopping
 {
     public class ExceptionResponeAttribute : ExceptionFilterAttribute
     {
@@ -25,53 +22,48 @@ namespace Shopping.App_Start
             this.ultilityService = UnityConfig.GetConfiguredContainer().Resolve<IUltilityService>();
         }
 
-        public override void OnException(HttpActionExecutedContext Context)
+        public override void OnException(HttpActionExecutedContext context)
         {
-            var Response = new HttpResponseMessage(HttpStatusCode.BadRequest);
-            if (Context.Exception is BadRequestException)
+            var response = new HttpResponseMessage(HttpStatusCode.BadRequest);
+            if (context.Exception is BadRequestException)
             {
-                Response = new HttpResponseMessage(HttpStatusCode.BadRequest);
-                Response.ReasonPhrase = "Wrong paramenters";
+                response = new HttpResponseMessage(HttpStatusCode.BadRequest) {ReasonPhrase = "Wrong paramenters"};
 
             }
-            if (Context.Exception is ConflictException)
+            if (context.Exception is ConflictException)
             {
-                Response = new HttpResponseMessage(HttpStatusCode.Conflict);
-                Response.ReasonPhrase = "Conflict data";
+                response = new HttpResponseMessage(HttpStatusCode.Conflict) {ReasonPhrase = "Conflict data"};
             }
 
-            if (Context.Exception is ForbiddenException)
+            if (context.Exception is ForbiddenException)
             {
-                Response = new HttpResponseMessage(HttpStatusCode.Forbidden);
-                Response.ReasonPhrase = "Forbidden";
+                response = new HttpResponseMessage(HttpStatusCode.Forbidden) {ReasonPhrase = "Forbidden"};
             }
-            if (Context.Exception is NotFoundException)
+            if (context.Exception is NotFoundException)
             {
-                Response = new HttpResponseMessage(HttpStatusCode.NotFound);
-                Response.ReasonPhrase = "Not Found";
+                response = new HttpResponseMessage(HttpStatusCode.NotFound) {ReasonPhrase = "Not Found"};
             }
 
-            if (Context.Exception is DataException)
+            if (context.Exception is DataException)
             {
-                Response = new HttpResponseMessage(HttpStatusCode.NotModified);
-                Response.ReasonPhrase = "Not Modified Data";
+                response = new HttpResponseMessage(HttpStatusCode.NotModified) {ReasonPhrase = "Not Modified Data"};
             }
 
-            var Message = JsonConvert.SerializeObject(new { Message = Context.Exception.Message });
+            var message = JsonConvert.SerializeObject(new { Message = context.Exception.Message });
 
-            Response.Content = new StringContent(Message);
-            Context.Response = Response;
+            response.Content = new StringContent(message);
+            context.Response = response;
 
 
-            var token = ultilityService.GetTokenFromHeaderHttpRequest(Context);
-            ultilityService.Log(Context, token, false, Context.Exception.Message);
+            var token = ultilityService.GetHeaderToken(context);
+            ultilityService.Log(context, token, false, context.Exception.Message);
 
         }
     }
 
     public class BadRequestException : Exception
     {
-        public BadRequestException(string Message) : base(Message)
+        public BadRequestException(string message) : base(message)
         {
 
         }
@@ -79,7 +71,7 @@ namespace Shopping.App_Start
 
     public class ForbiddenException : Exception
     {
-        public ForbiddenException(string Message) : base(Message)
+        public ForbiddenException(string message) : base(message)
         {
 
         }
@@ -87,7 +79,7 @@ namespace Shopping.App_Start
 
     public class NotFoundException : Exception
     {
-        public NotFoundException(string Message) : base(Message)
+        public NotFoundException(string message) : base(message)
         {
 
         }
@@ -95,7 +87,7 @@ namespace Shopping.App_Start
 
     public class ConflictException : Exception
     {
-        public ConflictException(string Message) : base(Message)
+        public ConflictException(string message) : base(message)
         {
 
         }

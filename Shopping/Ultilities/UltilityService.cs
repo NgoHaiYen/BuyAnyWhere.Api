@@ -17,7 +17,7 @@ namespace Shopping.Ultilities
             this.shoppingEntities = shoppingEntities;
         }
 
-        public string GetTokenFromHeaderHttpRequest(HttpAuthenticationContext context)
+        public string GetHeaderToken(HttpAuthenticationContext context)
         {
             if (context.Request.Headers.Contains(Constant.AccessToken))
             {
@@ -28,7 +28,7 @@ namespace Shopping.Ultilities
             return null;
         }
 
-        public string GetTokenFromHeaderHttpRequest(HttpActionExecutedContext context)
+        public string GetHeaderToken(HttpActionExecutedContext context)
         {
             if (context.Request.Headers.Contains(Constant.AccessToken))
             {
@@ -39,7 +39,7 @@ namespace Shopping.Ultilities
             return null;
         }
 
-        public string GetTokenFromHeaderHttpRequest(HttpContext context)
+        public string GetHeaderToken(HttpContext context)
         {
             if (context.Request.Headers[Constant.AccessToken] != null)
             {
@@ -50,7 +50,7 @@ namespace Shopping.Ultilities
             return null;
         }
 
-        public string GetTokenFromHeaderHttpRequest(HttpActionContext context)
+        public string GetHeaderToken(HttpActionContext context)
         {
             if (context.Request.Headers.Contains(Constant.AccessToken))
             {
@@ -61,7 +61,7 @@ namespace Shopping.Ultilities
             return null;
         }
 
-        public User GetUserFromTokenAlwayReturnUserName(string token)
+        public User GetUserForLogging(string token)
         {
             User user = null;
 
@@ -92,7 +92,7 @@ namespace Shopping.Ultilities
             var logger = new Logger
             {
                 Id = Guid.NewGuid(),
-                UserName = GetUserFromTokenAlwayReturnUserName(headerToken).Name,
+                UserName = GetUserForLogging(headerToken).Name,
                 DateTime = DateTime.Now,
                 ApiMethod = dynamicContect.Request.Method.ToString(),
                 ApiUri = dynamicContect.Request.RequestUri.AbsolutePath,
