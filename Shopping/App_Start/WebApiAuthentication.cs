@@ -30,7 +30,7 @@ namespace Shopping
         public Task AuthenticateAsync(HttpAuthenticationContext context, CancellationToken cancellationToken)
         {
             var request = context.Request;
-            var publicApis = shoppingEntities.Apis.Where(t => t.Type == (int)Constant.TypeApi.PUBLIC).ToList();
+            var publicApis = shoppingEntities.Apis.Where(t => t.Type == (int)Constant.TypeApi.Public).ToList();
 
             // Neu la public Api
             if (publicApis.FirstOrDefault(t => t.Method == request.Method.ToString() 
@@ -43,7 +43,7 @@ namespace Shopping
             // Neu la private Api
 
             string token = appService.GetTokenFromHeaderHttpRequest(context);
-            UserToken userToken = shoppingEntities.UserTokens.Where(t => t.Name == token).FirstOrDefault();
+            var userToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
 
             if (userToken == null)
             {

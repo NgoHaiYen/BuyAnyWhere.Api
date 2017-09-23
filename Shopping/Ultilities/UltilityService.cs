@@ -19,9 +19,9 @@ namespace Shopping.Ultilities
 
         public string GetTokenFromHeaderHttpRequest(HttpAuthenticationContext context)
         {
-            if (context.Request.Headers.Contains(Constant.ACCESS_TOKEN))
+            if (context.Request.Headers.Contains(Constant.AccessToken))
             {
-                var token = context.Request.Headers.GetValues(Constant.ACCESS_TOKEN).First();
+                var token = context.Request.Headers.GetValues(Constant.AccessToken).First();
                 return token;
             }
 
@@ -30,9 +30,9 @@ namespace Shopping.Ultilities
 
         public string GetTokenFromHeaderHttpRequest(HttpActionExecutedContext context)
         {
-            if (context.Request.Headers.Contains(Constant.ACCESS_TOKEN))
+            if (context.Request.Headers.Contains(Constant.AccessToken))
             {
-                var token = context.Request.Headers.GetValues(Constant.ACCESS_TOKEN).First();
+                var token = context.Request.Headers.GetValues(Constant.AccessToken).First();
                 return token;
             }
 
@@ -41,9 +41,9 @@ namespace Shopping.Ultilities
 
         public string GetTokenFromHeaderHttpRequest(HttpContext context)
         {
-            if (context.Request.Headers[Constant.ACCESS_TOKEN] != null)
+            if (context.Request.Headers[Constant.AccessToken] != null)
             {
-                var token = (context.Request.Headers.GetValues(Constant.ACCESS_TOKEN) ?? throw new InvalidOperationException()).First();
+                var token = (context.Request.Headers.GetValues(Constant.AccessToken) ?? throw new InvalidOperationException()).First();
                 return token;
             }
 
@@ -52,9 +52,9 @@ namespace Shopping.Ultilities
 
         public string GetTokenFromHeaderHttpRequest(HttpActionContext context)
         {
-            if (context.Request.Headers.Contains(Constant.ACCESS_TOKEN))
+            if (context.Request.Headers.Contains(Constant.AccessToken))
             {
-                var token = context.Request.Headers.GetValues(Constant.ACCESS_TOKEN).First();
+                var token = context.Request.Headers.GetValues(Constant.AccessToken).First();
                 return token;
             }
 
