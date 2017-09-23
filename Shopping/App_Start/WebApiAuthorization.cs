@@ -24,7 +24,7 @@ namespace Shopping
 
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
-            var token = ultilityService.GetTokenFromHeaderHttpRequest(actionContext);
+            var token = ultilityService.GetHeaderToken(actionContext);
             var method = actionContext.Request.Method.ToString();
             var uri = ultilityService.NormalizePath(actionContext.Request.RequestUri.AbsolutePath);
 
@@ -43,7 +43,6 @@ namespace Shopping
             var userToken = shoppingEntities.UserTokens.First(t => t.Name == token);
             var user = userToken.User;
             var role = shoppingEntities.Roles.Include(t => t.Apis).First(t => t.Id == user.RoleId);
-
 
             if (role == null)
             {

@@ -1,9 +1,10 @@
-﻿using System.Web.Http.Filters;
+﻿using System.Net;
+using System.Web.Http.Filters;
 using Microsoft.Practices.Unity;
+using Shopping.App_Start;
 using Shopping.Contexts.Auth.Applications.Interfaces;
-using System.Net;
 
-namespace Shopping.App_Start
+namespace Shopping
 {
     public class LoggerAttribute : ActionFilterAttribute
     {
@@ -20,7 +21,7 @@ namespace Shopping.App_Start
             {
                 if (actionExecutedContext.Response.StatusCode == HttpStatusCode.OK)
                 {
-                    var token = ultilityService.GetTokenFromHeaderHttpRequest(actionExecutedContext);
+                    var token = ultilityService.GetHeaderToken(actionExecutedContext);
                     ultilityService.Log(actionExecutedContext, token, true, "Thực hiện yêu cầu thành công");
                 }
             } 

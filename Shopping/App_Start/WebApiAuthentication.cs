@@ -32,7 +32,8 @@ namespace Shopping
             var request = context.Request;
             var publicApis = shoppingEntities.Apis.Where(t => t.Type == (int)Constant.TypeApi.Public).ToList();
 
-            // Nếu là PUBLIC API thì
+            // Nếu là PUBLIC API 
+
             if (publicApis.FirstOrDefault(t => t.Method == request.Method.ToString() 
                 && t.Uri == appService.NormalizePath(request.RequestUri.AbsolutePath)) != null)
             {
@@ -40,9 +41,9 @@ namespace Shopping
             }
 
 
-            // Nếu là PRIVATE API thì
+            // Nếu là PRIVATE API 
 
-            string token = appService.GetTokenFromHeaderHttpRequest(context);
+            string token = appService.GetHeaderToken(context);
             var userToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
 
             if (userToken == null)
