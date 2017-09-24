@@ -9,5 +9,7 @@
         }
 
         public static readonly string AccessToken = "access_token";
+
+        public static readonly string Root = "Root";
     }
 }

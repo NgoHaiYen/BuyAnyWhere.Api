@@ -10,6 +10,7 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
 
         public List<UserDto> UserDtos { get; set; }
         public List<ApiDto> ApiDtos { get; set; }
@@ -21,6 +22,7 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
         {
             this.Id = role.Id;
             this.Name = role.Name;
+            this.Description = role.Description;
 
             foreach(var arg in args)
             {
@@ -56,6 +58,7 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
             }
 
             role.Name = Name;
+            role.Description = Description;
 
             return role;          
         }

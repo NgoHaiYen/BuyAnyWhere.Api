@@ -95,6 +95,7 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="RoleApi">
           <Key>
@@ -643,6 +644,7 @@
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Users" Relationship="ShoppingModel.FK_User_Role" FromRole="Role" ToRole="User" />
           <NavigationProperty Name="Apis" Relationship="ShoppingModel.RoleApi" FromRole="Role" ToRole="Api" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SaleOff">
           <Key>
@@ -972,6 +974,7 @@
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="ShoppingModel.Role">
               <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
