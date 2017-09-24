@@ -6,7 +6,7 @@ using System.Data.Entity;
 
 namespace Shopping.Contexts.Auth.Applications.Controllers
 {
-    [RoutePrefix("api/Auth/Api")]
+    [RoutePrefix("api/Auth/Apis")]
     public class OperationController : ApiController
     {
         private readonly ShoppingEntities shoppingEntities;
@@ -26,7 +26,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             }
 
             var apis = apiFilterDto.SkipAndTake(apiFilterDto.ApplyTo(shoppingEntities.Apis.Include(t => t.Roles))).ToList();
-            var apiDtos = shoppingEntities.Apis.Select(t => new ApiDto(t, t.Roles)).ToList();
+            var apiDtos = apis.Select(t => new ApiDto(t, t.Roles)).ToList();
 
             return Ok(apiDtos);
         }

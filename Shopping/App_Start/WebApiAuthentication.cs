@@ -29,13 +29,13 @@ namespace Shopping
 
         public Task AuthenticateAsync(HttpAuthenticationContext context, CancellationToken cancellationToken)
         {
-            var request = context.Request;
             var publicApis = shoppingEntities.Apis.Where(t => t.Type == (int)Constant.TypeApi.Public).ToList();
+            var method = context.Request.Method.ToString();
+            var uri = appService.NormalizePath(context.Request.RequestUri.AbsolutePath);
 
             // Nếu là PUBLIC API 
 
-            if (publicApis.FirstOrDefault(t => t.Method == request.Method.ToString() 
-                && t.Uri == appService.NormalizePath(request.RequestUri.AbsolutePath)) != null)
+            if (publicApis.FirstOrDefault(t => t.Method == method && t.Uri == uri) != null)
             {
                 return Task.FromResult(0);
             }
