@@ -4,16 +4,36 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5c1b3a7471d34cee81edf92e540f9658" Name="Diagram1">
-        <EntityTypeShape EntityType="ShoppingModel.Logger" Width="1.5" PointX="0.75" PointY="4.75" />
-        <EntityTypeShape EntityType="ShoppingModel.Role" Width="1.5" PointX="3" PointY="1.125" />
-        <EntityTypeShape EntityType="ShoppingModel.sysdiagram" Width="1.5" PointX="2.75" PointY="4.75" />
-        <EntityTypeShape EntityType="ShoppingModel.UserToken" Width="1.5" PointX="7.5" PointY="1.125" />
-        <EntityTypeShape EntityType="ShoppingModel.Api" Width="1.5" PointX="0.75" PointY="1" />
-        <AssociationConnector Association="ShoppingModel.RoleApi" />
-        <EntityTypeShape EntityType="ShoppingModel.User" Width="1.5" PointX="5.25" PointY="0.875" />
+      <Diagram DiagramId="5c1b3a7471d34cee81edf92e540f9658" Name="Diagram1" ZoomLevel="37">
+        <EntityTypeShape EntityType="ShoppingModel.Api" Width="1.5" PointX="0.75" PointY="8" />
+        <EntityTypeShape EntityType="ShoppingModel.Category" Width="1.5" PointX="5.25" PointY="3.75" />
+        <EntityTypeShape EntityType="ShoppingModel.FavoriteCategory" Width="1.5" PointX="7.5" PointY="8" />
+        <EntityTypeShape EntityType="ShoppingModel.Logger" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ShoppingModel.Product" Width="1.5" PointX="12.75" PointY="2.375" />
+        <EntityTypeShape EntityType="ShoppingModel.PurchaseOrder" Width="1.5" PointX="12.75" PointY="7.375" />
+        <EntityTypeShape EntityType="ShoppingModel.PurchaseOrderDetail" Width="1.5" PointX="15" PointY="6.875" />
+        <EntityTypeShape EntityType="ShoppingModel.PurchaseOrderWorkFlow" Width="1.5" PointX="15" PointY="10.75" />
+        <EntityTypeShape EntityType="ShoppingModel.Role" Width="1.5" PointX="3" PointY="8.125" />
+        <EntityTypeShape EntityType="ShoppingModel.SaleOff" Width="1.5" PointX="15" PointY="2.875" />
+        <EntityTypeShape EntityType="ShoppingModel.Shop" Width="1.5" PointX="10.5" PointY="7.25" />
+        <EntityTypeShape EntityType="ShoppingModel.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ShoppingModel.User" Width="1.5" PointX="5.25" PointY="7.5" />
+        <EntityTypeShape EntityType="ShoppingModel.UserToken" Width="1.5" PointX="7.5" PointY="15.125" />
+        <AssociationConnector Association="ShoppingModel.FK_FavoriteCategory_Category" />
+        <AssociationConnector Association="ShoppingModel.FK_Product_Category" />
+        <AssociationConnector Association="ShoppingModel.FK_FavoriteCategory_User" />
+        <AssociationConnector Association="ShoppingModel.FK_Product_Shop" />
+        <AssociationConnector Association="ShoppingModel.FK_PurchaseOrderDetail_Product" />
+        <AssociationConnector Association="ShoppingModel.FK_SaleOff_Product" />
+        <AssociationConnector Association="ShoppingModel.FK_PurchaseOrder_Shop" />
+        <AssociationConnector Association="ShoppingModel.FK_PurchaseOrder_User" />
+        <AssociationConnector Association="ShoppingModel.FK_PurchaseOrderDetail_PurchaseOrder" />
+        <AssociationConnector Association="ShoppingModel.FK_PurchaseOrderWorkFlow_PurchaseOrder" />
         <AssociationConnector Association="ShoppingModel.FK_User_Role" />
+        <AssociationConnector Association="ShoppingModel.FK_Shop_User" />
         <AssociationConnector Association="ShoppingModel.FK_UserToken_User" />
+        <AssociationConnector Association="ShoppingModel.RoleApi" />
+        <AssociationConnector Association="ShoppingModel.ShopCategory" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

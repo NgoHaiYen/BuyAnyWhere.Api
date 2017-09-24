@@ -12,21 +12,26 @@ namespace Shopping.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class Category
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Role()
+        public Category()
         {
-            this.Users = new HashSet<User>();
-            this.Apis = new HashSet<Api>();
+            this.FavoriteCategories = new HashSet<FavoriteCategory>();
+            this.Products = new HashSet<Product>();
+            this.Shops = new HashSet<Shop>();
         }
     
         public System.Guid Id { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
+        public byte[] Icon { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<FavoriteCategory> FavoriteCategories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Api> Apis { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Shop> Shops { get; set; }
     }
 }

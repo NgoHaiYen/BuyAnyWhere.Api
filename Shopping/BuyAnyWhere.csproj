@@ -182,7 +182,31 @@
     <Compile Include="App_Start\WebApiAuthentication.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\HelpPageController.cs" />
     <Compile Include="Contexts\Auth\Applications\DTOs\UserFilterDto.cs" />
+    <Compile Include="Models\Category.cs">
+      <DependentUpon>ShoppingEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FavoriteCategory.cs">
+      <DependentUpon>ShoppingEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Product.cs">
+      <DependentUpon>ShoppingEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PurchaseOrder.cs">
+      <DependentUpon>ShoppingEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PurchaseOrderDetail.cs">
+      <DependentUpon>ShoppingEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PurchaseOrderWorkFlow.cs">
+      <DependentUpon>ShoppingEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Role.cs">
+      <DependentUpon>ShoppingEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SaleOff.cs">
+      <DependentUpon>ShoppingEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Shop.cs">
       <DependentUpon>ShoppingEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Ultilities\FilterDto.cs" />

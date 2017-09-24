@@ -12,21 +12,29 @@ namespace Shopping.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class PurchaseOrder
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Role()
+        public PurchaseOrder()
         {
-            this.Users = new HashSet<User>();
-            this.Apis = new HashSet<Api>();
+            this.PurchaseOrderDetails = new HashSet<PurchaseOrderDetail>();
+            this.PurchaseOrderWorkFlows = new HashSet<PurchaseOrderWorkFlow>();
         }
     
         public System.Guid Id { get; set; }
         public string Name { get; set; }
+        public string Phone { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<System.Guid> BuyerId { get; set; }
+        public Nullable<System.Guid> ShopId { get; set; }
+        public Nullable<int> WorkFlowLevel { get; set; }
+        public Nullable<int> WorkFlowStatus { get; set; }
     
+        public virtual Shop Shop { get; set; }
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Api> Apis { get; set; }
+        public virtual ICollection<PurchaseOrderWorkFlow> PurchaseOrderWorkFlows { get; set; }
     }
 }

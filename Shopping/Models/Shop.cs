@@ -12,21 +12,32 @@ namespace Shopping.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class Shop
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Role()
+        public Shop()
         {
-            this.Users = new HashSet<User>();
-            this.Apis = new HashSet<Api>();
+            this.Products = new HashSet<Product>();
+            this.PurchaseOrders = new HashSet<PurchaseOrder>();
+            this.Categories = new HashSet<Category>();
         }
     
         public System.Guid Id { get; set; }
+        public Nullable<System.Guid> OwnerId { get; set; }
         public string Name { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+        public string Website { get; set; }
+        public string Description { get; set; }
+        public Nullable<decimal> Rating { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Api> Apis { get; set; }
+        public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
+        public virtual User User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Category> Categories { get; set; }
     }
 }
