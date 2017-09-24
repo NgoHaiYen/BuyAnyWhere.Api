@@ -21,8 +21,14 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             this.shoppingEntities = shoppingEntities;
         }
 
+
+        /// <summary>  
+        ///  Xem danh sách thông tin tất cả các User, có thể Skip, Take, Order, Filter
+        /// </summary>
+
         [HttpGet]
         [Route("")]
+        [ResponseType(typeof(List<UserDto>))]
         public IHttpActionResult Get([FromUri] UserFilterDto userFilterDto)
         {
             if (userFilterDto == null)
@@ -36,6 +42,10 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             return Ok(userDtos);
         }
 
+
+        /// <summary>  
+        ///  Xem thông tin User cụ thể khi truyền vào userId
+        /// </summary>
         [HttpGet]
         [Route("{userId}")]
         public IHttpActionResult Get([FromUri] Guid userId)
@@ -49,6 +59,9 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             return Ok(userDto);
         }
 
+        /// <summary>  
+        ///  Tạo 1 User mới
+        /// </summary>
         [HttpPost]
         [Route("")]
         public IHttpActionResult Post([FromBody] UserDto userDto)
@@ -60,6 +73,9 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             return Get(user.Id);
         }
 
+        /// <summary>  
+        ///  Đếm số lượng User, truyền vào Filter
+        /// </summary>
         [HttpGet]
         [Route("Counter")]
         public IHttpActionResult Count([FromUri] UserFilterDto userFilterDto)
@@ -73,6 +89,10 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             return Ok(count);
         }
 
+
+        /// <summary>  
+        ///  Gán cho User 1 quyền, truyền vào userId và roleId
+        /// </summary>
         [HttpPut]
         [Route("{userId}/Role/{roleId}")]
         public IHttpActionResult PutRole([FromUri] Guid userId, [FromUri] Guid roleId)
