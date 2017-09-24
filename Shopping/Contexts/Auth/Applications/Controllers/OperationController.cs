@@ -20,6 +20,11 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         [Route("")]
         public IHttpActionResult Get([FromUri] ApiFilterDto apiFilterDto)
         {
+            if (apiFilterDto == null)
+            {
+                apiFilterDto = new ApiFilterDto();
+            }
+
             var apis = apiFilterDto.SkipAndTake(apiFilterDto.ApplyTo(shoppingEntities.Apis.Include(t => t.Roles))).ToList();
             var apiDtos = shoppingEntities.Apis.Select(t => new ApiDto(t, t.Roles)).ToList();
 
