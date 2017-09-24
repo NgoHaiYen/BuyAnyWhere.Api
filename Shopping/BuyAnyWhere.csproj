@@ -186,6 +186,8 @@
     <Compile Include="Contexts\Auth\Applications\DTOs\ApiFilterDto.cs" />
     <Compile Include="Contexts\Auth\Applications\DTOs\RoleFilterDto.cs" />
     <Compile Include="Contexts\Auth\Applications\DTOs\UserFilterDto.cs" />
+    <Compile Include="Contexts\Procurement\Applications\Controllers\CategoryController.cs" />
+    <Compile Include="Contexts\Procurement\Applications\Dtos\CategoryDto.cs" />
     <Compile Include="Models\Category.cs">
       <DependentUpon>ShoppingEntities.tt</DependentUpon>
     </Compile>
@@ -369,8 +371,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Contexts\Management\" />
-    <Folder Include="Contexts\Procurement\Applications\" />
-    <Folder Include="Contexts\Procurement\Services\" />
     <Folder Include="Views\HelpPage\" />
   </ItemGroup>
   <ItemGroup>
