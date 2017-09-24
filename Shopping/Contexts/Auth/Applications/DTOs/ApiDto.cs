@@ -11,7 +11,7 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
         public string Method { get; set; }
         public string Uri { get; set; }
         public string Name { get; set; }
-        public Constant.TypeApi Type { get; set; }
+        public Constant.ApiType Type { get; set; }
 
         public List<RoleDto> RoleDtos { get; set; }
 
@@ -26,7 +26,7 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
             this.Id = api.Id;
             this.Method = api.Method;
             this.Uri = api.Uri;
-            if (api.Type != null) this.Type = (Constant.TypeApi) api.Type;
+            if (api.Type != null) this.Type = (Constant.ApiType) api.Type;
 
             foreach(var arg in args)
             {

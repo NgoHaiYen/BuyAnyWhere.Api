@@ -2,7 +2,7 @@
 {
     public static class Constant
     {
-        public enum TypeApi
+        public enum ApiType
         {
             Public = 1,
             Private = 0

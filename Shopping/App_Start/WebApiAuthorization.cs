@@ -28,7 +28,7 @@ namespace Shopping
             var method = actionContext.Request.Method.ToString();
             var uri = ultilityService.NormalizePath(actionContext.Request.RequestUri.AbsolutePath);
 
-            var publicApis = shoppingEntities.Apis.Where(t => t.Type == (int) Constant.TypeApi.Public);
+            var publicApis = shoppingEntities.Apis.Where(t => t.Type == (int) Constant.ApiType.Public);
 
 
             // Nếu là PUBLIC API thì thành công

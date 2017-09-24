@@ -11,7 +11,7 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
     {
         public string Method { get; set; }
         public string Uri { get; set; }
-        public Constant.TypeApi? Type { get; set; }
+        public Constant.ApiType? Type { get; set; }
 
         public override IQueryable<Api> ApplyTo(IQueryable<Api> source)
         {

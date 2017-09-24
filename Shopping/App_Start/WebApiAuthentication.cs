@@ -29,7 +29,7 @@ namespace Shopping
 
         public Task AuthenticateAsync(HttpAuthenticationContext context, CancellationToken cancellationToken)
         {
-            var publicApis = shoppingEntities.Apis.Where(t => t.Type == (int)Constant.TypeApi.Public).ToList();
+            var publicApis = shoppingEntities.Apis.Where(t => t.Type == (int)Constant.ApiType.Public).ToList();
             var method = context.Request.Method.ToString();
             var uri = appService.NormalizePath(context.Request.RequestUri.AbsolutePath);
 
