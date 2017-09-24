@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Http;
-using Shopping.App_Start;
 using Shopping.Contexts.Auth.Applications.DTOs;
 using Shopping.Models;
-using Shopping.Ultilities;
 using System.Data.Entity;
 using System.Web.Http.Description;
 using System.Collections.Generic;
@@ -23,7 +21,8 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
 
         /// <summary>  
-        ///  Xem danh sách thông tin tất cả các User, có thể Skip, Take, Order, Filter
+        ///  Xem danh sách thông tin tất cả các User kèm Role của User đó
+        ///, có thể Skip, Take, Order, Filter
         /// </summary>
 
         [HttpGet]
@@ -55,7 +54,8 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             if (user == null)
                 throw new BadRequestException("Không tìm thấy User này");
 
-            var userDto = new UserDto(user, null, user.Role);
+            var userDto = new UserDto(user);
+
             return Ok(userDto);
         }
 
@@ -91,7 +91,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
 
         /// <summary>  
-        ///  Gán cho User 1 quyền, truyền vào userId và roleId
+        ///  Sửa quyền của User, truyền vào userId và roleId
         /// </summary>
         [HttpPut]
         [Route("{userId}/Role/{roleId}")]

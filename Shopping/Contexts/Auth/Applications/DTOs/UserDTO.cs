@@ -11,7 +11,7 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
         public string Name { get; set; }
 
         public string AccessToken { get; set; }
-        public RoleDto RoleDtos { get; set; }
+        public RoleDto RoleDto { get; set; }
 
 
         public UserDto() { }
@@ -30,7 +30,7 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
             {
                 if (arg is Role role)
                 {                 
-                    RoleDtos = new RoleDto(role);
+                    RoleDto = new RoleDto(role);
                 }
             }
         }

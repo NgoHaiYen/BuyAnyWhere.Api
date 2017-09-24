@@ -26,7 +26,7 @@
         </member>
         <member name="M:Shopping.Contexts.Auth.Applications.Controllers.UserController.PutRole(System.Guid,System.Guid)">
             <summary>  
-             Gán cho User 1 quyền, truyền vào userId và roleId
+             Sửa quyền của User, truyền vào userId và roleId
             </summary>
         </member>
         <member name="T:Shopping.App_Start.UnityConfig">

@@ -4,8 +4,13 @@
     {
         public enum ApiType
         {
-            Public = 1,
-            Private = 0
+            Private = 0,
+            Public = 1
+        }
+
+        public enum PurchaseOrderWorkFlowStatus
+        {
+            
         }
 
         public static readonly string AccessToken = "access_token";
