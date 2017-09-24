@@ -13,5 +13,12 @@ namespace Shopping.Contexts.Procurement.Applications.Dtos
         {
 
         }
+
+
+        public Category ToModel(Category category = null)
+        {
+
+            return null;
+        }
     }
 }

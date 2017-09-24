@@ -188,6 +188,7 @@
     <Compile Include="Contexts\Auth\Applications\DTOs\UserFilterDto.cs" />
     <Compile Include="Contexts\Procurement\Applications\Controllers\CategoryController.cs" />
     <Compile Include="Contexts\Procurement\Applications\Dtos\CategoryDto.cs" />
+    <Compile Include="Contexts\Procurement\Applications\Dtos\CategoryFilterDto.cs" />
     <Compile Include="Models\Category.cs">
       <DependentUpon>ShoppingEntities.tt</DependentUpon>
     </Compile>
