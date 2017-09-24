@@ -15,10 +15,7 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
         public List<ApiDto> ApiDtos { get; set; }
 
 
-        public RoleDto()
-        {
-
-        }
+        public RoleDto() { }
 
         public RoleDto(Role role, params object[] args)
         {
@@ -50,16 +47,17 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
             }
         }
 
-        public Role ToModel()
+        public Role ToModel(Role role = null)
         {
-            var role = new Role
+            if (role == null)
             {
-                Id = Guid.NewGuid(),
-                Name = Name
-            };
+                role = new Role();
+                role.Id = Guid.NewGuid();
+            }
 
-            return role;
+            role.Name = Name;
+
+            return role;          
         }
-
     }
 } 

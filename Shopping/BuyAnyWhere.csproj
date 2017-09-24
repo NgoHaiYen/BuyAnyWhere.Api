@@ -181,6 +181,8 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiAuthentication.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\HelpPageController.cs" />
+    <Compile Include="Contexts\Auth\Applications\Controllers\RoleController.cs" />
+    <Compile Include="Contexts\Auth\Applications\DTOs\RoleFilterDto.cs" />
     <Compile Include="Contexts\Auth\Applications\DTOs\UserFilterDto.cs" />
     <Compile Include="Models\Category.cs">
       <DependentUpon>ShoppingEntities.tt</DependentUpon>
@@ -365,7 +367,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Contexts\Management\" />
-    <Folder Include="Contexts\Procurement\" />
+    <Folder Include="Contexts\Procurement\Applications\" />
+    <Folder Include="Contexts\Procurement\Services\" />
     <Folder Include="Views\HelpPage\" />
   </ItemGroup>
   <ItemGroup>
