@@ -6,7 +6,7 @@ using System;
 
 namespace Shopping.Contexts.Auth.Applications.Controllers
 {
-    [RoutePrefix("api/Role")]
+    [RoutePrefix("api/Auth/Role")]
     public class RoleController : ApiController
     {
         private readonly ShoppingEntities shoppingEntities;
