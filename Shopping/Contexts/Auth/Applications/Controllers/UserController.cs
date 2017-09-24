@@ -6,6 +6,8 @@ using Shopping.Contexts.Auth.Applications.DTOs;
 using Shopping.Models;
 using Shopping.Ultilities;
 using System.Data.Entity;
+using System.Web.Http.Description;
+using System.Collections.Generic;
 
 namespace Shopping.Contexts.Auth.Applications.Controllers
 {
