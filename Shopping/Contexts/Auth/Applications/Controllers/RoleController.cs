@@ -3,6 +3,7 @@ using System.Web.Http;
 using Shopping.Models;
 using Shopping.Contexts.Auth.Applications.DTOs;
 using System;
+using System.Data.Entity;
 
 namespace Shopping.Contexts.Auth.Applications.Controllers
 {
@@ -25,8 +26,10 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
                 roleFilterDto = new RoleFilterDto();
             }
 
-            var roles = roleFilterDto.SkipAndTake(roleFilterDto.ApplyTo(shoppingEntities.Roles)).ToList();
-            var roleDtos = roles.Select(t => new RoleDto(t)).ToList();
+            var roles = roleFilterDto.SkipAndTake(roleFilterDto.ApplyTo(
+                shoppingEntities.Roles.Include(t => t.Users).Include(t => t.Apis))).ToList();
+
+            var roleDtos = roles.Select(t => new RoleDto(t, t.Users, t.Apis)).ToList();
 
             return Ok(roleDtos);
         }
@@ -36,6 +39,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         public IHttpActionResult Get([FromUri] Guid roleId)
         {
             var role = shoppingEntities.Roles.FirstOrDefault(t => t.Id == roleId);
+
             if (role == null)
             {
                 throw new BadRequestException("Role không tồn tại");

@@ -180,8 +180,10 @@
     <Compile Include="App_Start\LoggerAttribute.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiAuthentication.cs" />
+    <Compile Include="Contexts\Auth\Applications\Controllers\OperationController.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\HelpPageController.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\RoleController.cs" />
+    <Compile Include="Contexts\Auth\Applications\DTOs\ApiFilterDto.cs" />
     <Compile Include="Contexts\Auth\Applications\DTOs\RoleFilterDto.cs" />
     <Compile Include="Contexts\Auth\Applications\DTOs\UserFilterDto.cs" />
     <Compile Include="Models\Category.cs">

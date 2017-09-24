@@ -10,7 +10,7 @@ using Shopping.Models;
 namespace Shopping.Contexts.Auth.Applications.Controllers
 {
     [RoutePrefix("api/Auth/OAuth2")]
-    public class AuthController : ApiController
+    public class AuthController : OperationController
     {
         private readonly ShoppingEntities shoppingEntities;
 
