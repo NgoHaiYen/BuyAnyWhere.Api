@@ -21,7 +21,7 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
             this.shoppingEntities = shoppingEntities;
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("{userId}/FavoriteCategories/{categoryId}")]
         public IHttpActionResult PostFavoriteCategory([FromUri] Guid userId, [FromUri] Guid categoryId)
         {
@@ -44,14 +44,37 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
             favoriteCategory.User = user;
 
             shoppingEntities.SaveChanges();
-            return Ok();
+            return Ok(favoriteCategory);
         }
 
         [HttpDelete]
         [Route("{userId}/FavoriteCategories/{categoryId}")]
-        public IHttpActionResult DeleteFavoriteCategory([FromUri] Guid userId, [FromUri] Guid favoriteCategoryId)
+        public IHttpActionResult DeleteFavoriteCategory([FromUri] Guid userId, [FromUri] Guid categoryId)
         {
-            return Ok();
+            var user = shoppingEntities.Users.FirstOrDefault(t => t.Id == userId);
+            var category = shoppingEntities.Categories.FirstOrDefault(t => t.Id == categoryId);
+
+            if (user == null)
+            {
+                throw new BadRequestException("User khong ton tai");
+            }
+
+            if (category == null)
+            {
+                throw new BadRequestException("Category khong ton tai");
+            }
+
+            FavoriteCategory favoriteCategory = shoppingEntities.FavoriteCategories.FirstOrDefault(t => t.UserId == userId && t.CategoryId == categoryId);
+
+            if (favoriteCategory == null)
+            {
+                throw new BadRequestException("User chua thich Category nay");
+            }
+
+            shoppingEntities.FavoriteCategories.Remove(favoriteCategory);
+            shoppingEntities.SaveChanges();
+
+            return Ok(favoriteCategory);
         }
 
         [HttpGet]
