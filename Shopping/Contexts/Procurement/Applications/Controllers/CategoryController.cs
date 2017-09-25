@@ -57,5 +57,6 @@ namespace Shopping.Contexts.Procurement.Controllers.Applications
 
             return Ok(categoryDto);
         }
+
     }
 }
