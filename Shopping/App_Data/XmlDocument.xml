@@ -5,9 +5,10 @@
     </assembly>
     <members>
         <member name="M:Shopping.Contexts.Auth.Applications.Controllers.UserController.Get(Shopping.Contexts.Auth.Applications.DTOs.UserFilterDto)">
-            <summary>  
-             Xem danh sách thông tin tất cả các User, có thể Skip, Take, Order, Filter
-            </summary>
+             <summary>  
+              Xem danh sách thông tin tất cả các User kèm Role của User đó
+            , có thể Skip, Take, Order, Filter
+             </summary>
         </member>
         <member name="M:Shopping.Contexts.Auth.Applications.Controllers.UserController.Get(System.Guid)">
             <summary>  

@@ -182,6 +182,9 @@
     <Compile Include="Contexts\Auth\Applications\DTOs\RoleFilterDto.cs" />
     <Compile Include="Contexts\Auth\Applications\DTOs\UserFilterDto.cs" />
     <Compile Include="Contexts\Procurement\Applications\Controllers\CategoryController.cs" />
+    <Compile Include="Contexts\Procurement\Applications\Controllers\ProductController.cs" />
+    <Compile Include="Contexts\Procurement\Applications\Controllers\PurchaseOrderController.cs" />
+    <Compile Include="Contexts\Procurement\Applications\Dtos\ProductFilterDto.cs" />
     <Compile Include="Contexts\Procurement\Applications\Controllers\ShopController.cs" />
     <Compile Include="Contexts\Procurement\Applications\Dtos\CategoryDto.cs" />
     <Compile Include="Contexts\Procurement\Applications\Dtos\CategoryFilterDto.cs" />
@@ -375,6 +378,7 @@
   <ItemGroup>
     <Folder Include="Contexts\Management\" />
     <Folder Include="Views\HelpPage\" />
+    <Folder Include="Views\PurchaseOrder\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -18,7 +18,9 @@ namespace Shopping.Contexts.Procurement.Applications.Dtos
         public int? WorkFlowLevel { get; set; }
         public Constant.PurchaseOrderWorkFlowStatus WorkFlowStatus { get; set; }
 
-        public PurchaseOrderDto(PurchaseOrder purchaseOrder)
+        public List<PurchaseOrderDetailDto> PurchaseOrderDetailDtos { get; set; }
+
+        public PurchaseOrderDto(PurchaseOrder purchaseOrder, params object[] args)
         {
             Id = purchaseOrder.Id;
             Name = purchaseOrder.Name;
@@ -28,6 +30,18 @@ namespace Shopping.Contexts.Procurement.Applications.Dtos
             ShopId = purchaseOrder.ShopId;
             WorkFlowStatus = (Constant.PurchaseOrderWorkFlowStatus)purchaseOrder.WorkFlowStatus;
             WorkFlowLevel = purchaseOrder.WorkFlowLevel;
+
+            foreach(var arg in args)
+            {
+                if (arg is ICollection<PurchaseOrderDetail> purchaseOrderDetails)
+                {
+                    PurchaseOrderDetailDtos = new List<PurchaseOrderDetailDto>();
+                    foreach(var t in purchaseOrderDetails)
+                    {
+                        PurchaseOrderDetailDtos.Add(new PurchaseOrderDetailDto(t));
+                    }
+                }
+            }
         }
 
         public PurchaseOrder ToModel(PurchaseOrder purchaseOrder = null)
