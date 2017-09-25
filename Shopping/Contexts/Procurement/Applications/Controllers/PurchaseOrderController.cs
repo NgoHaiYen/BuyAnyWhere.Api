@@ -32,7 +32,7 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
         }
 
        [HttpGet]
-       [Route("purchaseOrderId")]
+       [Route("{purchaseOrderId}")]
        public IHttpActionResult Get([FromUri] Guid purchaseOrderId)
        {
             var purchaseOrder = shoppingEntities.PurchaseOrders.FirstOrDefault(t => t.Id == purchaseOrderId);

@@ -16,7 +16,7 @@ namespace Shopping.Models
     {
         public System.Guid Id { get; set; }
         public Nullable<System.Guid> PurchaseOrderId { get; set; }
-        public Nullable<decimal> Quantity { get; set; }
+        public Nullable<int> Quantity { get; set; }
         public Nullable<System.Guid> ProductId { get; set; }
     
         public virtual Product Product { get; set; }

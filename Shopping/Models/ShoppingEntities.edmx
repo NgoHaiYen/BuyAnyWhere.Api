@@ -75,7 +75,7 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="PurchaseOrderId" Type="uniqueidentifier" />
-          <Property Name="Quantity" Type="money" />
+          <Property Name="Quantity" Type="int" />
           <Property Name="ProductId" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="PurchaseOrderWorkFlow">
@@ -466,7 +466,6 @@
           <EntitySet Name="Loggers" EntityType="ShoppingModel.Logger" />
           <EntitySet Name="Products" EntityType="ShoppingModel.Product" />
           <EntitySet Name="PurchaseOrders" EntityType="ShoppingModel.PurchaseOrder" />
-          <EntitySet Name="PurchaseOrderDetails" EntityType="ShoppingModel.PurchaseOrderDetail" />
           <EntitySet Name="PurchaseOrderWorkFlows" EntityType="ShoppingModel.PurchaseOrderWorkFlow" />
           <EntitySet Name="Roles" EntityType="ShoppingModel.Role" />
           <EntitySet Name="SaleOffs" EntityType="ShoppingModel.SaleOff" />
@@ -490,10 +489,6 @@
             <End Role="Shop" EntitySet="Shops" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK_PurchaseOrderDetail_Product" Association="ShoppingModel.FK_PurchaseOrderDetail_Product">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_SaleOff_Product" Association="ShoppingModel.FK_SaleOff_Product">
             <End Role="Product" EntitySet="Products" />
             <End Role="SaleOff" EntitySet="SaleOffs" />
@@ -505,10 +500,6 @@
           <AssociationSet Name="FK_PurchaseOrder_User" Association="ShoppingModel.FK_PurchaseOrder_User">
             <End Role="User" EntitySet="Users" />
             <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PurchaseOrderDetail_PurchaseOrder" Association="ShoppingModel.FK_PurchaseOrderDetail_PurchaseOrder">
-            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
-            <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_PurchaseOrderWorkFlow_PurchaseOrder" Association="ShoppingModel.FK_PurchaseOrderWorkFlow_PurchaseOrder">
             <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
@@ -533,6 +524,15 @@
           <AssociationSet Name="ShopCategory" Association="ShoppingModel.ShopCategory">
             <End Role="Category" EntitySet="Categories" />
             <End Role="Shop" EntitySet="Shops" />
+          </AssociationSet>
+          <EntitySet Name="PurchaseOrderDetails" EntityType="ShoppingModel.PurchaseOrderDetail" />
+          <AssociationSet Name="FK_PurchaseOrderDetail_Product" Association="ShoppingModel.FK_PurchaseOrderDetail_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrderDetail_PurchaseOrder" Association="ShoppingModel.FK_PurchaseOrderDetail_PurchaseOrder">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+            <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetails" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Api">
@@ -593,8 +593,8 @@
           <Property Name="CategoryId" Type="Guid" />
           <NavigationProperty Name="Category" Relationship="ShoppingModel.FK_Product_Category" FromRole="Product" ToRole="Category" />
           <NavigationProperty Name="Shop" Relationship="ShoppingModel.FK_Product_Shop" FromRole="Product" ToRole="Shop" />
-          <NavigationProperty Name="PurchaseOrderDetails" Relationship="ShoppingModel.FK_PurchaseOrderDetail_Product" FromRole="Product" ToRole="PurchaseOrderDetail" />
           <NavigationProperty Name="SaleOffs" Relationship="ShoppingModel.FK_SaleOff_Product" FromRole="Product" ToRole="SaleOff" />
+          <NavigationProperty Name="PurchaseOrderDetails" Relationship="ShoppingModel.FK_PurchaseOrderDetail_Product" FromRole="Product" ToRole="PurchaseOrderDetail" />
         </EntityType>
         <EntityType Name="PurchaseOrder">
           <Key>
@@ -610,19 +610,8 @@
           <Property Name="WorkFlowStatus" Type="Int32" />
           <NavigationProperty Name="Shop" Relationship="ShoppingModel.FK_PurchaseOrder_Shop" FromRole="PurchaseOrder" ToRole="Shop" />
           <NavigationProperty Name="User" Relationship="ShoppingModel.FK_PurchaseOrder_User" FromRole="PurchaseOrder" ToRole="User" />
-          <NavigationProperty Name="PurchaseOrderDetails" Relationship="ShoppingModel.FK_PurchaseOrderDetail_PurchaseOrder" FromRole="PurchaseOrder" ToRole="PurchaseOrderDetail" />
           <NavigationProperty Name="PurchaseOrderWorkFlows" Relationship="ShoppingModel.FK_PurchaseOrderWorkFlow_PurchaseOrder" FromRole="PurchaseOrder" ToRole="PurchaseOrderWorkFlow" />
-        </EntityType>
-        <EntityType Name="PurchaseOrderDetail">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="PurchaseOrderId" Type="Guid" />
-          <Property Name="Quantity" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="ProductId" Type="Guid" />
-          <NavigationProperty Name="Product" Relationship="ShoppingModel.FK_PurchaseOrderDetail_Product" FromRole="PurchaseOrderDetail" ToRole="Product" />
-          <NavigationProperty Name="PurchaseOrder" Relationship="ShoppingModel.FK_PurchaseOrderDetail_PurchaseOrder" FromRole="PurchaseOrderDetail" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="PurchaseOrderDetails" Relationship="ShoppingModel.FK_PurchaseOrderDetail_PurchaseOrder" FromRole="PurchaseOrder" ToRole="PurchaseOrderDetail" />
         </EntityType>
         <EntityType Name="PurchaseOrderWorkFlow">
           <Key>
@@ -757,18 +746,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PurchaseOrderDetail_Product">
-          <End Type="ShoppingModel.Product" Role="Product" Multiplicity="0..1" />
-          <End Type="ShoppingModel.PurchaseOrderDetail" Role="PurchaseOrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PurchaseOrderDetail">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SaleOff_Product">
           <End Type="ShoppingModel.Product" Role="Product" Multiplicity="0..1" />
           <End Type="ShoppingModel.SaleOff" Role="SaleOff" Multiplicity="*" />
@@ -802,18 +779,6 @@
             </Principal>
             <Dependent Role="PurchaseOrder">
               <PropertyRef Name="BuyerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PurchaseOrderDetail_PurchaseOrder">
-          <End Type="ShoppingModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="0..1" />
-          <End Type="ShoppingModel.PurchaseOrderDetail" Role="PurchaseOrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PurchaseOrder">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PurchaseOrderDetail">
-              <PropertyRef Name="PurchaseOrderId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -872,6 +837,41 @@
         <Association Name="ShopCategory">
           <End Type="ShoppingModel.Category" Role="Category" Multiplicity="*" />
           <End Type="ShoppingModel.Shop" Role="Shop" Multiplicity="*" />
+        </Association>
+        <EntityType Name="PurchaseOrderDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="PurchaseOrderId" Type="Guid" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="ProductId" Type="Guid" />
+          <NavigationProperty Name="Product" Relationship="ShoppingModel.FK_PurchaseOrderDetail_Product" FromRole="PurchaseOrderDetail" ToRole="Product" />
+          <NavigationProperty Name="PurchaseOrder" Relationship="ShoppingModel.FK_PurchaseOrderDetail_PurchaseOrder" FromRole="PurchaseOrderDetail" ToRole="PurchaseOrder" />
+        </EntityType>
+        <Association Name="FK_PurchaseOrderDetail_Product">
+          <End Type="ShoppingModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="ShoppingModel.PurchaseOrderDetail" Role="PurchaseOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrderDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrderDetail_PurchaseOrder">
+          <End Type="ShoppingModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="0..1" />
+          <End Type="ShoppingModel.PurchaseOrderDetail" Role="PurchaseOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrderDetail">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -945,16 +945,6 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PurchaseOrderDetails">
-            <EntityTypeMapping TypeName="ShoppingModel.PurchaseOrderDetail">
-              <MappingFragment StoreEntitySet="PurchaseOrderDetail">
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1053,6 +1043,16 @@
               <ScalarProperty Name="Id" ColumnName="CategoryId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="PurchaseOrderDetails">
+            <EntityTypeMapping TypeName="ShoppingModel.PurchaseOrderDetail">
+              <MappingFragment StoreEntitySet="PurchaseOrderDetail">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

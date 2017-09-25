@@ -10,11 +10,13 @@ namespace Shopping.Contexts.Procurement.Applications.Dtos
     {
         public Guid Id { get; set; }
         public Guid? PurchaseOrderId { get; set; }
-        public decimal? Quantity { get; set; }
+        public int? Quantity { get; set; }
         public Guid? ProductId { get; set; }
 
         public ProductDto ProductDto { get; set; }
         public PurchaseOrderDto PurchaseOrderDto { get; set; }
+
+        public PurchaseOrderDetailDto() { }
 
         public PurchaseOrderDetailDto(PurchaseOrderDetail purchaseOrderDetail, params object[] args)
         {

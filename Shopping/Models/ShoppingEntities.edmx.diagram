@@ -11,7 +11,6 @@
         <EntityTypeShape EntityType="ShoppingModel.Logger" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="ShoppingModel.Product" Width="1.5" PointX="12.75" PointY="2.375" />
         <EntityTypeShape EntityType="ShoppingModel.PurchaseOrder" Width="1.5" PointX="12.75" PointY="7.375" />
-        <EntityTypeShape EntityType="ShoppingModel.PurchaseOrderDetail" Width="1.5" PointX="15" PointY="6.875" />
         <EntityTypeShape EntityType="ShoppingModel.PurchaseOrderWorkFlow" Width="1.5" PointX="15" PointY="10.75" />
         <EntityTypeShape EntityType="ShoppingModel.Role" Width="1.5" PointX="3" PointY="8.125" />
         <EntityTypeShape EntityType="ShoppingModel.SaleOff" Width="1.5" PointX="15" PointY="2.875" />
@@ -23,17 +22,18 @@
         <AssociationConnector Association="ShoppingModel.FK_Product_Category" />
         <AssociationConnector Association="ShoppingModel.FK_FavoriteCategory_User" />
         <AssociationConnector Association="ShoppingModel.FK_Product_Shop" />
-        <AssociationConnector Association="ShoppingModel.FK_PurchaseOrderDetail_Product" />
         <AssociationConnector Association="ShoppingModel.FK_SaleOff_Product" />
         <AssociationConnector Association="ShoppingModel.FK_PurchaseOrder_Shop" />
         <AssociationConnector Association="ShoppingModel.FK_PurchaseOrder_User" />
-        <AssociationConnector Association="ShoppingModel.FK_PurchaseOrderDetail_PurchaseOrder" />
         <AssociationConnector Association="ShoppingModel.FK_PurchaseOrderWorkFlow_PurchaseOrder" />
         <AssociationConnector Association="ShoppingModel.FK_User_Role" />
         <AssociationConnector Association="ShoppingModel.FK_Shop_User" />
         <AssociationConnector Association="ShoppingModel.FK_UserToken_User" />
         <AssociationConnector Association="ShoppingModel.RoleApi" />
         <AssociationConnector Association="ShoppingModel.ShopCategory" />
+        <EntityTypeShape EntityType="ShoppingModel.PurchaseOrderDetail" Width="1.5" PointX="15" PointY="6.5" />
+        <AssociationConnector Association="ShoppingModel.FK_PurchaseOrderDetail_Product" />
+        <AssociationConnector Association="ShoppingModel.FK_PurchaseOrderDetail_PurchaseOrder" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

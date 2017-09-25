@@ -17,8 +17,8 @@ namespace Shopping.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
-            this.PurchaseOrderDetails = new HashSet<PurchaseOrderDetail>();
             this.SaleOffs = new HashSet<SaleOff>();
+            this.PurchaseOrderDetails = new HashSet<PurchaseOrderDetail>();
         }
     
         public System.Guid Id { get; set; }
@@ -33,8 +33,8 @@ namespace Shopping.Models
         public virtual Category Category { get; set; }
         public virtual Shop Shop { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SaleOff> SaleOffs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
     }
 }
