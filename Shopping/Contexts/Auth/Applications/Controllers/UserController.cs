@@ -6,6 +6,7 @@ using Shopping.Models;
 using System.Data.Entity;
 using System.Web.Http.Description;
 using System.Collections.Generic;
+using Shopping.Contexts.Procurement.Applications.Dtos;
 
 namespace Shopping.Contexts.Auth.Applications.Controllers
 {
@@ -113,7 +114,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         /// <summary>  
         ///  Thêm 1 category vào danh sách yêu thích cho user
         /// </summary>
-        [HttpPost]
+        [HttpPut]
         [Route("{userId}/FavoriteCategories/")]
         public IHttpActionResult PostFavoriteCategory([FromUri] Guid userId, [FromUri] Guid categoryId)
         {
@@ -154,7 +155,9 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
             var favoriteCategories = users.FavoriteCategories.Select(t => t.Category).ToList();
 
-            return Ok(favoriteCategories);
+            var favoriteCategoryDtos = favoriteCategories.ConvertAll(t => new CategoryDto(t));
+
+            return Ok(favoriteCategoryDtos);
         }
 
     }
