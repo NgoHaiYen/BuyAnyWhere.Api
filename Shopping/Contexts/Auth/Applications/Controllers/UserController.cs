@@ -94,7 +94,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         ///  Sửa quyền của User, truyền vào userId và roleId
         /// </summary>
         [HttpPut]
-        [Route("{userId}/Role/{roleId}")]
+        [Route("{userId}/Roles/{roleId}")]
         public IHttpActionResult PutRole([FromUri] Guid userId, [FromUri] Guid roleId)
         {
             var user = shoppingEntities.Users.FirstOrDefault(t => t.Id == userId);
@@ -114,7 +114,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         ///  Thêm 1 category vào danh sách yêu thích cho user
         /// </summary>
         [HttpPost]
-        [Route("{userId}/FavoriteCategories/{categoryId}")]
+        [Route("{userId}/FavoriteCategories/")]
         public IHttpActionResult PostFavoriteCategory([FromUri] Guid userId, [FromUri] Guid categoryId)
         {
             var user = shoppingEntities.Users.FirstOrDefault(t => t.Id == userId);
@@ -138,5 +138,24 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             shoppingEntities.SaveChanges();
             return Ok();
         }
+
+        [HttpDelete]
+        [Route("{userId}/FavoriteCategories/{favoriteCategoryId}")]
+        public IHttpActionResult DeleteFavoriteCategory([FromUri] Guid userId, [FromUri] Guid favoriteCategoryId)
+        {
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("{userId}/FavoriteCategories")]
+        public IHttpActionResult GetFavoriteCategories([FromUri] Guid userId)
+        {
+            var users = shoppingEntities.Users.Include(t => t.FavoriteCategories.Select(u => u.Category)).FirstOrDefault(t => t.Id == userId);
+
+            var favoriteCategories = users.FavoriteCategories.Select(t => t.Category).ToList();
+
+            return Ok(favoriteCategories);
+        }
+
     }
 }
