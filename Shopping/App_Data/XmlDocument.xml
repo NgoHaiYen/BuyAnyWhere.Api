@@ -30,6 +30,11 @@
              Sửa quyền của User, truyền vào userId và roleId
             </summary>
         </member>
+        <member name="M:Shopping.Contexts.Auth.Applications.Controllers.UserController.PostFavoriteCategory(System.Guid,System.Guid)">
+            <summary>  
+             Thêm 1 category vào danh sách yêu thích cho user
+            </summary>
+        </member>
         <member name="T:Shopping.App_Start.UnityConfig">
             <summary>
             Specifies the Unity configuration for the main container.

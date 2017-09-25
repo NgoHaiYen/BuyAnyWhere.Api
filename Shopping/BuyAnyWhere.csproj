@@ -184,6 +184,7 @@
     <Compile Include="Contexts\Procurement\Applications\Controllers\CategoryController.cs" />
     <Compile Include="Contexts\Procurement\Applications\Controllers\ProductController.cs" />
     <Compile Include="Contexts\Procurement\Applications\Controllers\PurchaseOrderController.cs" />
+    <Compile Include="Contexts\Procurement\Applications\Controllers\UserController.cs" />
     <Compile Include="Contexts\Procurement\Applications\Dtos\ProductFilterDto.cs" />
     <Compile Include="Contexts\Procurement\Applications\Controllers\ShopController.cs" />
     <Compile Include="Contexts\Procurement\Applications\Dtos\CategoryDto.cs" />
@@ -193,6 +194,7 @@
     <Compile Include="Contexts\Procurement\Applications\Dtos\PurchaseOrderDto.cs" />
     <Compile Include="Contexts\Procurement\Applications\Dtos\SaleOffDto.cs" />
     <Compile Include="Contexts\Procurement\Applications\Dtos\ShopDto.cs" />
+    <Compile Include="Contexts\Procurement\Applications\Dtos\UserDto.cs" />
     <Compile Include="Models\Category.cs">
       <DependentUpon>ShoppingEntities.tt</DependentUpon>
     </Compile>

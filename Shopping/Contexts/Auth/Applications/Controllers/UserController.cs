@@ -6,7 +6,6 @@ using Shopping.Models;
 using System.Data.Entity;
 using System.Web.Http.Description;
 using System.Collections.Generic;
-using Shopping.Contexts.Procurement.Applications.Dtos;
 
 namespace Shopping.Contexts.Auth.Applications.Controllers
 {
@@ -21,14 +20,9 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         }
 
 
-        /// <summary>  
-        ///  Xem danh sách thông tin tất cả các User kèm Role của User đó
-        ///, có thể Skip, Take, Order, Filter
-        /// </summary>
 
         [HttpGet]
         [Route("")]
-        [ResponseType(typeof(List<UserDto>))]
         public IHttpActionResult Get([FromUri] UserFilterDto userFilterDto)
         {
             if (userFilterDto == null)
@@ -43,9 +37,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         }
 
 
-        /// <summary>  
-        ///  Xem thông tin User cụ thể khi truyền vào userId
-        /// </summary>
+
         [HttpGet]
         [Route("{userId}")]
         public IHttpActionResult Get([FromUri] Guid userId)
@@ -60,11 +52,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             return Ok(userDto);
         }
 
-        /// <summary>  
-        ///  Tạo 1 User mới
-        /// </summary>
-        [HttpPost]
-        [Route("")]
+
         public IHttpActionResult Post([FromBody] UserDto userDto)
         {
             var user = userDto.ToModel();
@@ -74,9 +62,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             return Get(user.Id);
         }
 
-        /// <summary>  
-        ///  Đếm số lượng User, truyền vào Filter
-        /// </summary>
+
         [HttpGet]
         [Route("Counter")]
         public IHttpActionResult Count([FromUri] UserFilterDto userFilterDto)
@@ -91,9 +77,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         }
 
 
-        /// <summary>  
-        ///  Sửa quyền của User, truyền vào userId và roleId
-        /// </summary>
+
         [HttpPut]
         [Route("{userId}/Roles/{roleId}")]
         public IHttpActionResult PutRole([FromUri] Guid userId, [FromUri] Guid roleId)
@@ -109,56 +93,5 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             shoppingEntities.SaveChanges();
             return Get(userId);
         }
-
-
-        /// <summary>  
-        ///  Thêm 1 category vào danh sách yêu thích cho user
-        /// </summary>
-        [HttpPut]
-        [Route("{userId}/FavoriteCategories/{categoryId}")]
-        public IHttpActionResult PostFavoriteCategory([FromUri] Guid userId, [FromUri] Guid categoryId)
-        {
-            var user = shoppingEntities.Users.FirstOrDefault(t => t.Id == userId);
-            var category = shoppingEntities.Categories.FirstOrDefault(t => t.Id == categoryId);
-
-            if (user == null)
-            {
-                throw new BadRequestException("User khong ton tai");
-            }
-
-            if (category == null)
-            {
-                throw new BadRequestException("Category khong ton tai");
-            }
-
-            FavoriteCategory favoriteCategory = new FavoriteCategory();
-            favoriteCategory.Id = Guid.NewGuid();
-            favoriteCategory.Category = category;
-            favoriteCategory.User = user;
-
-            shoppingEntities.SaveChanges();
-            return Ok();
-        }
-
-        [HttpDelete]
-        [Route("{userId}/FavoriteCategories/{categoryId}")]
-        public IHttpActionResult DeleteFavoriteCategory([FromUri] Guid userId, [FromUri] Guid favoriteCategoryId)
-        {
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("{userId}/FavoriteCategories")]
-        public IHttpActionResult GetFavoriteCategories([FromUri] Guid userId)
-        {
-            var users = shoppingEntities.Users.Include(t => t.FavoriteCategories.Select(u => u.Category)).FirstOrDefault(t => t.Id == userId);
-
-            var favoriteCategories = users.FavoriteCategories.Select(t => t.Category).ToList();
-
-            var favoriteCategoryDtos = favoriteCategories.ConvertAll(t => new CategoryDto(t));
-
-            return Ok(favoriteCategoryDtos);
-        }
-
     }
 }

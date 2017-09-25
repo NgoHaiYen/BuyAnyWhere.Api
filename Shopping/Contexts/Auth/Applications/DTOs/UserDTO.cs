@@ -17,8 +17,7 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
         public UserDto() { }
 
 
-        public UserDto(User user, string accessToken = null, 
-            params object[] args)
+        public UserDto(User user, string accessToken = null, params object[] args)
         {
             Id = user.Id;          
             Name = user.Name;
