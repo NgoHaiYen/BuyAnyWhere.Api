@@ -8,7 +8,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
     {
         public ActionResult Index()
         {
-            return Redirect("~/Help");
+            return Redirect("~/swagger");
         }
     }
 }
