@@ -184,7 +184,7 @@
     <Compile Include="Contexts\Procurement\Applications\Controllers\CategoryController.cs" />
     <Compile Include="Contexts\Procurement\Applications\Controllers\ProductController.cs" />
     <Compile Include="Contexts\Procurement\Applications\Controllers\PurchaseOrderController.cs" />
-    <Compile Include="Contexts\Procurement\Applications\Controllers\UserController.cs" />
+    <Compile Include="Contexts\Procurement\Applications\Controllers\CustomerController.cs" />
     <Compile Include="Contexts\Procurement\Applications\Dtos\ProductFilterDto.cs" />
     <Compile Include="Contexts\Procurement\Applications\Controllers\ShopController.cs" />
     <Compile Include="Contexts\Procurement\Applications\Dtos\CategoryDto.cs" />

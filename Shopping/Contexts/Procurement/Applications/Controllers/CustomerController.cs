@@ -12,11 +12,11 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
 {
 
     [RoutePrefix("api/Procurement/Users")]
-    public class UserController : ApiController
+    public class CustomerController : ApiController
     {
         private readonly ShoppingEntities shoppingEntities;
 
-        public UserController(ShoppingEntities shoppingEntities)
+        public CustomerController(ShoppingEntities shoppingEntities)
         {
             this.shoppingEntities = shoppingEntities;
         }
