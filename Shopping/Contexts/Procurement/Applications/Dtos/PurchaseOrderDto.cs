@@ -16,9 +16,11 @@ namespace Shopping.Contexts.Procurement.Applications.Dtos
         public Guid? BuyerId { get; set; }
         public Guid? ShopId { get; set; }
         public int? WorkFlowLevel { get; set; }
-        public Constant.PurchaseOrderWorkFlowStatus WorkFlowStatus { get; set; }
+        public Constant.PurchaseOrderWorkFlowStatus? WorkFlowStatus { get; set; }
 
         public List<PurchaseOrderDetailDto> PurchaseOrderDetailDtos { get; set; }
+
+        public PurchaseOrderDto() { }
 
         public PurchaseOrderDto(PurchaseOrder purchaseOrder, params object[] args)
         {
