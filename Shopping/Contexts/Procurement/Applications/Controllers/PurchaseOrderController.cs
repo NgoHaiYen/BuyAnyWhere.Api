@@ -30,5 +30,20 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
 
             return Ok(purchaseOrderDtos);
         }
+
+       [HttpGet]
+       [Route("purchaseOrderId")]
+       public IHttpActionResult Get([FromUri] Guid purchaseOrderId)
+       {
+            var purchaseOrder = shoppingEntities.PurchaseOrders.FirstOrDefault(t => t.Id == purchaseOrderId);
+            if (purchaseOrder == null)
+            {
+                throw new BadRequestException("Không có PurchaseOrder");
+            }
+
+            var purchaseOrderDto = new PurchaseOrderDto(purchaseOrder, purchaseOrder.PurchaseOrderDetails, purchaseOrder.PurchaseOrderWorkFlows);
+
+            return Ok(purchaseOrderDto);
+       }
     }
 }
