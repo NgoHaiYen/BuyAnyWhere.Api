@@ -115,7 +115,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         ///  Thêm 1 category vào danh sách yêu thích cho user
         /// </summary>
         [HttpPut]
-        [Route("{userId}/FavoriteCategories/")]
+        [Route("{userId}/FavoriteCategories/{categoryId}")]
         public IHttpActionResult PostFavoriteCategory([FromUri] Guid userId, [FromUri] Guid categoryId)
         {
             var user = shoppingEntities.Users.FirstOrDefault(t => t.Id == userId);
@@ -141,7 +141,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         }
 
         [HttpDelete]
-        [Route("{userId}/FavoriteCategories/{favoriteCategoryId}")]
+        [Route("{userId}/FavoriteCategories/{categoryId}")]
         public IHttpActionResult DeleteFavoriteCategory([FromUri] Guid userId, [FromUri] Guid favoriteCategoryId)
         {
             return Ok();

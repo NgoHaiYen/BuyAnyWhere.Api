@@ -188,7 +188,6 @@
     <Compile Include="Contexts\Procurement\Applications\Controllers\ShopController.cs" />
     <Compile Include="Contexts\Procurement\Applications\Dtos\CategoryDto.cs" />
     <Compile Include="Contexts\Procurement\Applications\Dtos\CategoryFilterDto.cs" />
-    <Compile Include="Contexts\Procurement\Applications\Dtos\FavoriteCategoryDto.cs" />
     <Compile Include="Contexts\Procurement\Applications\Dtos\ProductDto.cs" />
     <Compile Include="Contexts\Procurement\Applications\Dtos\PurchaseOrderDetailDto.cs" />
     <Compile Include="Contexts\Procurement\Applications\Dtos\PurchaseOrderDto.cs" />
