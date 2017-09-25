@@ -108,5 +108,35 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             shoppingEntities.SaveChanges();
             return Get(userId);
         }
+
+
+        /// <summary>  
+        ///  Thêm 1 category vào danh sách yêu thích cho user
+        /// </summary>
+        [HttpPost]
+        [Route("{userId}/FavoriteCategories/{categoryId}")]
+        public IHttpActionResult PostFavoriteCategory([FromUri] Guid userId, [FromUri] Guid categoryId)
+        {
+            var user = shoppingEntities.Users.FirstOrDefault(t => t.Id == userId);
+            var category = shoppingEntities.Categories.FirstOrDefault(t => t.Id == categoryId);
+
+            if (user == null)
+            {
+                throw new BadRequestException("User khong ton tai");
+            }
+
+            if (category == null)
+            {
+                throw new BadRequestException("Category khong ton tai");
+            }
+
+            FavoriteCategory favoriteCategory = new FavoriteCategory();
+            favoriteCategory.Id = Guid.NewGuid();
+            favoriteCategory.Category = category;
+            favoriteCategory.User = user;
+
+            shoppingEntities.SaveChanges();
+            return Ok();
+        }
     }
 }
