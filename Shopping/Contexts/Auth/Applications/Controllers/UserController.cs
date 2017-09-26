@@ -74,6 +74,8 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         }
 
 
+        [HttpPost]
+        [Route("")]
         public IHttpActionResult Post([FromBody] UserDto userDto)
         {
             var user = userDto.ToModel();
