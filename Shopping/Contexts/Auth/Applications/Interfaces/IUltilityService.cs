@@ -14,6 +14,7 @@ namespace Shopping.Contexts.Auth.Applications.Interfaces
 
         string NormalizePath(string path);
         User GetUserForLogging(string token);
+        User GetUserFromToken(string token);
         void Log(object context, string headerToken, bool success, string reason);
     }
 }

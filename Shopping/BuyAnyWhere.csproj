@@ -182,7 +182,6 @@
     <Compile Include="Contexts\Auth\Applications\Controllers\OperationController.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\HelpPageController.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\RoleController.cs" />
-    <Compile Include="Ultilities\DomainController.cs" />
     <Compile Include="Contexts\Auth\Applications\DTOs\ApiFilterDto.cs" />
     <Compile Include="Contexts\Auth\Applications\DTOs\RoleFilterDto.cs" />
     <Compile Include="Contexts\Auth\Applications\DTOs\UserFilterDto.cs" />
@@ -201,6 +200,9 @@
     <Compile Include="Contexts\Procurement\Applications\Dtos\ShopDto.cs" />
     <Compile Include="Contexts\Procurement\Applications\Dtos\UserDto.cs" />
     <Compile Include="Models\Category.cs">
+      <DependentUpon>ShoppingEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CloudToken.cs">
       <DependentUpon>ShoppingEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FavoriteCategory.cs">
@@ -227,7 +229,6 @@
     <Compile Include="Models\Shop.cs">
       <DependentUpon>ShoppingEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Ultilities\Dtos\DomainDto.cs" />
     <Compile Include="Ultilities\FilterDto.cs" />
     <Compile Include="Ultilities\UltilityService.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\AuthController.cs" />

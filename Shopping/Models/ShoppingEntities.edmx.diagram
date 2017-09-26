@@ -34,6 +34,8 @@
         <EntityTypeShape EntityType="ShoppingModel.PurchaseOrderDetail" Width="1.5" PointX="15" PointY="6.5" />
         <AssociationConnector Association="ShoppingModel.FK_PurchaseOrderDetail_Product" />
         <AssociationConnector Association="ShoppingModel.FK_PurchaseOrderDetail_PurchaseOrder" />
+        <EntityTypeShape EntityType="ShoppingModel.CloudToken" Width="1.5" PointX="7.5" PointY="11.125" />
+        <AssociationConnector Association="ShoppingModel.FK_CloudToken_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

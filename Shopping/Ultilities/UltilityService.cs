@@ -84,6 +84,13 @@ namespace Shopping.Ultilities
             return user;
         }
 
+        public User GetUserFromToken(string token)
+        {
+            var userToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
+            var user = userToken.User;
+
+            return user;
+        }
 
         public void Log(object context, string headerToken, bool success, string reason)
         {

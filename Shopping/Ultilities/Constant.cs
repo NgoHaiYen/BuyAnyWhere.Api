@@ -10,7 +10,8 @@
 
         public enum PurchaseOrderWorkFlowStatus
         {
-            
+            Rejected = 0,
+            Approved = 1
         }
 
         public static readonly string AccessToken = "access_token";

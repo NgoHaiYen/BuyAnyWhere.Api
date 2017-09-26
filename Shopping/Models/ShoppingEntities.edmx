@@ -23,6 +23,14 @@
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Icon" Type="image" />
         </EntityType>
+        <EntityType Name="CloudToken">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="UserId" Type="uniqueidentifier" />
+        </EntityType>
         <EntityType Name="FavoriteCategory">
           <Key>
             <PropertyRef Name="Id" />
@@ -165,6 +173,18 @@
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="UserId" Type="uniqueidentifier" />
         </EntityType>
+        <Association Name="FK_CloudToken_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="CloudToken" Type="Self.CloudToken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CloudToken">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FavoriteCategory_Category">
           <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
           <End Role="FavoriteCategory" Type="Self.FavoriteCategory" Multiplicity="*" />
@@ -372,6 +392,7 @@
         <EntityContainer Name="ShoppingModelStoreContainer">
           <EntitySet Name="Api" EntityType="Self.Api" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CloudToken" EntityType="Self.CloudToken" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FavoriteCategory" EntityType="Self.FavoriteCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Logger" EntityType="Self.Logger" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
@@ -386,6 +407,10 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserToken" EntityType="Self.UserToken" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CloudToken_User" Association="Self.FK_CloudToken_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="CloudToken" EntitySet="CloudToken" />
+          </AssociationSet>
           <AssociationSet Name="FK_FavoriteCategory_Category" Association="Self.FK_FavoriteCategory_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="FavoriteCategory" EntitySet="FavoriteCategory" />
@@ -533,6 +558,11 @@
           <AssociationSet Name="FK_PurchaseOrderDetail_PurchaseOrder" Association="ShoppingModel.FK_PurchaseOrderDetail_PurchaseOrder">
             <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
             <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetails" />
+          </AssociationSet>
+          <EntitySet Name="CloudTokens" EntityType="ShoppingModel.CloudToken" />
+          <AssociationSet Name="FK_CloudToken_User" Association="ShoppingModel.FK_CloudToken_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="CloudToken" EntitySet="CloudTokens" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Api">
@@ -688,6 +718,7 @@
           <NavigationProperty Name="Role" Relationship="ShoppingModel.FK_User_Role" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="Shops" Relationship="ShoppingModel.FK_Shop_User" FromRole="User" ToRole="Shop" />
           <NavigationProperty Name="UserTokens" Relationship="ShoppingModel.FK_UserToken_User" FromRole="User" ToRole="UserToken" />
+          <NavigationProperty Name="CloudTokens" Relationship="ShoppingModel.FK_CloudToken_User" FromRole="User" ToRole="CloudToken" />
         </EntityType>
         <EntityType Name="UserToken">
           <Key>
@@ -873,6 +904,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CloudToken">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Guid" />
+          <NavigationProperty Name="User" Relationship="ShoppingModel.FK_CloudToken_User" FromRole="CloudToken" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_CloudToken_User">
+          <End Type="ShoppingModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="ShoppingModel.CloudToken" Role="CloudToken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CloudToken">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1049,6 +1101,15 @@
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CloudTokens">
+            <EntityTypeMapping TypeName="ShoppingModel.CloudToken">
+              <MappingFragment StoreEntitySet="CloudToken">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

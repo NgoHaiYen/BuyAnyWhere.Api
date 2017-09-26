@@ -39,5 +39,6 @@ namespace Shopping.Models
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserToken> UserTokens { get; set; }
         public virtual DbSet<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
+        public virtual DbSet<CloudToken> CloudTokens { get; set; }
     }
 }

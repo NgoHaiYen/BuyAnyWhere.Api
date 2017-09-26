@@ -6,6 +6,9 @@ using Shopping.Models;
 using System.Data.Entity;
 using System.Web.Http.Description;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Shopping.Contexts.Auth.Applications.Interfaces;
+using System.Web;
 
 namespace Shopping.Contexts.Auth.Applications.Controllers
 {
@@ -14,23 +17,40 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
     {
         private readonly ShoppingEntities shoppingEntities;
 
+        private readonly IUltilityService ultilityService;
+
         public UserController(ShoppingEntities shoppingEntities)
         {
             this.shoppingEntities = shoppingEntities;
         }
+        
+        [HttpPost]
+        [Route("Users/me/Tokens")]
+        public IHttpActionResult PostCloudToken([FromBody] string cloudToken)
+        {
+            var token = ultilityService.GetHeaderToken(HttpContext.Current);
+            var user = ultilityService.GetUserFromToken(token);
 
+            var cdt = new CloudToken();
+            cdt.Id = Guid.NewGuid();
+            cdt.Name = cloudToken;
+            user.CloudTokens.Add(cdt);
 
+            shoppingEntities.SaveChanges();
+
+            return Ok(new UserDto(user));
+        }
 
         [HttpGet]
         [Route("")]
-        public IHttpActionResult Get([FromUri] UserFilterDto userFilterDto)
+        public async Task<IHttpActionResult> GetAsync([FromUri] UserFilterDto userFilterDto)
         {
             if (userFilterDto == null)
             {
                 userFilterDto = new UserFilterDto();
             }
 
-            var users = userFilterDto.SkipAndTake(userFilterDto.ApplyTo(shoppingEntities.Users.Include(t => t.Role))).ToList();
+            var users = await userFilterDto.SkipAndTake(userFilterDto.ApplyTo(shoppingEntities.Users.AsNoTracking().Include(t => t.Role))).ToListAsync();
             var userDtos = users.ConvertAll(t => new UserDto(t, null, t.Role));
 
             return Ok(userDtos);

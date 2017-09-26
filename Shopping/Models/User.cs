@@ -21,6 +21,7 @@ namespace Shopping.Models
             this.PurchaseOrders = new HashSet<PurchaseOrder>();
             this.Shops = new HashSet<Shop>();
             this.UserTokens = new HashSet<UserToken>();
+            this.CloudTokens = new HashSet<CloudToken>();
         }
     
         public System.Guid Id { get; set; }
@@ -38,5 +39,7 @@ namespace Shopping.Models
         public virtual ICollection<Shop> Shops { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserToken> UserTokens { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CloudToken> CloudTokens { get; set; }
     }
 }
