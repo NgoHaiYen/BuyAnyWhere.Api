@@ -46,6 +46,10 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             {
                 using (var transaction = shoppingEntities.Database.BeginTransaction())
                 {
+
+                    shoppingEntities.Apis.RemoveRange(shoppingEntities.Apis);
+                    shoppingEntities.SaveChanges();
+
                     try
                     {
                         foreach (ApiDescription apiDescription in apiDescriptions)
