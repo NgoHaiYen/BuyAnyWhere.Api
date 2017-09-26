@@ -11,7 +11,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         // GET: HelpPage
         public ActionResult Index()
         {
-            return Redirect("~/swagger");
+            return View();
         }
     }
 }

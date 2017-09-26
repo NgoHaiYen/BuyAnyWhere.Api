@@ -11,18 +11,21 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
         public string Name { get; set; }
 
         public string AccessToken { get; set; }
+        public string CloudToken { get; set; }
+
         public RoleDto RoleDto { get; set; }
 
 
         public UserDto() { }
 
 
-        public UserDto(User user, string accessToken = null, params object[] args)
+        public UserDto(User user, string accessToken = null, string cloudToken = null, params object[] args)
         {
             Id = user.Id;          
             Name = user.Name;
             FacebookId = user.FacebookId;
             AccessToken = accessToken;
+            CloudToken = cloudToken;
             GoogleId = user.GoogleId;
             
             foreach (var arg in args)

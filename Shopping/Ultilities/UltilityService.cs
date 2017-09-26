@@ -87,6 +87,12 @@ namespace Shopping.Ultilities
         public User GetUserFromToken(string token)
         {
             var userToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
+
+            if (userToken == null)
+            {
+                throw new BadRequestException("Token khong hop le");
+            }
+
             var user = userToken.User;
 
             return user;
