@@ -46,8 +46,6 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             {
                 using (var transaction = shoppingEntities.Database.BeginTransaction())
                 {
-                    var rol
-
                     try
                     {
                         foreach (ApiDescription apiDescription in apiDescriptions)

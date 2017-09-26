@@ -35,8 +35,9 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             var cdt = new CloudToken();
             cdt.Id = Guid.NewGuid();
             cdt.Name = cloudToken;
-            user.CloudTokens.Add(cdt);
+            cdt.UserId = user.Id;
 
+            shoppingEntities.CloudTokens.Add(cdt);
             shoppingEntities.SaveChanges();
 
             return Ok(new UserDto(user, null, cloudToken));
