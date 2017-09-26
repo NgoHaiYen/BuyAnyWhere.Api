@@ -75,7 +75,7 @@ namespace Shopping.Ultilities
 
                 if (userToken == null)
                 {
-                    user = new User {Name = "Người dùng sai Token"};
+                    user = new User {Name = "Người dùng sai Access Token"};
                 }
 
                 if (userToken != null) user = userToken.User;
@@ -90,7 +90,7 @@ namespace Shopping.Ultilities
 
             if (userToken == null)
             {
-                throw new BadRequestException("Token khong hop le");
+                throw new BadRequestException("Access Token khong hop le");
             }
 
             var user = userToken.User;
