@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuyAnyWhere", "Shopping\BuyAnyWhere.csproj", "{5BF474FD-A78C-493F-AF79-F5F8A0D61141}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuyAnyWhere.Test", "BuyAnyWhere.Test\BuyAnyWhere.Test.csproj", "{0AD2318D-6F80-45FA-B685-892204A595DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{5BF474FD-A78C-493F-AF79-F5F8A0D61141}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BF474FD-A78C-493F-AF79-F5F8A0D61141}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BF474FD-A78C-493F-AF79-F5F8A0D61141}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AD2318D-6F80-45FA-B685-892204A595DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AD2318D-6F80-45FA-B685-892204A595DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AD2318D-6F80-45FA-B685-892204A595DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AD2318D-6F80-45FA-B685-892204A595DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

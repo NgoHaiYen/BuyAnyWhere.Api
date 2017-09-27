@@ -383,7 +383,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Contexts\Management\" />
     <Folder Include="Views\HelpPage\" />
     <Folder Include="Views\PurchaseOrder\" />
   </ItemGroup>
