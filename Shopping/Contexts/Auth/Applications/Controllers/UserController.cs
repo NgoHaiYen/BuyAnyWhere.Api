@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Shopping.Contexts.Auth.Applications.Interfaces;
 using System.Web;
+using Shopping.Contexts.Procurement.Applications.Interfaces;
 
 namespace Shopping.Contexts.Auth.Applications.Controllers
 {
@@ -19,9 +20,13 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
         private readonly IUltilityService ultilityService;
 
-        public UserController(ShoppingEntities shoppingEntities, IUltilityService ultilityService)
+        private readonly INotificationService notificationService;
+
+        public UserController(ShoppingEntities shoppingEntities, IUltilityService ultilityService
+            , INotificationService notificationService)
         {
             this.shoppingEntities = shoppingEntities;
+            this.notificationService = notificationService;
             this.ultilityService = ultilityService;
         }
         
@@ -30,10 +35,19 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         public IHttpActionResult PostCloudToken([FromBody] string cloudToken)
         {
             var token = ultilityService.GetHeaderToken(HttpContext.Current);
-            var user = ultilityService.GetUserFromToken(token);
+
+            var userToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
+
+            if (userToken == null)
+            {
+                throw new BadRequestException("Access token khong hop le");
+            }
+
+            var user = userToken.User;
             user.CloudToken = cloudToken;
-            shoppingEntities.Entry<User>(user).State = EntityState.Modified;
             shoppingEntities.SaveChanges();
+
+            notificationService.Notify("Hello", "World", cloudToken);
             return Ok(new UserDto(user));
         }
 
