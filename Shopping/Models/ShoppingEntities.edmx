@@ -23,14 +23,6 @@
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Icon" Type="image" />
         </EntityType>
-        <EntityType Name="CloudToken">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" />
-          <Property Name="UserId" Type="uniqueidentifier" />
-        </EntityType>
         <EntityType Name="FavoriteCategory">
           <Key>
             <PropertyRef Name="Id" />
@@ -164,6 +156,7 @@
           <Property Name="FacebookId" Type="nvarchar(max)" />
           <Property Name="GoogleId" Type="nvarchar(max)" />
           <Property Name="RoleId" Type="uniqueidentifier" />
+          <Property Name="CloudToken" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="UserToken">
           <Key>
@@ -173,18 +166,6 @@
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="UserId" Type="uniqueidentifier" />
         </EntityType>
-        <Association Name="FK_CloudToken_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
-          <End Role="CloudToken" Type="Self.CloudToken" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CloudToken">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_FavoriteCategory_Category">
           <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
           <End Role="FavoriteCategory" Type="Self.FavoriteCategory" Multiplicity="*" />
@@ -392,7 +373,6 @@
         <EntityContainer Name="ShoppingModelStoreContainer">
           <EntitySet Name="Api" EntityType="Self.Api" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CloudToken" EntityType="Self.CloudToken" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FavoriteCategory" EntityType="Self.FavoriteCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Logger" EntityType="Self.Logger" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
@@ -407,10 +387,6 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserToken" EntityType="Self.UserToken" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_CloudToken_User" Association="Self.FK_CloudToken_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="CloudToken" EntitySet="CloudToken" />
-          </AssociationSet>
           <AssociationSet Name="FK_FavoriteCategory_Category" Association="Self.FK_FavoriteCategory_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="FavoriteCategory" EntitySet="FavoriteCategory" />
@@ -488,9 +464,9 @@
           <EntitySet Name="Apis" EntityType="ShoppingModel.Api" />
           <EntitySet Name="Categories" EntityType="ShoppingModel.Category" />
           <EntitySet Name="FavoriteCategories" EntityType="ShoppingModel.FavoriteCategory" />
-          <EntitySet Name="Loggers" EntityType="ShoppingModel.Logger" />
           <EntitySet Name="Products" EntityType="ShoppingModel.Product" />
           <EntitySet Name="PurchaseOrders" EntityType="ShoppingModel.PurchaseOrder" />
+          <EntitySet Name="PurchaseOrderDetails" EntityType="ShoppingModel.PurchaseOrderDetail" />
           <EntitySet Name="PurchaseOrderWorkFlows" EntityType="ShoppingModel.PurchaseOrderWorkFlow" />
           <EntitySet Name="Roles" EntityType="ShoppingModel.Role" />
           <EntitySet Name="SaleOffs" EntityType="ShoppingModel.SaleOff" />
@@ -514,6 +490,10 @@
             <End Role="Shop" EntitySet="Shops" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrderDetail_Product" Association="ShoppingModel.FK_PurchaseOrderDetail_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_SaleOff_Product" Association="ShoppingModel.FK_SaleOff_Product">
             <End Role="Product" EntitySet="Products" />
             <End Role="SaleOff" EntitySet="SaleOffs" />
@@ -525,6 +505,10 @@
           <AssociationSet Name="FK_PurchaseOrder_User" Association="ShoppingModel.FK_PurchaseOrder_User">
             <End Role="User" EntitySet="Users" />
             <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrderDetail_PurchaseOrder" Association="ShoppingModel.FK_PurchaseOrderDetail_PurchaseOrder">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+            <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_PurchaseOrderWorkFlow_PurchaseOrder" Association="ShoppingModel.FK_PurchaseOrderWorkFlow_PurchaseOrder">
             <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
@@ -550,20 +534,7 @@
             <End Role="Category" EntitySet="Categories" />
             <End Role="Shop" EntitySet="Shops" />
           </AssociationSet>
-          <EntitySet Name="PurchaseOrderDetails" EntityType="ShoppingModel.PurchaseOrderDetail" />
-          <AssociationSet Name="FK_PurchaseOrderDetail_Product" Association="ShoppingModel.FK_PurchaseOrderDetail_Product">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PurchaseOrderDetail_PurchaseOrder" Association="ShoppingModel.FK_PurchaseOrderDetail_PurchaseOrder">
-            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
-            <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetails" />
-          </AssociationSet>
-          <EntitySet Name="CloudTokens" EntityType="ShoppingModel.CloudToken" />
-          <AssociationSet Name="FK_CloudToken_User" Association="ShoppingModel.FK_CloudToken_User">
-            <End Role="User" EntitySet="Users" />
-            <End Role="CloudToken" EntitySet="CloudTokens" />
-          </AssociationSet>
+          <EntitySet Name="Loggers" EntityType="ShoppingModel.Logger" />
         </EntityContainer>
         <EntityType Name="Api">
           <Key>
@@ -597,18 +568,6 @@
           <NavigationProperty Name="Category" Relationship="ShoppingModel.FK_FavoriteCategory_Category" FromRole="FavoriteCategory" ToRole="Category" />
           <NavigationProperty Name="User" Relationship="ShoppingModel.FK_FavoriteCategory_User" FromRole="FavoriteCategory" ToRole="User" />
         </EntityType>
-        <EntityType Name="Logger">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ApiMethod" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DateTime" Type="DateTime" Precision="3" />
-          <Property Name="ApiUri" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Success" Type="Boolean" />
-          <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="Id" />
@@ -623,8 +582,8 @@
           <Property Name="CategoryId" Type="Guid" />
           <NavigationProperty Name="Category" Relationship="ShoppingModel.FK_Product_Category" FromRole="Product" ToRole="Category" />
           <NavigationProperty Name="Shop" Relationship="ShoppingModel.FK_Product_Shop" FromRole="Product" ToRole="Shop" />
-          <NavigationProperty Name="SaleOffs" Relationship="ShoppingModel.FK_SaleOff_Product" FromRole="Product" ToRole="SaleOff" />
           <NavigationProperty Name="PurchaseOrderDetails" Relationship="ShoppingModel.FK_PurchaseOrderDetail_Product" FromRole="Product" ToRole="PurchaseOrderDetail" />
+          <NavigationProperty Name="SaleOffs" Relationship="ShoppingModel.FK_SaleOff_Product" FromRole="Product" ToRole="SaleOff" />
         </EntityType>
         <EntityType Name="PurchaseOrder">
           <Key>
@@ -640,8 +599,19 @@
           <Property Name="WorkFlowStatus" Type="Int32" />
           <NavigationProperty Name="Shop" Relationship="ShoppingModel.FK_PurchaseOrder_Shop" FromRole="PurchaseOrder" ToRole="Shop" />
           <NavigationProperty Name="User" Relationship="ShoppingModel.FK_PurchaseOrder_User" FromRole="PurchaseOrder" ToRole="User" />
-          <NavigationProperty Name="PurchaseOrderWorkFlows" Relationship="ShoppingModel.FK_PurchaseOrderWorkFlow_PurchaseOrder" FromRole="PurchaseOrder" ToRole="PurchaseOrderWorkFlow" />
           <NavigationProperty Name="PurchaseOrderDetails" Relationship="ShoppingModel.FK_PurchaseOrderDetail_PurchaseOrder" FromRole="PurchaseOrder" ToRole="PurchaseOrderDetail" />
+          <NavigationProperty Name="PurchaseOrderWorkFlows" Relationship="ShoppingModel.FK_PurchaseOrderWorkFlow_PurchaseOrder" FromRole="PurchaseOrder" ToRole="PurchaseOrderWorkFlow" />
+        </EntityType>
+        <EntityType Name="PurchaseOrderDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="PurchaseOrderId" Type="Guid" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="ProductId" Type="Guid" />
+          <NavigationProperty Name="Product" Relationship="ShoppingModel.FK_PurchaseOrderDetail_Product" FromRole="PurchaseOrderDetail" ToRole="Product" />
+          <NavigationProperty Name="PurchaseOrder" Relationship="ShoppingModel.FK_PurchaseOrderDetail_PurchaseOrder" FromRole="PurchaseOrderDetail" ToRole="PurchaseOrder" />
         </EntityType>
         <EntityType Name="PurchaseOrderWorkFlow">
           <Key>
@@ -661,9 +631,9 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Users" Relationship="ShoppingModel.FK_User_Role" FromRole="Role" ToRole="User" />
           <NavigationProperty Name="Apis" Relationship="ShoppingModel.RoleApi" FromRole="Role" ToRole="Api" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SaleOff">
           <Key>
@@ -713,12 +683,12 @@
           <Property Name="FacebookId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="GoogleId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="RoleId" Type="Guid" />
+          <Property Name="CloudToken" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="FavoriteCategories" Relationship="ShoppingModel.FK_FavoriteCategory_User" FromRole="User" ToRole="FavoriteCategory" />
           <NavigationProperty Name="PurchaseOrders" Relationship="ShoppingModel.FK_PurchaseOrder_User" FromRole="User" ToRole="PurchaseOrder" />
           <NavigationProperty Name="Role" Relationship="ShoppingModel.FK_User_Role" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="Shops" Relationship="ShoppingModel.FK_Shop_User" FromRole="User" ToRole="Shop" />
           <NavigationProperty Name="UserTokens" Relationship="ShoppingModel.FK_UserToken_User" FromRole="User" ToRole="UserToken" />
-          <NavigationProperty Name="CloudTokens" Relationship="ShoppingModel.FK_CloudToken_User" FromRole="User" ToRole="CloudToken" />
         </EntityType>
         <EntityType Name="UserToken">
           <Key>
@@ -777,6 +747,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PurchaseOrderDetail_Product">
+          <End Type="ShoppingModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="ShoppingModel.PurchaseOrderDetail" Role="PurchaseOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrderDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SaleOff_Product">
           <End Type="ShoppingModel.Product" Role="Product" Multiplicity="0..1" />
           <End Type="ShoppingModel.SaleOff" Role="SaleOff" Multiplicity="*" />
@@ -810,6 +792,18 @@
             </Principal>
             <Dependent Role="PurchaseOrder">
               <PropertyRef Name="BuyerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrderDetail_PurchaseOrder">
+          <End Type="ShoppingModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="0..1" />
+          <End Type="ShoppingModel.PurchaseOrderDetail" Role="PurchaseOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrderDetail">
+              <PropertyRef Name="PurchaseOrderId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -869,62 +863,18 @@
           <End Type="ShoppingModel.Category" Role="Category" Multiplicity="*" />
           <End Type="ShoppingModel.Shop" Role="Shop" Multiplicity="*" />
         </Association>
-        <EntityType Name="PurchaseOrderDetail">
+        <EntityType Name="Logger">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="PurchaseOrderId" Type="Guid" />
-          <Property Name="Quantity" Type="Int32" />
-          <Property Name="ProductId" Type="Guid" />
-          <NavigationProperty Name="Product" Relationship="ShoppingModel.FK_PurchaseOrderDetail_Product" FromRole="PurchaseOrderDetail" ToRole="Product" />
-          <NavigationProperty Name="PurchaseOrder" Relationship="ShoppingModel.FK_PurchaseOrderDetail_PurchaseOrder" FromRole="PurchaseOrderDetail" ToRole="PurchaseOrder" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ApiMethod" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateTime" Type="DateTime" Precision="3" />
+          <Property Name="ApiUri" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Success" Type="Boolean" />
+          <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <Association Name="FK_PurchaseOrderDetail_Product">
-          <End Type="ShoppingModel.Product" Role="Product" Multiplicity="0..1" />
-          <End Type="ShoppingModel.PurchaseOrderDetail" Role="PurchaseOrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PurchaseOrderDetail">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PurchaseOrderDetail_PurchaseOrder">
-          <End Type="ShoppingModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="0..1" />
-          <End Type="ShoppingModel.PurchaseOrderDetail" Role="PurchaseOrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PurchaseOrder">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PurchaseOrderDetail">
-              <PropertyRef Name="PurchaseOrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="CloudToken">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="UserId" Type="Guid" />
-          <NavigationProperty Name="User" Relationship="ShoppingModel.FK_CloudToken_User" FromRole="CloudToken" ToRole="User" />
-        </EntityType>
-        <Association Name="FK_CloudToken_User">
-          <End Type="ShoppingModel.User" Role="User" Multiplicity="0..1" />
-          <End Type="ShoppingModel.CloudToken" Role="CloudToken" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CloudToken">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -960,19 +910,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Loggers">
-            <EntityTypeMapping TypeName="ShoppingModel.Logger">
-              <MappingFragment StoreEntitySet="Logger">
-                <ScalarProperty Name="Reason" ColumnName="Reason" />
-                <ScalarProperty Name="Success" ColumnName="Success" />
-                <ScalarProperty Name="ApiUri" ColumnName="ApiUri" />
-                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
-                <ScalarProperty Name="ApiMethod" ColumnName="ApiMethod" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="ShoppingModel.Product">
               <MappingFragment StoreEntitySet="Product">
@@ -997,6 +934,16 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseOrderDetails">
+            <EntityTypeMapping TypeName="ShoppingModel.PurchaseOrderDetail">
+              <MappingFragment StoreEntitySet="PurchaseOrderDetail">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1062,6 +1009,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="ShoppingModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="CloudToken" ColumnName="CloudToken" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="GoogleId" ColumnName="GoogleId" />
                 <ScalarProperty Name="FacebookId" ColumnName="FacebookId" />
@@ -1095,21 +1043,15 @@
               <ScalarProperty Name="Id" ColumnName="CategoryId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="PurchaseOrderDetails">
-            <EntityTypeMapping TypeName="ShoppingModel.PurchaseOrderDetail">
-              <MappingFragment StoreEntitySet="PurchaseOrderDetail">
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CloudTokens">
-            <EntityTypeMapping TypeName="ShoppingModel.CloudToken">
-              <MappingFragment StoreEntitySet="CloudToken">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
+          <EntitySetMapping Name="Loggers">
+            <EntityTypeMapping TypeName="ShoppingModel.Logger">
+              <MappingFragment StoreEntitySet="Logger">
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="ApiUri" ColumnName="ApiUri" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="ApiMethod" ColumnName="ApiMethod" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

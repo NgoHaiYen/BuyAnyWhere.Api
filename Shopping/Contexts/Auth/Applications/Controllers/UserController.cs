@@ -25,22 +25,16 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             this.ultilityService = ultilityService;
         }
         
-        [HttpPost]
-        [Route("current/CloundTokens")]
+        [HttpPut]
+        [Route("current/CloundToken")]
         public IHttpActionResult PostCloudToken([FromBody] string cloudToken)
         {
             var token = ultilityService.GetHeaderToken(HttpContext.Current);
             var user = ultilityService.GetUserFromToken(token);
-
-            var cdt = new CloudToken();
-            cdt.Id = Guid.NewGuid();
-            cdt.Name = cloudToken;
-            cdt.UserId = user.Id;
-
-            shoppingEntities.CloudTokens.Add(cdt);
+            user.CloudToken = cloudToken;
+            shoppingEntities.Entry<User>(user).State = EntityState.Modified;
             shoppingEntities.SaveChanges();
-
-            return Ok(new UserDto(user, null, cloudToken));
+            return Ok(new UserDto(user));
         }
 
         [HttpGet]
@@ -53,7 +47,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             }
 
             var users = await userFilterDto.SkipAndTake(userFilterDto.ApplyTo(shoppingEntities.Users.AsNoTracking().Include(t => t.Role))).ToListAsync();
-            var userDtos = users.ConvertAll(t => new UserDto(t, null, null, t.Role));
+            var userDtos = users.ConvertAll(t => new UserDto(t, t.Role));
 
             return Ok(userDtos);
         }

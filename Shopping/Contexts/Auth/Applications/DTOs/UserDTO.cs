@@ -19,13 +19,12 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
         public UserDto() { }
 
 
-        public UserDto(User user, string accessToken = null, string cloudToken = null, params object[] args)
+        public UserDto(User user, params object[] args)
         {
             Id = user.Id;          
             Name = user.Name;
             FacebookId = user.FacebookId;
-            AccessToken = accessToken;
-            CloudToken = cloudToken;
+            CloudToken = user.CloudToken;
             GoogleId = user.GoogleId;
             
             foreach (var arg in args)
@@ -44,7 +43,8 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
                 Id = Guid.NewGuid(),
                 Name = Name,
                 FacebookId = FacebookId,
-                GoogleId = GoogleId
+                GoogleId = GoogleId,
+                CloudToken = CloudToken
             };
 
 

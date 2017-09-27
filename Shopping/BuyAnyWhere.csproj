@@ -202,9 +202,6 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>ShoppingEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CloudToken.cs">
-      <DependentUpon>ShoppingEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\FavoriteCategory.cs">
       <DependentUpon>ShoppingEntities.tt</DependentUpon>
     </Compile>
