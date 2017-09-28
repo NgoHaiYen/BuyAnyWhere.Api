@@ -16,7 +16,7 @@ namespace Shopping.Contexts.Procurement.Applications.Dtos
         public Guid? BuyerId { get; set; }
         public Guid? ShopId { get; set; }
         public int? WorkFlowLevel { get; set; }
-        public Constant.PurchaseOrderWorkFlowStatus? WorkFlowStatus { get; set; }
+        public Constant.WorkFlowStatus? WorkFlowStatus { get; set; }
 
         public List<PurchaseOrderDetailDto> PurchaseOrderDetailDtos { get; set; }
         public List<PurchaseOrderWorkFlowDto> PurchaseOrderWorkFlowDtos { get; set; }
@@ -31,7 +31,7 @@ namespace Shopping.Contexts.Procurement.Applications.Dtos
             CreatedDate = purchaseOrder.CreatedDate;
             BuyerId = purchaseOrder.BuyerId;
             ShopId = purchaseOrder.ShopId;
-            WorkFlowStatus = (Constant.PurchaseOrderWorkFlowStatus)purchaseOrder.WorkFlowStatus;
+            WorkFlowStatus = (Constant.WorkFlowStatus)purchaseOrder.WorkFlowStatus;
             WorkFlowLevel = purchaseOrder.WorkFlowLevel;
 
             foreach(var arg in args)

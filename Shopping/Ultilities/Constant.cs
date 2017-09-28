@@ -8,7 +8,14 @@
             Public = 1
         }
 
-        public enum PurchaseOrderWorkFlowStatus
+        
+        public enum Status
+        {
+            Rejected = 0,
+            Running = 1,      
+        }
+
+        public enum WorkFlowStatus
         {
             Rejected = 0,
             Approved = 1

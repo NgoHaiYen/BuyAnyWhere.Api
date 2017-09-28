@@ -103,7 +103,7 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
 
         [HttpGet]
         [Route("current/PurchaseOrders/All")]
-        public IHttpActionResult GetCurrentAllPurchaseOrders()
+        public IHttpActionResult GetCurrentUserAllPurchaseOrders()
         {
             var token = ultilityService.GetHeaderToken(HttpContext.Current);
 
@@ -124,9 +124,99 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
             return Ok(purchaseOrderDtos);
         }
 
+        [HttpPost]
+        [Route("current/PurchaseOrders")]
+        public IHttpActionResult PostCurrentUserPurchaseOrder([FromBody] PurchaseOrderDto purchaseOrderDto)
+        {
+            var token = ultilityService.GetHeaderToken(HttpContext.Current);
+
+            var userToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
+
+            if (userToken == null)
+            {
+                throw new BadRequestException("Access token khong hop le");
+            }
+
+            var user = userToken.User;
+
+            using (ShoppingEntities shoppingEntities = new ShoppingEntities())
+            {
+                using (var transaction = shoppingEntities.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var purchaseOrder = purchaseOrderDto.ToModel();
+                        purchaseOrder.WorkFlowStatus = (int)Constant.Status.Running;
+                        purchaseOrder.WorkFlowLevel = 1;
+
+                        List<PurchaseOrderDetail> purchaseOrderDetails = purchaseOrderDto.PurchaseOrderDetailDtos.ConvertAll(t => t.ToModel());
+
+                        shoppingEntities.PurchaseOrders.Add(purchaseOrder);
+                        shoppingEntities.PurchaseOrderDetails.AddRange(purchaseOrderDetails);
+
+                        shoppingEntities.PurchaseOrderWorkFlows.Add(
+                            new PurchaseOrderWorkFlow {
+                                Id = Guid.NewGuid(),
+                                UserId = user.Id,
+                                Level = 1,
+                                Status = (int)Constant.WorkFlowStatus.Approved,
+                                Reason = "",
+                                PurchaseOrderId = purchaseOrder.Id
+                            });
+
+                        shoppingEntities.SaveChanges();
+                        transaction.Commit();
+                    }
+                    catch (Exception e)
+                    {
+                        transaction.Rollback();
+                    }
+                }
+            }
+
+            return Ok();
+        }
+
+        //[HttpDelete]
+        //[Route("current/PurchaseOrders/{purchaseOrderId}")]
+        //public IHttpActionResult Delete([FromUri] Guid purchaseOrderId)
+        //{
+        //    var token = ultilityService.GetHeaderToken(HttpContext.Current);
+
+        //    var userToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
+
+        //    if (userToken == null)
+        //    {
+        //        throw new BadRequestException("Access token khong hop le");
+        //    }
+
+        //    var user = userToken.User;
+
+        //    var purchaseOrder = shoppingEntities.PurchaseOrders
+        //        .Include(t => t.PurchaseOrderDetails)
+        //        .Include(t => t.PurchaseOrderWorkFlows)
+        //        .FirstOrDefault(t => t.BuyerId == user.Id && t.Id == purchaseOrderId
+        //        && t.WorkFlowLevel == 1);
+
+        //    if (purchaseOrder == null)
+        //    {
+        //        throw new BadRequestException("PurchaseOrder không hợp lệ");
+        //    }
+
+        //    purchaseOrder.WorkFlowStatus = (int)Constant.PurchaseOrderWorkFlowStatus.Rejected;
+
+
+        //    PurchaseOrderWorkFlow purchaseOrderWork = new PurchaseOrderWorkFlow();
+        //    purchaseOrderWork.Id = Guid.NewGuid();
+        //    purchaseOrderWork.
+
+        //    return Ok();
+        //}
+
+
         [HttpGet]
         [Route("current/PurchaseOrders/Deleted")]
-        public IHttpActionResult GetCurrentDeletedPurchaseOrders()
+        public IHttpActionResult GetCurrentUserDeletedPurchaseOrders()
         {
             var token = ultilityService.GetHeaderToken(HttpContext.Current);
 
@@ -143,7 +233,7 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
                 .Include(t => t.PurchaseOrderDetails)
                 .Include(t => t.PurchaseOrderWorkFlows)
                 .Where(t => t.BuyerId == user.Id && t.WorkFlowLevel == 1 
-                    && t.WorkFlowStatus == (int)Constant.PurchaseOrderWorkFlowStatus.Rejected)
+                    && t.WorkFlowStatus == (int)Constant.WorkFlowStatus.Rejected)
                 .ToList();
 
             var purchaseOrderDtos = purchaseOrders.ConvertAll(t => new PurchaseOrderDto(t, t.PurchaseOrderDetails, t.PurchaseOrderWorkFlows));
