@@ -32,7 +32,7 @@ namespace Shopping.Contexts.Procurement.Applications.Dtos
             }
         }
 
-        public SaleOff ToModel(SaleOff saleOff)
+        public SaleOff ToModel(SaleOff saleOff = null)
         {
             if (saleOff == null)
             {
