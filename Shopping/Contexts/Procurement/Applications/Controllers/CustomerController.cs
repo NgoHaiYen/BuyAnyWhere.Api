@@ -21,7 +21,7 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
             this.shoppingEntities = shoppingEntities;
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("{userId}/FavoriteCategories/{categoryId}")]
         public IHttpActionResult PostFavoriteCategory([FromUri] Guid userId, [FromUri] Guid categoryId)
         {
@@ -38,13 +38,19 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
                 throw new BadRequestException("Category khong ton tai");
             }
 
-            FavoriteCategory favoriteCategory = new FavoriteCategory();
-            favoriteCategory.Id = Guid.NewGuid();
-            favoriteCategory.Category = category;
-            favoriteCategory.User = user;
+            if (shoppingEntities.FavoriteCategories.FirstOrDefault(t => t.UserId == user.Id && t.CategoryId == category.Id) == null)
+            {
+                FavoriteCategory favoriteCategory = new FavoriteCategory();
+                favoriteCategory.Id = Guid.NewGuid();
+                favoriteCategory.Category = category;
+                favoriteCategory.User = user;
+                shoppingEntities.FavoriteCategories.Add(favoriteCategory);
 
-            shoppingEntities.SaveChanges();
-            return Ok(favoriteCategory);
+                shoppingEntities.SaveChanges();
+            } 
+
+
+            return Ok(new CategoryDto(category));
         }
 
         [HttpDelete]
@@ -74,7 +80,7 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
             shoppingEntities.FavoriteCategories.Remove(favoriteCategory);
             shoppingEntities.SaveChanges();
 
-            return Ok(favoriteCategory);
+            return Ok(new CategoryDto(category));
         }
 
         [HttpGet]
