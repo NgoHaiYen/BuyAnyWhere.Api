@@ -16,8 +16,9 @@ namespace Shopping.Contexts.Procurement.Applications.Dtos
         public DateTime? CreatedDate { get; set; }
         public Guid? ShopId { get; set; }
         public Guid? CategoryId { get; set; }
+        public SaleOffDto SaleOffDto { get; set; }
 
-        public ProductDto(Product product)
+        public ProductDto(Product product, params object[] args)
         {
             Id = product.Id;
             Name = product.Name;
@@ -27,6 +28,14 @@ namespace Shopping.Contexts.Procurement.Applications.Dtos
             CreatedDate = product.CreatedDate;
             ShopId = product.ShopId;
             CategoryId = product.CategoryId;
+
+            foreach(var arg in args)
+            {
+                if (arg is SaleOff saleOff)
+                {
+                    SaleOffDto = new SaleOffDto(saleOff);
+                }
+            }
         }
 
         public Product ToModel(Product product = null)

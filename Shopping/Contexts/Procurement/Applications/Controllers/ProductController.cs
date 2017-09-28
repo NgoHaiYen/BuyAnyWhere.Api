@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Data.Entity;
 
 namespace Shopping.Contexts.Procurement.Applications.Controllers
 {
@@ -29,8 +30,8 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
                 productFilterDto = new ProductFilterDto();
             }
 
-            var products = productFilterDto.SkipAndTake(productFilterDto.ApplyTo(shoppingEntities.Products)).ToList();
-            var productDtos = products.ConvertAll(t => new ProductDto(t));
+            var products = productFilterDto.SkipAndTake(productFilterDto.ApplyTo(shoppingEntities.Products.Include(t => t.SaleOffs))).ToList();
+            var productDtos = products.ConvertAll(t => new ProductDto(t, t.SaleOffs));
 
             return Ok(productDtos);
         }
@@ -55,9 +56,10 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
                 throw new BadRequestException("Không tồn tại Product");
             }
 
-            var productDto = new ProductDto(product);
+            var productDto = new ProductDto(product, product.SaleOffs);
 
             return Ok(productDto);
         }
+
     }
 }
