@@ -19,6 +19,7 @@ namespace Shopping.Contexts.Procurement.Applications.Dtos
         public Constant.PurchaseOrderWorkFlowStatus? WorkFlowStatus { get; set; }
 
         public List<PurchaseOrderDetailDto> PurchaseOrderDetailDtos { get; set; }
+        public List<PurchaseOrderWorkFlowDto>
 
         public PurchaseOrderDto() { }
 
@@ -39,6 +40,15 @@ namespace Shopping.Contexts.Procurement.Applications.Dtos
                 {
                     PurchaseOrderDetailDtos = new List<PurchaseOrderDetailDto>();
                     foreach(var t in purchaseOrderDetails)
+                    {
+                        PurchaseOrderDetailDtos.Add(new PurchaseOrderDetailDto(t));
+                    }
+                }
+
+                if (arg is ICollection<PurchaseOrderWorkFlow> purchaseOrderWorkFlows)
+                {
+                    PurchaseOrderDetailDtos = new List<PurchaseOrderDetailDto>();
+                    foreach (var t in purchaseOrderDetails)
                     {
                         PurchaseOrderDetailDtos.Add(new PurchaseOrderDetailDto(t));
                     }

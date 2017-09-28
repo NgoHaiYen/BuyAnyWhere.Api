@@ -196,10 +196,12 @@
     <Compile Include="Contexts\Procurement\Applications\Dtos\ProductDto.cs" />
     <Compile Include="Contexts\Procurement\Applications\Dtos\PurchaseOrderDetailDto.cs" />
     <Compile Include="Contexts\Procurement\Applications\Dtos\PurchaseOrderDto.cs" />
+    <Compile Include="Contexts\Procurement\Applications\Dtos\PurchaseOrderWorkFlowDto.cs" />
     <Compile Include="Contexts\Procurement\Applications\Dtos\SaleOffDto.cs" />
     <Compile Include="Contexts\Procurement\Applications\Dtos\ShopDto.cs" />
     <Compile Include="Contexts\Procurement\Applications\Dtos\UserDto.cs" />
     <Compile Include="Contexts\Procurement\Applications\Interfaces\INotificationService.cs" />
+    <Compile Include="Contexts\Procurement\Infrastructures\PurchaseOrderRepository.cs" />
     <Compile Include="Contexts\Procurement\Services\NotificationService.cs" />
     <Compile Include="Models\Category.cs">
       <DependentUpon>ShoppingEntities.tt</DependentUpon>
