@@ -7,6 +7,9 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Data.Entity;
 using Shopping.Contexts.Procurement.Applications.Dtos;
+using Shopping.Contexts.Auth.Applications.Interfaces;
+using System.Web;
+using Shopping.Ultilities;
 
 namespace Shopping.Contexts.Procurement.Applications.Controllers
 {
@@ -15,10 +18,12 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
     public class CustomerController : ApiController
     {
         private readonly ShoppingEntities shoppingEntities;
+        private readonly IUltilityService ultilityService;
 
-        public CustomerController(ShoppingEntities shoppingEntities)
+        public CustomerController(ShoppingEntities shoppingEntities, IUltilityService ultilityService)
         {
             this.shoppingEntities = shoppingEntities;
+            this.ultilityService = ultilityService;
         }
 
         [HttpPut]
@@ -94,6 +99,56 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
             var favoriteCategoryDtos = favoriteCategories.ConvertAll(t => new CategoryDto(t));
 
             return Ok(favoriteCategoryDtos);
+        }
+
+        [HttpGet]
+        [Route("current/PurchaseOrders/All")]
+        public IHttpActionResult GetCurrentAllPurchaseOrders()
+        {
+            var token = ultilityService.GetHeaderToken(HttpContext.Current);
+
+            var userToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
+
+            if (userToken == null)
+            {
+                throw new BadRequestException("Access token khong hop le");
+            }
+
+            var user = userToken.User;
+
+            var purchaseOrders = shoppingEntities.PurchaseOrders.Include(t => t.PurchaseOrderDetails)
+                .Include(t => t.PurchaseOrderWorkFlows).Where(t => t.BuyerId == user.Id).ToList();
+
+            var purchaseOrderDtos = purchaseOrders.ConvertAll(t => new PurchaseOrderDto(t, t.PurchaseOrderDetails, t.PurchaseOrderWorkFlows));
+
+            return Ok(purchaseOrderDtos);
+        }
+
+        [HttpGet]
+        [Route("current/PurchaseOrders/Deleted")]
+        public IHttpActionResult GetCurrentDeletedPurchaseOrders()
+        {
+            var token = ultilityService.GetHeaderToken(HttpContext.Current);
+
+            var userToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
+
+            if (userToken == null)
+            {
+                throw new BadRequestException("Access token khong hop le");
+            }
+
+            var user = userToken.User;
+
+            var purchaseOrders = shoppingEntities.PurchaseOrders
+                .Include(t => t.PurchaseOrderDetails)
+                .Include(t => t.PurchaseOrderWorkFlows)
+                .Where(t => t.BuyerId == user.Id && t.WorkFlowLevel == 1 
+                    && t.WorkFlowStatus == (int)Constant.PurchaseOrderWorkFlowStatus.Rejected)
+                .ToList();
+
+            var purchaseOrderDtos = purchaseOrders.ConvertAll(t => new PurchaseOrderDto(t, t.PurchaseOrderDetails, t.PurchaseOrderWorkFlows));
+
+            return Ok(purchaseOrderDtos);
         }
     }
 }

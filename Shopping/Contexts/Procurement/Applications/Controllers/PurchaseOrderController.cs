@@ -1,8 +1,6 @@
 ﻿using Shopping.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Http;
 using System.Data.Entity;
 using Shopping.Contexts.Procurement.Applications.Dtos;
@@ -45,5 +43,6 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
 
             return Ok(purchaseOrderDto);
        }
+
     }
 }
