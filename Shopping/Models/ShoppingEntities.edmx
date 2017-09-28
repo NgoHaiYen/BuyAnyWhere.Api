@@ -55,6 +55,7 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ShopId" Type="uniqueidentifier" />
           <Property Name="CategoryId" Type="uniqueidentifier" />
+          <Property Name="Deleted" Type="bit" />
         </EntityType>
         <EntityType Name="PurchaseOrder">
           <Key>
@@ -584,6 +585,7 @@
           <NavigationProperty Name="Shop" Relationship="ShoppingModel.FK_Product_Shop" FromRole="Product" ToRole="Shop" />
           <NavigationProperty Name="PurchaseOrderDetails" Relationship="ShoppingModel.FK_PurchaseOrderDetail_Product" FromRole="Product" ToRole="PurchaseOrderDetail" />
           <NavigationProperty Name="SaleOffs" Relationship="ShoppingModel.FK_SaleOff_Product" FromRole="Product" ToRole="SaleOff" />
+          <Property Name="Deleted" Type="Boolean" />
         </EntityType>
         <EntityType Name="PurchaseOrder">
           <Key>
@@ -913,6 +915,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="ShoppingModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="ShopId" ColumnName="ShopId" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />

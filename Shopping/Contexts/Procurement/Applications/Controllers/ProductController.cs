@@ -30,7 +30,8 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
                 productFilterDto = new ProductFilterDto();
             }
 
-            var products = productFilterDto.SkipAndTake(productFilterDto.ApplyTo(shoppingEntities.Products.Include(t => t.SaleOffs))).ToList();
+            var products = productFilterDto.SkipAndTake(productFilterDto
+                .ApplyTo(shoppingEntities.Products.Include(t => t.SaleOffs).Where(t => t.Deleted == false))).ToList();
             var productDtos = products.ConvertAll(t => new ProductDto(t, t.SaleOffs));
 
             return Ok(productDtos);
@@ -41,6 +42,7 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
         public IHttpActionResult Post([FromBody] ProductDto productDto)
         {
             var product = productDto.ToModel();
+            product.Deleted = false;
             shoppingEntities.Products.Add(product);
             shoppingEntities.SaveChanges();
 
@@ -49,7 +51,7 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
 
         [HttpGet]
         [Route("{productId}")]
-        private IHttpActionResult Get([FromUri] Guid productId)
+        public IHttpActionResult Get([FromUri] Guid productId)
         {
             var product = shoppingEntities.Products.FirstOrDefault(t => t.Id == productId);
             if (product == null)
@@ -62,5 +64,20 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
             return Ok(productDto);
         }
 
+        [HttpDelete]
+        [Route("{productId}")]
+        public IHttpActionResult Delete([FromUri] Guid productId)
+        {
+            var product = shoppingEntities.Products.FirstOrDefault(t => t.Id == productId);
+            if (product == null)
+            {
+                throw new BadRequestException("Không tồn tại Product");
+            }
+
+            product.Deleted = true;
+            shoppingEntities.SaveChanges();
+
+            return Ok(new ProductDto(product));
+        }
     }
 }
