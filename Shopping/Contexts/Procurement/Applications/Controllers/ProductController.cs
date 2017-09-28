@@ -42,6 +42,7 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
         {
             var product = productDto.ToModel();
             shoppingEntities.Products.Add(product);
+            shoppingEntities.SaveChanges();
 
             return Get(product.Id);
         }

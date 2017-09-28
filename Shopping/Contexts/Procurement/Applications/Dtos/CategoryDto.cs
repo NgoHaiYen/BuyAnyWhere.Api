@@ -11,6 +11,8 @@ namespace Shopping.Contexts.Procurement.Applications.Dtos
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        
+        public CategoryDto() { }
 
         public CategoryDto(Category category)
         {

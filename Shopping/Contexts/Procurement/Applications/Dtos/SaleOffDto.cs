@@ -15,6 +15,8 @@ namespace Shopping.Contexts.Procurement.Applications.Dtos
         public Guid? ProductId { get; set; }
         public ProductDto ProductDto { get; set; }
 
+        public SaleOffDto() { }
+
         public SaleOffDto(SaleOff saleOff, params object[] args)
         {
             Id = saleOff.Id;

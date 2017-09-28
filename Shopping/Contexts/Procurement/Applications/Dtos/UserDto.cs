@@ -16,6 +16,7 @@ namespace Shopping.Contexts.Procurement.Applications.Dtos
         public List<CategoryDto> FavoriteCategoryDtos { get; set; }
         public List<PurchaseOrderDto> PurchaseOrderDtos { get; set; }
 
+        public UserDto() { }
 
         public UserDto(User user, params object[] args)
         {

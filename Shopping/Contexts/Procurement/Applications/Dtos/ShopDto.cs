@@ -18,7 +18,7 @@ namespace Shopping.Contexts.Procurement.Applications.Dtos
         public decimal? Rating { get; set; }
         public DateTime? CreatedDate { get; set; }
 
-
+        public ShopDto() { }
         public ShopDto(Shop shop, params object[] args)
         {
             Id = shop.Id;
