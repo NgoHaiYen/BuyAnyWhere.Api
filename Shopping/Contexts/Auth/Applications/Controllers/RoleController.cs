@@ -58,7 +58,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             shoppingEntities.Roles.Add(role);
             shoppingEntities.SaveChanges();
 
-            return Ok(Get(role.Id));
+            return Ok(new RoleDto(role));
         }
 
         [HttpPut]
@@ -75,7 +75,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             roleDto.ToModel(role);
      
             shoppingEntities.SaveChanges();
-            return Ok(Get(role.Id));
+            return Ok(new RoleDto(role));
         }
     }
 }

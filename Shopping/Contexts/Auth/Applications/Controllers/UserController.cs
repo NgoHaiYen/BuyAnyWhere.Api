@@ -91,7 +91,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             shoppingEntities.Users.Add(user);
             shoppingEntities.SaveChanges();
 
-            return Get(user.Id);
+            return Ok(new UserDto(user));
         }
 
 
@@ -123,7 +123,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             user.Role = role ?? throw new BadRequestException("ID vai trò không hợp lệ");
 
             shoppingEntities.SaveChanges();
-            return Get(userId);
+            return Ok(new UserDto(user));
         }
     }
 }

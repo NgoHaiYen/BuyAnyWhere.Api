@@ -44,7 +44,7 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
             shoppingEntities.Products.Add(product);
             shoppingEntities.SaveChanges();
 
-            return Get(product.Id);
+            return Ok(new ProductDto(product));
         }
 
         [HttpGet]
