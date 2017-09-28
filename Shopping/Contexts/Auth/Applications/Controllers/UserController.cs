@@ -88,7 +88,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         public IHttpActionResult Post([FromBody] UserDto userDto)
         {
             var user = userDto.ToModel();
-            shoppingEntities.Users.Add(userDto.ToModel());
+            shoppingEntities.Users.Add(user);
             shoppingEntities.SaveChanges();
 
             return Get(user.Id);
