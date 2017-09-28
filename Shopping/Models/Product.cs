@@ -30,6 +30,7 @@ namespace Shopping.Models
         public Nullable<System.Guid> ShopId { get; set; }
         public Nullable<System.Guid> CategoryId { get; set; }
         public Nullable<bool> Deleted { get; set; }
+        public Nullable<System.DateTime> DetetedTime { get; set; }
     
         public virtual Category Category { get; set; }
         public virtual Shop Shop { get; set; }

@@ -42,6 +42,7 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
         public IHttpActionResult Post([FromBody] ProductDto productDto)
         {
             var product = productDto.ToModel();
+            product.CreatedDate = System.DateTime.Now;
             product.Deleted = false;
             shoppingEntities.Products.Add(product);
             shoppingEntities.SaveChanges();
@@ -75,6 +76,7 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
             }
 
             product.Deleted = true;
+            product.DetetedTime = System.DateTime.Now;
             shoppingEntities.SaveChanges();
 
             return Ok(new ProductDto(product));
