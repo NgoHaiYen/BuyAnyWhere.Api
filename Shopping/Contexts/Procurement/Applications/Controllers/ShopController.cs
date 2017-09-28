@@ -23,8 +23,9 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
         public IHttpActionResult Get()
         {
             var shops = shoppingEntities.Shops.ToList();
+            var shopDtos = shops.ConvertAll(t => new ShopDto(t));
 
-            return Ok(shops);
+            return Ok(shopDtos);
         }
 
         [HttpGet]
@@ -42,6 +43,41 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
             return Ok(shopDto);
         }
 
+
+        [HttpGet]
+        [Route("{shopId}/Products/All")]
+        public IHttpActionResult GetAllProducts([FromUri] Guid shopId, [FromUri] ProductFilterDto productFilterDto)
+        {
+            var products = productFilterDto.SkipAndTake(productFilterDto
+                .ApplyTo( shoppingEntities.Products.Where(t => t.ShopId == shopId)))
+                .ToList();
+            var productDtos = products.ConvertAll(t => new ProductDto(t));
+            return Ok(productDtos);
+        }
+
+
+        [HttpGet]
+        [Route("{shopId}/Products")]
+        public IHttpActionResult GetProducts([FromUri] Guid shopId, [FromUri] ProductFilterDto productFilterDto)
+        {
+            var products = productFilterDto.SkipAndTake(productFilterDto
+                .ApplyTo(shoppingEntities.Products.Where(t => t.ShopId == shopId && t.Deleted == false)))
+                .ToList();
+            var productDtos = products.ConvertAll(t => new ProductDto(t));
+            return Ok(productDtos);
+        }
+
+        [HttpGet]
+        [Route("{shopId}/Products/Deleted")]
+        public IHttpActionResult GetDeletedProducts([FromUri] Guid shopId, [FromUri] ProductFilterDto productFilterDto)
+        {
+            var products = productFilterDto.SkipAndTake(productFilterDto
+                .ApplyTo(shoppingEntities.Products.Where(t => t.ShopId == shopId && t.Deleted == true)))
+                .ToList();
+            var productDtos = products.ConvertAll(t => new ProductDto(t));
+            return Ok(productDtos);
+        }
+
         [HttpPost]
         [Route("")]
         public IHttpActionResult Post([FromBody] ShopDto shopDto)
@@ -51,7 +87,7 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
             shoppingEntities.Shops.Add(shop);
             shoppingEntities.SaveChanges();
 
-            return Get(shop.Id);
+            return Ok(new ShopDto(shop));
         }
 
         [HttpPut]
@@ -68,7 +104,7 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
             shopDto.ToModel(shop);
             shoppingEntities.SaveChanges();
 
-            return Get(shop.Id);
+            return Ok(new ShopDto(shop));
         }
     }
 }
