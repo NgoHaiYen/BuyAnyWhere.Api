@@ -25,8 +25,8 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
                 apiFilterDto = new ApiFilterDto();
             }
 
-            var apis = apiFilterDto.SkipAndTake(apiFilterDto.ApplyTo(shoppingEntities.Apis.Include(t => t.Roles))).ToList();
-            var apiDtos = apis.Select(t => new ApiDto(t, t.Roles)).ToList();
+            var apis = apiFilterDto.SkipAndTake(apiFilterDto.ApplyTo(shoppingEntities.Apis)).ToList();
+            var apiDtos = apis.Select(t => new ApiDto(t)).ToList();
 
             return Ok(apiDtos);
         }

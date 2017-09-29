@@ -19,21 +19,13 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
         public UserDto() { }
 
 
-        public UserDto(User user, params object[] args)
+        public UserDto(User user)
         {
             Id = user.Id;          
             Name = user.Name;
             FacebookId = user.FacebookId;
             CloudToken = user.CloudToken;
             GoogleId = user.GoogleId;
-            
-            foreach (var arg in args)
-            {
-                if (arg is Role role)
-                {                 
-                    RoleDto = new RoleDto(role);
-                }
-            }
         }
 
         public User ToModel()

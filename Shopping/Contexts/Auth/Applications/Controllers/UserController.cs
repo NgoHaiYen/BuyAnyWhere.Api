@@ -61,7 +61,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             }
 
             var users = await userFilterDto.SkipAndTake(userFilterDto.ApplyTo(shoppingEntities.Users.AsNoTracking().Include(t => t.Role))).ToListAsync();
-            var userDtos = users.ConvertAll(t => new UserDto(t, t.Role));
+            var userDtos = users.ConvertAll(t => new UserDto(t));
 
             return Ok(userDtos);
         }
@@ -120,7 +120,10 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             if (user == null)
                 throw new BadRequestException("ID người dùng không hợp lệ");
 
-            user.Role = role ?? throw new BadRequestException("ID vai trò không hợp lệ");
+            if (role == null)
+                throw new BadRequestException("ID role khong hop le");
+
+            user.RoleId = roleId;
 
             shoppingEntities.SaveChanges();
             return Ok(new UserDto(user));

@@ -27,9 +27,9 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             }
 
             var roles = roleFilterDto.SkipAndTake(roleFilterDto.ApplyTo(
-                shoppingEntities.Roles.Include(t => t.Users).Include(t => t.Apis))).ToList();
+                shoppingEntities.Roles)).ToList();
 
-            var roleDtos = roles.Select(t => new RoleDto(t, t.Users, t.Apis)).ToList();
+            var roleDtos = roles.Select(t => new RoleDto(t)).ToList();
 
             return Ok(roleDtos);
         }
@@ -45,7 +45,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
                 throw new BadRequestException("Role không tồn tại");
             }
 
-            var roleDto = new RoleDto(role, role.Users, role.Apis);
+            var roleDto = new RoleDto(role);
 
             return Ok(roleDto);
         }
