@@ -81,17 +81,6 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         }
 
 
-        [HttpPost]
-        [Route("")]
-        public IHttpActionResult Post([FromBody] UserDto userDto)
-        {
-            var user = userDto.ToModel();
-            shoppingEntities.Users.Add(user);
-            shoppingEntities.SaveChanges();
-
-            return Ok(new UserDto(user));
-        }
-
         [HttpGet]
         [Route("{userId}/Role")]
         IHttpActionResult GetUserRole([FromUri] Guid userId)
