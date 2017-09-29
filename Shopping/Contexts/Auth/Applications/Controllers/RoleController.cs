@@ -55,6 +55,11 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         [Route("{roleId}/Apis")]
         public IHttpActionResult GetRoleApis([FromUri] Guid roleId, [FromUri] ApiFilterDto apiFilterDto)
         {
+            if (apiFilterDto == null)
+            {
+                apiFilterDto = new ApiFilterDto();
+            }
+
             var role = shoppingEntities.Roles.Include(t => t.Apis).FirstOrDefault(t => t.Id == roleId);
             if (role == null)
             {
@@ -84,6 +89,11 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         [Route("{roleId}/Users")]
         public IHttpActionResult GetRoleUsers([FromUri] Guid roleId, [FromUri] UserFilterDto userFilterDto)
         {
+            if (userFilterDto == null)
+            {
+                userFilterDto = new UserFilterDto();
+            }
+
             var role = shoppingEntities.Roles.Include(t => t.Users).FirstOrDefault(t => t.Id == roleId);
 
             if (role == null)

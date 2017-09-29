@@ -48,6 +48,11 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
         [Route("{shopId}/Products/All")]
         public IHttpActionResult GetAllProducts([FromUri] Guid shopId, [FromUri] ProductFilterDto productFilterDto)
         {
+            if (productFilterDto == null)
+            {
+                productFilterDto = new ProductFilterDto();
+            }
+
             var products = productFilterDto.SkipAndTake(productFilterDto
                 .ApplyTo( shoppingEntities.Products.Where(t => t.ShopId == shopId)))
                 .ToList();
@@ -60,6 +65,11 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
         [Route("{shopId}/Products")]
         public IHttpActionResult GetProducts([FromUri] Guid shopId, [FromUri] ProductFilterDto productFilterDto)
         {
+            if (productFilterDto == null)
+            {
+                productFilterDto = new ProductFilterDto();
+            }
+
             var products = productFilterDto.SkipAndTake(productFilterDto
                 .ApplyTo(shoppingEntities.Products.Where(t => t.ShopId == shopId && t.Deleted == false)))
                 .ToList();
@@ -71,6 +81,11 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
         [Route("{shopId}/Products/Deleted")]
         public IHttpActionResult GetDeletedProducts([FromUri] Guid shopId, [FromUri] ProductFilterDto productFilterDto)
         {
+            if (productFilterDto == null)
+            {
+                productFilterDto = new ProductFilterDto();
+            }
+
             var products = productFilterDto.SkipAndTake(productFilterDto
                 .ApplyTo(shoppingEntities.Products.Where(t => t.ShopId == shopId && t.Deleted == true)))
                 .ToList();
