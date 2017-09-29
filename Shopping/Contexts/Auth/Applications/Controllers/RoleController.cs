@@ -50,6 +50,25 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             return Ok(roleDto);
         }
 
+
+        [HttpGet]
+        [Route("{roleId}/Apis")]
+        public IHttpActionResult GetRoleApis([FromUri] Guid roleId, [FromUri] ApiFilterDto apiFilterDto)
+        {
+            var role = shoppingEntities.Roles.Include(t => t.Apis).FirstOrDefault(t => t.Id == roleId);
+            if (role == null)
+            {
+                throw new BadRequestException("Khong ton tai role");
+            }
+
+            var apis = apiFilterDto.SkipAndTake(apiFilterDto.ApplyTo(role.Apis.AsQueryable())).ToList();
+
+            var apiDtos = apis.ConvertAll(t => new ApiDto(t));
+
+            return Ok(apiDtos);
+        }
+
+
         [HttpPost]
         [Route("")]
         public IHttpActionResult Post([FromBody] RoleDto roleDto)
@@ -63,7 +82,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
         [HttpGet]
         [Route("{roleId}/Users")]
-        public IHttpActionResult GetRoleUsers([FromUri] Guid roleId)
+        public IHttpActionResult GetRoleUsers([FromUri] Guid roleId, [FromUri] UserFilterDto userFilterDto)
         {
             var role = shoppingEntities.Roles.Include(t => t.Users).FirstOrDefault(t => t.Id == roleId);
 
@@ -72,7 +91,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
                 throw new BadRequestException("Role khong ton tai");
             }
 
-            var users = role.Users.ToList();
+            var users = userFilterDto.SkipAndTake(userFilterDto.ApplyTo(role.Users.AsQueryable())).ToList();
 
             var userDtos = users.ConvertAll(t => new UserDto(t));
 
