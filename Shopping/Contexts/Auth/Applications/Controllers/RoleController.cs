@@ -63,7 +63,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             var role = shoppingEntities.Roles.Include(t => t.Apis).FirstOrDefault(t => t.Id == roleId);
             if (role == null)
             {
-                throw new BadRequestException("Khong ton tai role");
+                throw new BadRequestException("Không tồn tại role");
             }
 
             var apis = apiFilterDto.SkipAndTake(apiFilterDto.ApplyTo(role.Apis.AsQueryable())).ToList();
@@ -98,7 +98,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
             if (role == null)
             {
-                throw new BadRequestException("Role khong ton tai");
+                throw new BadRequestException("Role không tồn tại");
             }
 
             var users = userFilterDto.SkipAndTake(userFilterDto.ApplyTo(role.Users.AsQueryable())).ToList();
@@ -134,11 +134,11 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
             if (role == null)
             {
-                throw new BadRequestException("Khong ton tai Role");
+                throw new BadRequestException("Không tồn tại Role");
             }
             if (api == null)
             {
-                throw new BadRequestException("Khong ton tai Api");
+                throw new BadRequestException("Không tồn tại Api");
             }
 
             if (!role.Apis.Contains(api))
@@ -168,11 +168,10 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
                 throw new BadRequestException("Không tồn tai Api");
             }
 
-            if (role.Apis.FirstOrDefault(t => t.Id == apiId) == null)
+            if (!role.Apis.Contains(api))
             {
                 throw new BadRequestException("Api không thuộc Role");
             }
-
 
             role.Apis.Remove(api);
 
