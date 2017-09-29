@@ -105,7 +105,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
             var userDtos = users.ConvertAll(t => new UserDto(t));
 
-            return Ok(users);
+            return Ok(userDtos);
         }
 
         [HttpPut]
