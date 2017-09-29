@@ -131,6 +131,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
         {
             var role = shoppingEntities.Roles.FirstOrDefault(t => t.Id == roleId);
             var api = shoppingEntities.Apis.FirstOrDefault(t => t.Id == apiId);
+
             if (role == null)
             {
                 throw new BadRequestException("Khong ton tai Role");
@@ -144,6 +145,36 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             {
                 role.Apis.Add(api);
             }
+
+            shoppingEntities.SaveChanges();
+
+            return Ok(new RoleDto(role));
+        }
+
+        [HttpDelete]
+        [Route("{roleId}/Apis/{apiId}")]
+        public IHttpActionResult DeleteApi([FromUri] Guid roleId, [FromUri] Guid apiId)
+        {
+            var role = shoppingEntities.Roles.FirstOrDefault(t => t.Id == roleId);
+            var api = shoppingEntities.Apis.FirstOrDefault(t => t.Id == apiId);
+
+            if (role == null)
+            {
+                throw new BadRequestException("Không tồn tai Role");
+            }
+
+            if (api == null)
+            {
+                throw new BadRequestException("Không tồn tai Api");
+            }
+
+            if (role.Apis.FirstOrDefault(t => t.Id == apiId) == null)
+            {
+                throw new BadRequestException("Api không thuộc Role");
+            }
+
+
+            role.Apis.Remove(api);
 
             shoppingEntities.SaveChanges();
 
