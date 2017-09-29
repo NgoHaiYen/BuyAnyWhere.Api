@@ -11,7 +11,6 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
         public string Description { get; set; }
 
 
-
         public RoleDto() { }
 
         public RoleDto(Role role)

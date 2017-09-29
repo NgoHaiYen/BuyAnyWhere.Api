@@ -13,8 +13,6 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
         public string AccessToken { get; set; }
         public string CloudToken { get; set; }
 
-        public RoleDto RoleDto { get; set; }
-
 
         public UserDto() { }
 
