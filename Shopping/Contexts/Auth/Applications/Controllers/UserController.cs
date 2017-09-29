@@ -124,7 +124,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
        
         [HttpPut]
-        [Route("{userId}/Roles/{roleId}")]
+        [Route("{userId}/Role/{roleId}")]
         public IHttpActionResult PutRole([FromUri] Guid userId, [FromUri] Guid roleId)
         {
             var user = shoppingEntities.Users.FirstOrDefault(t => t.Id == userId);
