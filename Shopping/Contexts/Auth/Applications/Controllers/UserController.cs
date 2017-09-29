@@ -4,8 +4,6 @@ using System.Web.Http;
 using Shopping.Contexts.Auth.Applications.DTOs;
 using Shopping.Models;
 using System.Data.Entity;
-using System.Web.Http.Description;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Shopping.Contexts.Auth.Applications.Interfaces;
 using System.Web;
@@ -94,6 +92,22 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             return Ok(new UserDto(user));
         }
 
+        [HttpGet]
+        [Route("{userId}/Role")]
+        IHttpActionResult GetUserRole([FromUri] Guid userId)
+        {
+            var user = shoppingEntities.Users.Include(t => t.Role).FirstOrDefault(t => t.Id == userId);
+
+            if (user == null)
+            {
+                throw new BadRequestException("User khong ton tai");
+            }
+
+            var role = user.Role;
+
+            return Ok(new RoleDto(role));
+        }
+
 
         [HttpGet]
         [Route("Counter")]
@@ -108,8 +122,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             return Ok(count);
         }
 
-
-
+       
         [HttpPut]
         [Route("{userId}/Roles/{roleId}")]
         public IHttpActionResult PutRole([FromUri] Guid userId, [FromUri] Guid roleId)

@@ -61,6 +61,24 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             return Ok(new RoleDto(role));
         }
 
+        [HttpGet]
+        [Route("{roleId}/Users")]
+        public IHttpActionResult GetRoleUsers([FromUri] Guid roleId)
+        {
+            var role = shoppingEntities.Roles.Include(t => t.Users).FirstOrDefault(t => t.Id == roleId);
+
+            if (role == null)
+            {
+                throw new BadRequestException("Role khong ton tai");
+            }
+
+            var users = role.Users.ToList();
+
+            var userDtos = users.ConvertAll(t => new UserDto(t));
+
+            return Ok(users);
+        }
+
         [HttpPut]
         [Route("{roleId}")]
         public IHttpActionResult Put(Guid roleId, RoleDto roleDto)
