@@ -124,5 +124,30 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             shoppingEntities.SaveChanges();
             return Ok(new RoleDto(role));
         }
+
+        [HttpPut]
+        [Route("{roleId}/Apis/{apiId}")]
+        public IHttpActionResult PutApi([FromUri] Guid roleId, [FromUri] Guid apiId)
+        {
+            var role = shoppingEntities.Roles.FirstOrDefault(t => t.Id == roleId);
+            var api = shoppingEntities.Apis.FirstOrDefault(t => t.Id == apiId);
+            if (role == null)
+            {
+                throw new BadRequestException("Khong ton tai Role");
+            }
+            if (api == null)
+            {
+                throw new BadRequestException("Khong ton tai Api");
+            }
+
+            if (!role.Apis.Contains(api))
+            {
+                role.Apis.Add(api);
+            }
+
+            shoppingEntities.SaveChanges();
+
+            return Ok(new RoleDto(role));
+        }
     }
 }

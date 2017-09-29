@@ -106,7 +106,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
                 throw new BadRequestException("ID người dùng không hợp lệ");
 
             if (role == null)
-                throw new BadRequestException("ID role khong hop le");
+                throw new BadRequestException("ID role không hợp lệ");
 
             user.RoleId = roleId;
 
