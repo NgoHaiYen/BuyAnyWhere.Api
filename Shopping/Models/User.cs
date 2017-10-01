@@ -29,6 +29,8 @@ namespace Shopping.Models
         public string GoogleId { get; set; }
         public Nullable<System.Guid> RoleId { get; set; }
         public string CloudToken { get; set; }
+        public string AvatarUrl { get; set; }
+        public string Email { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FavoriteCategory> FavoriteCategories { get; set; }
