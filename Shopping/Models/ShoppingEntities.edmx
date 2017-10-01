@@ -163,7 +163,7 @@
           <Property Name="Email" Type="nvarchar(max)" />
           <Property Name="Gender" Type="nvarchar(max)" />
           <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="Notification" Type="bit" />
+          <Property Name="Notification" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="UserToken">
           <Key>
@@ -709,7 +709,7 @@
           <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="Notification" Type="Boolean" />
+          <Property Name="Notification" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="FavoriteCategories" Relationship="ShoppingModel.FK_FavoriteCategory_User" FromRole="User" ToRole="FavoriteCategory" />
           <NavigationProperty Name="PurchaseOrders" Relationship="ShoppingModel.FK_PurchaseOrder_User" FromRole="User" ToRole="PurchaseOrder" />
           <NavigationProperty Name="Role" Relationship="ShoppingModel.FK_User_Role" FromRole="User" ToRole="Role" />

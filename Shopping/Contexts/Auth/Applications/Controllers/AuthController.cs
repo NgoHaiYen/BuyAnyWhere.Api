@@ -30,6 +30,8 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             if (user == null)
             {
                 user = userDto.ToModel();
+                user.Notification = true;
+                user.CreatedDate = System.DateTime.Now;
                 shoppingEntities.Users.Add(user);
 
                 var userToken = new UserToken

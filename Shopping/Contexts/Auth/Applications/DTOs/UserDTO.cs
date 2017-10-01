@@ -9,14 +9,12 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
         public string FacebookId { get; set; }
         public string GoogleId { get; set; }
         public string Name { get; set; }
-
         public string AccessToken { get; set; }
         public string CloudToken { get; set; }
-
         public string AvatarUrl { get; set; }
-        public string Email { get; set; }
-        
+        public string Email { get; set; }       
         public string Gender { get; set; }
+        public bool Notification { get; set; }
 
         public UserDto() { }
 
@@ -31,6 +29,7 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
             AvatarUrl = user.AvatarUrl;
             Email = user.Email;
             Gender = user.Gender;
+            Notification = user.Notification;
         }
 
         public User ToModel()
@@ -44,9 +43,9 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
                 CloudToken = CloudToken,
                 AvatarUrl = AvatarUrl,
                 Email = Email,
-                Gender = Gender
+                Gender = Gender,
+                Notification = Notification
             };
-
 
             return user;
         }

@@ -6,16 +6,16 @@
     <edmx:Diagrams>
       <Diagram DiagramId="5c1b3a7471d34cee81edf92e540f9658" Name="Diagram1" ZoomLevel="82">
         <EntityTypeShape EntityType="ShoppingModel.Api" Width="1.5" PointX="0.75" PointY="8.125" />
-        <EntityTypeShape EntityType="ShoppingModel.Category" Width="1.5" PointX="5.25" PointY="3.875" />
-        <EntityTypeShape EntityType="ShoppingModel.FavoriteCategory" Width="1.5" PointX="7.5" PointY="8.125" />
+        <EntityTypeShape EntityType="ShoppingModel.Category" Width="1.5" PointX="8.25" PointY="3.875" />
+        <EntityTypeShape EntityType="ShoppingModel.FavoriteCategory" Width="1.5" PointX="10.5" PointY="8.125" />
         <EntityTypeShape EntityType="ShoppingModel.Logger" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ShoppingModel.Product" Width="1.5" PointX="9.75" PointY="2.25" />
-        <EntityTypeShape EntityType="ShoppingModel.PurchaseOrder" Width="1.5" PointX="10.5" PointY="7.375" />
-        <EntityTypeShape EntityType="ShoppingModel.PurchaseOrderDetail" Width="1.5" PointX="12.75" PointY="5.375" />
-        <EntityTypeShape EntityType="ShoppingModel.PurchaseOrderWorkFlow" Width="1.5" PointX="12.75" PointY="10.875" />
+        <EntityTypeShape EntityType="ShoppingModel.Product" Width="1.5" PointX="12.75" PointY="3.25" />
+        <EntityTypeShape EntityType="ShoppingModel.PurchaseOrder" Width="1.5" PointX="7.5" PointY="7.375" />
+        <EntityTypeShape EntityType="ShoppingModel.PurchaseOrderDetail" Width="1.5" PointX="15" PointY="5.875" />
+        <EntityTypeShape EntityType="ShoppingModel.PurchaseOrderWorkFlow" Width="1.5" PointX="9.75" PointY="10.875" />
         <EntityTypeShape EntityType="ShoppingModel.Role" Width="1.5" PointX="3" PointY="8.125" />
-        <EntityTypeShape EntityType="ShoppingModel.SaleOff" Width="1.5" PointX="12" PointY="2" />
-        <EntityTypeShape EntityType="ShoppingModel.Shop" Width="1.5" PointX="7.5" PointY="3.375" />
+        <EntityTypeShape EntityType="ShoppingModel.SaleOff" Width="1.5" PointX="15" PointY="2" />
+        <EntityTypeShape EntityType="ShoppingModel.Shop" Width="1.5" PointX="10.5" PointY="3.375" />
         <EntityTypeShape EntityType="ShoppingModel.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="ShoppingModel.User" Width="1.5" PointX="5.25" PointY="7" />
         <EntityTypeShape EntityType="ShoppingModel.UserToken" Width="1.5" PointX="7.5" PointY="19.25" />

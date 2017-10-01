@@ -64,26 +64,10 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             return Ok(userDtos);
         }
 
-        [HttpPut]
-        [Route("{userId}/Notifications")]
-        IHttpActionResult PutNotification([FromUri]Guid userId, [FromUri] bool state)
-        {
-            var user = shoppingEntities.Users.FirstOrDefault(t => t.Id == userId);
 
-            if (user == null)
-            {
-                throw new BadRequestException("Không tồn tại User");
-            }
-
-            user.Notification = state;
-            
-            shoppingEntities.SaveChanges();
-            return Ok(new UserDto(user));
-        }
-
-        [HttpPut]
+        [HttpPatch]
         [Route("current")]
-        public IHttpActionResult PutCurrentUser([FromBody] UserDto userDto)
+        public IHttpActionResult PatchCurrentUser([FromBody] UserDto userDto)
         {
             var token = ultilityService.GetHeaderToken(HttpContext.Current);
 
