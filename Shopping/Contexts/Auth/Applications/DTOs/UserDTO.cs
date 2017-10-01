@@ -15,6 +15,8 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
 
         public string AvatarUrl { get; set; }
         public string Email { get; set; }
+        
+        public string Gender { get; set; }
 
         public UserDto() { }
 
@@ -28,6 +30,7 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
             GoogleId = user.GoogleId;
             AvatarUrl = user.AvatarUrl;
             Email = user.Email;
+            Gender = user.Gender;
         }
 
         public User ToModel()
@@ -40,7 +43,8 @@ namespace Shopping.Contexts.Auth.Applications.DTOs
                 GoogleId = GoogleId,
                 CloudToken = CloudToken,
                 AvatarUrl = AvatarUrl,
-                Email = Email
+                Email = Email,
+                Gender = Gender
             };
 
 

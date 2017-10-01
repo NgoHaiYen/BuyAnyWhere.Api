@@ -98,6 +98,7 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
         public IHttpActionResult Post([FromBody] ShopDto shopDto)
         {
             var shop = shopDto.ToModel();
+            shop.CreatedDate = System.DateTime.Now;
 
             shoppingEntities.Shops.Add(shop);
             shoppingEntities.SaveChanges();

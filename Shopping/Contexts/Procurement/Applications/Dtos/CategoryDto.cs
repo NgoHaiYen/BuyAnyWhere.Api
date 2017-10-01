@@ -11,6 +11,8 @@ namespace Shopping.Contexts.Procurement.Applications.Dtos
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+
+        public string IconUrl { get; set; }
         
         public CategoryDto() { }
 
@@ -19,6 +21,7 @@ namespace Shopping.Contexts.Procurement.Applications.Dtos
             Id = category.Id;
             Name = category.Name;
             Description = category.Description;
+            IconUrl = category.IconUrl;
         }
 
 
@@ -31,6 +34,7 @@ namespace Shopping.Contexts.Procurement.Applications.Dtos
             }
 
             category.Name = Name;
+            category.IconUrl = IconUrl;
             category.Description = Description;
 
             return category;

@@ -64,6 +64,46 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
             return Ok(userDtos);
         }
 
+        [HttpPut]
+        [Route("{userId}/Notifications")]
+        IHttpActionResult PutNotification([FromUri]Guid userId, [FromUri] bool state)
+        {
+            var user = shoppingEntities.Users.FirstOrDefault(t => t.Id == userId);
+
+            if (user == null)
+            {
+                throw new BadRequestException("Không tồn tại User");
+            }
+
+            user.Notification = state;
+            
+            shoppingEntities.SaveChanges();
+            return Ok(new UserDto(user));
+        }
+
+        [HttpPut]
+        [Route("current")]
+        public IHttpActionResult PutCurrentUser([FromBody] UserDto userDto)
+        {
+            var token = ultilityService.GetHeaderToken(HttpContext.Current);
+
+            var userToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
+
+            if (userToken == null)
+            {
+                throw new BadRequestException("Access token khong hop le");
+            }
+
+            var user = userToken.User;
+            user.Name = userDto.Name;
+            user.Gender = userDto.Gender;
+            user.AvatarUrl = userDto.AvatarUrl;
+
+            shoppingEntities.SaveChanges();
+
+            return Ok(new UserDto(user));
+        }
+
 
 
         [HttpGet]

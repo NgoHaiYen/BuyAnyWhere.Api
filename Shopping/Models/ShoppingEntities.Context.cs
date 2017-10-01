@@ -28,6 +28,7 @@ namespace Shopping.Models
         public virtual DbSet<Api> Apis { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<FavoriteCategory> FavoriteCategories { get; set; }
+        public virtual DbSet<Logger> Loggers { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
         public virtual DbSet<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
@@ -38,6 +39,5 @@ namespace Shopping.Models
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserToken> UserTokens { get; set; }
-        public virtual DbSet<Logger> Loggers { get; set; }
     }
 }

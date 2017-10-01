@@ -21,7 +21,7 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="Icon" Type="image" />
+          <Property Name="IconUrl" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="FavoriteCategory">
           <Key>
@@ -161,6 +161,9 @@
           <Property Name="CloudToken" Type="nvarchar(max)" />
           <Property Name="AvatarUrl" Type="nvarchar(max)" />
           <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="Gender" Type="nvarchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="Notification" Type="bit" />
         </EntityType>
         <EntityType Name="UserToken">
           <Key>
@@ -468,6 +471,7 @@
           <EntitySet Name="Apis" EntityType="ShoppingModel.Api" />
           <EntitySet Name="Categories" EntityType="ShoppingModel.Category" />
           <EntitySet Name="FavoriteCategories" EntityType="ShoppingModel.FavoriteCategory" />
+          <EntitySet Name="Loggers" EntityType="ShoppingModel.Logger" />
           <EntitySet Name="Products" EntityType="ShoppingModel.Product" />
           <EntitySet Name="PurchaseOrders" EntityType="ShoppingModel.PurchaseOrder" />
           <EntitySet Name="PurchaseOrderDetails" EntityType="ShoppingModel.PurchaseOrderDetail" />
@@ -538,7 +542,6 @@
             <End Role="Category" EntitySet="Categories" />
             <End Role="Shop" EntitySet="Shops" />
           </AssociationSet>
-          <EntitySet Name="Loggers" EntityType="ShoppingModel.Logger" />
         </EntityContainer>
         <EntityType Name="Api">
           <Key>
@@ -557,7 +560,7 @@
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Icon" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="IconUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="FavoriteCategories" Relationship="ShoppingModel.FK_FavoriteCategory_Category" FromRole="Category" ToRole="FavoriteCategory" />
           <NavigationProperty Name="Products" Relationship="ShoppingModel.FK_Product_Category" FromRole="Category" ToRole="Product" />
           <NavigationProperty Name="Shops" Relationship="ShoppingModel.ShopCategory" FromRole="Category" ToRole="Shop" />
@@ -572,6 +575,18 @@
           <NavigationProperty Name="Category" Relationship="ShoppingModel.FK_FavoriteCategory_Category" FromRole="FavoriteCategory" ToRole="Category" />
           <NavigationProperty Name="User" Relationship="ShoppingModel.FK_FavoriteCategory_User" FromRole="FavoriteCategory" ToRole="User" />
         </EntityType>
+        <EntityType Name="Logger">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ApiMethod" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateTime" Type="DateTime" Precision="3" />
+          <Property Name="ApiUri" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Success" Type="Boolean" />
+          <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="Id" />
@@ -584,12 +599,12 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ShopId" Type="Guid" />
           <Property Name="CategoryId" Type="Guid" />
+          <Property Name="Deleted" Type="Boolean" />
+          <Property Name="DetetedTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Category" Relationship="ShoppingModel.FK_Product_Category" FromRole="Product" ToRole="Category" />
           <NavigationProperty Name="Shop" Relationship="ShoppingModel.FK_Product_Shop" FromRole="Product" ToRole="Shop" />
           <NavigationProperty Name="PurchaseOrderDetails" Relationship="ShoppingModel.FK_PurchaseOrderDetail_Product" FromRole="Product" ToRole="PurchaseOrderDetail" />
           <NavigationProperty Name="SaleOffs" Relationship="ShoppingModel.FK_SaleOff_Product" FromRole="Product" ToRole="SaleOff" />
-          <Property Name="Deleted" Type="Boolean" />
-          <Property Name="DetetedTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="PurchaseOrder">
           <Key>
@@ -690,13 +705,16 @@
           <Property Name="GoogleId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="RoleId" Type="Guid" />
           <Property Name="CloudToken" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AvatarUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Notification" Type="Boolean" />
           <NavigationProperty Name="FavoriteCategories" Relationship="ShoppingModel.FK_FavoriteCategory_User" FromRole="User" ToRole="FavoriteCategory" />
           <NavigationProperty Name="PurchaseOrders" Relationship="ShoppingModel.FK_PurchaseOrder_User" FromRole="User" ToRole="PurchaseOrder" />
           <NavigationProperty Name="Role" Relationship="ShoppingModel.FK_User_Role" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="Shops" Relationship="ShoppingModel.FK_Shop_User" FromRole="User" ToRole="Shop" />
           <NavigationProperty Name="UserTokens" Relationship="ShoppingModel.FK_UserToken_User" FromRole="User" ToRole="UserToken" />
-          <Property Name="AvatarUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="UserToken">
           <Key>
@@ -871,18 +889,6 @@
           <End Type="ShoppingModel.Category" Role="Category" Multiplicity="*" />
           <End Type="ShoppingModel.Shop" Role="Shop" Multiplicity="*" />
         </Association>
-        <EntityType Name="Logger">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ApiMethod" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DateTime" Type="DateTime" Precision="3" />
-          <Property Name="ApiUri" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Success" Type="Boolean" />
-          <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -902,7 +908,7 @@
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="ShoppingModel.Category">
               <MappingFragment StoreEntitySet="Category">
-                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="IconUrl" ColumnName="IconUrl" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -914,6 +920,19 @@
               <MappingFragment StoreEntitySet="FavoriteCategory">
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Loggers">
+            <EntityTypeMapping TypeName="ShoppingModel.Logger">
+              <MappingFragment StoreEntitySet="Logger">
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="ApiUri" ColumnName="ApiUri" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="ApiMethod" ColumnName="ApiMethod" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1019,6 +1038,9 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="ShoppingModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Notification" ColumnName="Notification" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="AvatarUrl" ColumnName="AvatarUrl" />
                 <ScalarProperty Name="CloudToken" ColumnName="CloudToken" />
@@ -1055,19 +1077,6 @@
               <ScalarProperty Name="Id" ColumnName="CategoryId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Loggers">
-            <EntityTypeMapping TypeName="ShoppingModel.Logger">
-              <MappingFragment StoreEntitySet="Logger">
-                <ScalarProperty Name="Reason" ColumnName="Reason" />
-                <ScalarProperty Name="Success" ColumnName="Success" />
-                <ScalarProperty Name="ApiUri" ColumnName="ApiUri" />
-                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
-                <ScalarProperty Name="ApiMethod" ColumnName="ApiMethod" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

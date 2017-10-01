@@ -25,7 +25,7 @@ namespace Shopping.Models
         public System.Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public byte[] Icon { get; set; }
+        public string IconUrl { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FavoriteCategory> FavoriteCategories { get; set; }

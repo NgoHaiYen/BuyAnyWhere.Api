@@ -11,7 +11,7 @@ namespace Shopping.Contexts.Auth.Services
     public class FacebookAuthService : IAuthService
     {
         public static readonly string Url = "https://graph.facebook.com/me";
-        public static readonly string Fields = "id,name,email";
+        public static readonly string Fields = "id,name,email,gender";
 
         private readonly ShoppingEntities shoppingEntities;
 
@@ -35,8 +35,10 @@ namespace Shopping.Contexts.Auth.Services
                     {
                         FacebookId = userDynamic["id"],
                         Name = userDynamic["name"],
-                        Email = userDynamic["email"]
+                        Email = userDynamic["email"],
+                        Gender = userDynamic["gender"]
                     };
+
                     return userDto;
 
                 } catch(Exception)
