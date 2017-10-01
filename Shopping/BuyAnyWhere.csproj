@@ -180,6 +180,7 @@
     <Compile Include="App_Start\ExceptionResponeAttribute.cs" />
     <Compile Include="App_Start\LoggerAttribute.cs" />
     <Compile Include="App_Start\WebApiAuthentication.cs" />
+    <Compile Include="Contexts\Auth\Applications\Controllers\NotificationController.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\OperationController.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\HelpPageController.cs" />
     <Compile Include="Contexts\Auth\Applications\Controllers\RoleController.cs" />

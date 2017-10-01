@@ -240,24 +240,5 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
 
             return Ok(purchaseOrderDtos);
         }
-
-
-        [HttpPut]
-        [Route("{userId}/Notification")]
-        IHttpActionResult ChangeNotification([FromUri] Guid userId)
-        {
-            var user = shoppingEntities.Users.FirstOrDefault(t => t.Id == userId);
-            if (user == null)
-            {
-                throw new BadRequestException("Không tồn tại user");
-            }
-
-           
-            user.Notification = !user.Notification;
-
-            shoppingEntities.SaveChanges();
-
-            return Ok(new UserDto(user));
-        }
     }
 }
