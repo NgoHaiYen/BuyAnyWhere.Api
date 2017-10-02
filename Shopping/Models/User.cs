@@ -34,6 +34,8 @@ namespace Shopping.Models
         public string Gender { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public bool Notification { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FavoriteCategory> FavoriteCategories { get; set; }

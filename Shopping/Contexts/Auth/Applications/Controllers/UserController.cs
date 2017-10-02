@@ -73,11 +73,6 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
             var userToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
 
-            if (userToken == null)
-            {
-                throw new BadRequestException("Access token khong hop le");
-            }
-
             var user = userToken.User;
             user.Name = userDto.Name;
             user.Gender = userDto.Gender;
@@ -103,6 +98,7 @@ namespace Shopping.Contexts.Auth.Applications.Controllers
 
             return Ok(userDto);
         }
+
 
 
         [HttpGet]
