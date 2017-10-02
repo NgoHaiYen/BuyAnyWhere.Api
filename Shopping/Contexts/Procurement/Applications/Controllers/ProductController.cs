@@ -50,6 +50,28 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
             return Ok(new ProductDto(product));
         }
 
+        [HttpPut]
+        [Route("{productId}")]
+        public IHttpActionResult Put([FromUri] Guid productId, [FromBody] ProductDto productDto)
+        {
+            var product = shoppingEntities.Products.FirstOrDefault(t => t.Id == productId);
+
+            if (product == null)
+            {
+                throw new BadRequestException("Product không tồn tại");
+            }
+
+            product.Name = productDto.Name;
+            product.Quantity = productDto.Quantity;
+            product.Price = productDto.Price;
+            product.Description = productDto.Description;
+            product.CategoryId = productDto.CategoryId;
+
+            shoppingEntities.SaveChanges();
+
+            return Ok(new ProductDto(product));
+        }
+
         [HttpGet]
         [Route("{productId}")]
         public IHttpActionResult Get([FromUri] Guid productId)

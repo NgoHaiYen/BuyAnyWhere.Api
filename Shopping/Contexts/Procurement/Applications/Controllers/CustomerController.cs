@@ -58,6 +58,47 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
             return Ok(new CategoryDto(category));
         }
 
+        [HttpPut]
+        [Route("current/FavoriteCategories/{categoryId}")]
+        public IHttpActionResult PostCurrentUserFavoriteCategory([FromUri] Guid categoryId)
+        {
+            var token = ultilityService.GetHeaderToken(HttpContext.Current);
+
+            var userToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
+
+            if (userToken == null)
+            {
+                throw new BadRequestException("Access token khong hop le");
+            }
+
+            var user = userToken.User;
+
+            var category = shoppingEntities.Categories.FirstOrDefault(t => t.Id == categoryId);
+
+            if (user == null)
+            {
+                throw new BadRequestException("User khong ton tai");
+            }
+
+            if (category == null)
+            {
+                throw new BadRequestException("Category khong ton tai");
+            }
+
+            if (shoppingEntities.FavoriteCategories.FirstOrDefault(t => t.UserId == user.Id && t.CategoryId == category.Id) == null)
+            {
+                FavoriteCategory favoriteCategory = new FavoriteCategory();
+                favoriteCategory.Id = Guid.NewGuid();
+                favoriteCategory.Category = category;
+                favoriteCategory.User = user;
+                shoppingEntities.FavoriteCategories.Add(favoriteCategory);
+
+                shoppingEntities.SaveChanges();
+            }
+
+            return Ok(new CategoryDto(category));
+        }
+
         [HttpDelete]
         [Route("{userId}/FavoriteCategories/{categoryId}")]
         public IHttpActionResult DeleteFavoriteCategory([FromUri] Guid userId, [FromUri] Guid categoryId)
@@ -86,6 +127,29 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
             shoppingEntities.SaveChanges();
 
             return Ok(new CategoryDto(category));
+        }
+
+        [HttpGet]
+        [Route("current/FavoriteCategories")]
+        public IHttpActionResult GetFavoriteCategories()
+        {
+
+            var token = ultilityService.GetHeaderToken(HttpContext.Current);
+
+            var userToken = shoppingEntities.UserTokens.FirstOrDefault(t => t.Name == token);
+
+            if (userToken == null)
+            {
+                throw new BadRequestException("Access token khong hop le");
+            }
+
+            var user = userToken.User;
+
+            var favoriteCategories = user.FavoriteCategories.Select(t => t.Category).ToList();
+
+            var favoriteCategoryDtos = favoriteCategories.ConvertAll(t => new CategoryDto(t));
+
+            return Ok(favoriteCategoryDtos);
         }
 
         [HttpGet]

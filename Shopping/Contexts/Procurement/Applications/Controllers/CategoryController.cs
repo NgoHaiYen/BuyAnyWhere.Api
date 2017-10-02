@@ -33,6 +33,7 @@ namespace Shopping.Contexts.Procurement.Controllers.Applications
             return Ok(categoryDtos);
         }
 
+
         [HttpPost]
         [Route("")]
         public IHttpActionResult Post([FromBody] CategoryDto categoryDto)
