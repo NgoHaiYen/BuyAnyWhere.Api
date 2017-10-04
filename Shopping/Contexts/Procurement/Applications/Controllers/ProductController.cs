@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Data.Entity;
+using Shopping.Contexts.Procurement.Applications.Interfaces;
 
 namespace Shopping.Contexts.Procurement.Applications.Controllers
 {
@@ -15,10 +16,12 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
     public class ProductController : ApiController
     {
         private readonly ShoppingEntities shoppingEntities;
+        private readonly INotificationService notificationService;
 
-        public ProductController(ShoppingEntities shoppingEntities)
+        public ProductController(ShoppingEntities shoppingEntities, INotificationService notificationService)
         {
             this.shoppingEntities = shoppingEntities;
+            this.notificationService = notificationService;
         }
 
         [HttpGet]
@@ -46,6 +49,15 @@ namespace Shopping.Contexts.Procurement.Applications.Controllers
             product.Deleted = false;
             shoppingEntities.Products.Add(product);
             shoppingEntities.SaveChanges();
+
+
+            // Notify favorite user
+            var users = shoppingEntities.Categories.SelectMany(t => t.FavoriteCategories).Select(t => t.User).ToList();
+
+            foreach(var user in users)
+            {
+                notificationService.Notify(product.Shop.Name + " đã thêm sản phẩm" + product.Name + "vào nhóm " + product.Category.Name, "", user.CloudToken);
+            }
 
             return Ok(new ProductDto(product));
         }
